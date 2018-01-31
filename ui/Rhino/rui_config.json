@@ -1,0 +1,59 @@
+{
+	"menus": [],
+	"toolbars": [
+		{
+            "name"  : "RBE.main", 
+            "items" : [
+
+                { "left" : "rbe.init" },
+                { "left" : "rbe.update_settings" },
+                { "left" : "rbe.update_view" }
+            ]
+		},
+        {
+            "name"  : "RBE.assembly", 
+            "items" : [
+
+                { "left" : "rbe.blocks_from_polysurfaces" },
+                { "left" : "rbe.blocks_from_meshes" },
+
+                { "type": "separator" },
+
+                { "left" : "rbe.assembly_edit_vertex_attributes" },
+                { "left" : "rbe.assembly_edit_edge_attributes" },
+
+                { "type": "separator" },
+
+                { "left" : "rbe.assembly_show_vertex_labels", "right" : "rbe.assembly_hide_vertex_labels" },
+                { "left" : "rbe.assembly_show_edge_labels", "right" : "rbe.assembly_hide_edge_labels" },
+
+                { "type": "separator" },
+
+                { "left" : "rbe.assembly_move_vertex" }
+            ]
+        },
+		{
+            "name"  : "RBE.rbe", 
+            "items" : [
+
+                { "left" : "rbe.identify_interfaces" },
+                { "left" : "rbe.compute_interface_forces" }
+            ]
+		},
+        {
+            "name"  : "RBE.dem",
+            "items" : []
+        }
+	],
+	"toolbargroups": [
+        {
+            "name"     : "RBE",
+            "toolbars" : [
+                "RBE.main",
+                "RBE.assembly",
+                "RBE.rbe",
+                "RBE.dem"
+            ]
+        }
+	]
+}

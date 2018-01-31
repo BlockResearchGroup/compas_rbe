@@ -1,6 +1,4 @@
 """
-.. _compas_rbe.rbe:
-
 ********************************************************************************
 compas_rbe.rbe
 ********************************************************************************
@@ -18,17 +16,18 @@ compas_rbe.rbe
 equilibrium
 ===========
 
-.. currentmodule:: compas_rbe.rbe.equilibrium
-
-:mod:`compas_rbe.rbe.equilibrium`
-
 .. autosummary::
     :toctree: generated/
 
 """
 
+from .utilities import *
+
+from .block import *
+from .assembly import *
+
+from .interfaces import *
+from .equilibrium import *
+
+
 __all__ = []
-
-
-from .block import Block
-from .assembly import Assembly

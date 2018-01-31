@@ -1,13 +1,30 @@
-from numpy import array
-from numpy import zeros
-from numpy import diagflat
-from numpy import absolute
+from __future__ import print_function
+from __future__ import absolute_import
+from __future__ import division
 
-import cvxopt
-import cvxpy
+import sys
 
-from compas_rbe.rbe.utilities import make_Aeq
-from compas_rbe.rbe.utilities import make_Aiq
+try:
+    from numpy import array
+    from numpy import zeros
+    from numpy import ones
+    from numpy import eye
+    from numpy import identity
+    from numpy import diagflat
+    from numpy import absolute
+except ImportError:
+    if 'ironpython' not in sys.version.lower():
+        raise
+
+try:
+    import cvxopt
+    import cvxpy
+except ImportError:
+    if 'ironpython' not in sys.version.lower():
+        raise
+
+from compas_rbe.rbe import make_Aeq
+from compas_rbe.rbe import make_Aiq
 
 
 __author__    = ['Ursula Frick', 'Tom Van Mele', ]
@@ -16,20 +33,24 @@ __license__   = 'MIT License'
 __email__     = 'vanmelet@ethz.ch'
 
 
-def compute_interface_forces_xfunc(data):
-    from compas_rbe.rbe.assembly import Assembly
-    from compas_rbe.rbe.block import Block
+__all__ = [
+    'compute_interface_forces',
+]
+
+
+def compute_interface_forces_xfunc(data, **kwargs):
+    from compas_rbe.rbe import Assembly
+    from compas_rbe.rbe import Block
     assembly = Assembly.from_data(data['assembly'])
     assembly.blocks = {int(key): Block.from_data(data['blocks'][key]) for key in data['blocks']}
-    config = data['config']
-    compute_interface_forces(assembly, **config)
+    compute_interface_forces(assembly, **kwargs)
     return {
         'assembly': assembly.to_data(),
         'blocks': {str(key): assembly.blocks[key].to_data() for key in assembly.blocks}
     }
 
 
-def compute_interface_forces(assembly, friction8=False, mu=0.6, density=1.0, verbose=False):
+def compute_interface_forces(assembly, friction8=False, mu=0.6, density=1.0, verbose=False, max_iters=100):
     r"""Compute the forces at the interfaces between the blocks of an assembly.
 
     Solve the following optimisation problem:
@@ -37,11 +58,16 @@ def compute_interface_forces(assembly, friction8=False, mu=0.6, density=1.0, ver
     .. math::
 
 
-    Parameters:
-        assembly (compas_rbe.rbe.assembly.Assembly): The rigid block assembly.
-        friction8 (bool): Use an eight-sided friction pyramid. Default is False.
-        mu (float):
-        density (float):
+    Parameters
+    ----------
+    assembly : compas_rbe.rbe.assembly.Assembly
+        The rigid block assembly.
+    friction8 : bool
+        Use an eight-sided friction pyramid. Default is False.
+    mu : float
+
+    density : float
+
     """
 
     n = assembly.number_of_vertices()
@@ -63,7 +89,8 @@ def compute_interface_forces(assembly, friction8=False, mu=0.6, density=1.0, ver
     b = [[0, 0, assembly.blocks[key].volume() * density, 0, 0, 0] for key, attr in assembly.vertices(True)]
     b = array(b, dtype=float)
     b = -1.0 * b
-    b = b[free, :].reshape((-1, 1), order='C')  # row-major ordering => fx, fy, fz, mx, my, mz, fx, fy, fz, mx, my, mz, ...
+    b = b[free, :].reshape((-1, 1), order='C')
+    # row-major ordering => fx, fy, fz, mx, my, mz, fx, fy, fz, mx, my, mz, ...
 
     # ==========================================================================
     # inequality constraints
@@ -75,7 +102,7 @@ def compute_interface_forces(assembly, friction8=False, mu=0.6, density=1.0, ver
     h = zeros((G.shape[0], 1))
 
     # ==========================================================================
-    # objective function
+    # variables for the objective function
     # ==========================================================================
 
     a1 = 1.0   # weights on the compression forces
@@ -93,19 +120,36 @@ def compute_interface_forces(assembly, friction8=False, mu=0.6, density=1.0, ver
     # weighting matrix
     # ==========================================================================
 
-    # W
+    # w = cvxpy.Variable(P.shape[0])
+
+    # w = ones((P.shape[0], 1))
+    # W = cvxpy.diag(w)
 
     # ==========================================================================
     # sanity check
     # ==========================================================================
 
     if verbose:
-        print 'P', P.shape
-        print 'q', q.shape
-        print 'G', G.shape
-        print 'h', h.shape
-        print 'A', A.shape
-        print 'b', b.shape
+        print('')
+        print('min   0.5 * xT * P * x + qT * x')
+        print('s.t.  A * x == b')
+        print('      G * x <= h')
+        print('')
+        print('with  P', P.shape)
+        print('      q', q.shape)
+        print('      G', G.shape)
+        print('      h', h.shape)
+        print('      A', A.shape)
+        print('      b', b.shape)
+
+    # instead do:
+    # min   0.5 * xT * W * P * x (+ qT * x)
+
+    # solve iteratively
+    # at every iteration
+    # update W based on the compression forces in the previous iteration
+    # W is diagonal with
+    # 1 / f+, 1, 1 / f+, 1 / f+
 
     # ==========================================================================
     # sole with cvxpy
@@ -122,30 +166,24 @@ def compute_interface_forces(assembly, friction8=False, mu=0.6, density=1.0, ver
 
     problem = cvxpy.Problem(objective, constraints)
 
-    problem.solve(solver=cvxpy.CVXOPT, verbose=verbose)
+    problem.solve(verbose=verbose, max_iters=max_iters)
 
-    x1 = array(x.value).reshape((-1, 1))
+    if problem.status == cvxpy.OPTIMAL:
+        x = array(x.value).reshape((-1, 1))
 
-    if verbose:
-        print problem.value
+        if verbose:
+            print('')
+            print('optimal value')
+            print('-------------')
+            print(problem.value)
+
+    else:
+        x = None
 
     # ==========================================================================
     # solve with cvxopt
     # (use sparse matrices!)
     # ==========================================================================
-
-    # min   0.5 * xT * P * x + qT * x
-    # s.t.  A * x == b
-    #       G * x <= h
-
-    # instead do:
-    # min   0.5 * xT * W * P * x (+ qT * x)
-
-    # solve iteratively
-    # at every iteration
-    # update W based on the compression forces in the previous iteration
-    # W is diagonal with
-    # 1 / f+, 1, 1 / f+, 1 / f+
 
     # res = cvxopt.solvers.qp(
     #     cvxopt.sparse(cvxopt.matrix(P), tc='d'),
@@ -156,7 +194,7 @@ def compute_interface_forces(assembly, friction8=False, mu=0.6, density=1.0, ver
     #     cvxopt.matrix(b)
     # )
 
-    # x2 = array(res['x']).reshape((-1, 1))
+    # x = array(res['x']).reshape((-1, 1))
 
     # if verbose:
     #     print res['primal objective']
@@ -165,32 +203,29 @@ def compute_interface_forces(assembly, friction8=False, mu=0.6, density=1.0, ver
     # update
     # ==========================================================================
 
-    x = x1
+    if x is not None:
 
-    x[absolute(x) < 1e-6] = 0.0
+        x[absolute(x) < 1e-6] = 0.0
 
-    if verbose:
-        print x
+        x = x.flatten().tolist()
 
-    x = x.flatten().tolist()
+        offset = 0
 
-    offset = 0
+        for u, v, attr in assembly.edges(True):
 
-    for u, v, attr in assembly.edges(True):
+            n = len(attr['interface_points'])
 
-        n = len(attr['interface_points'])
+            attr['interface_forces'] = []
 
-        attr['interface_forces'] = []
+            for i in range(n):
+                attr['interface_forces'].append({
+                    'c_np': x[offset + 4 * i + 0],
+                    'c_nn': x[offset + 4 * i + 1],
+                    'c_u' : x[offset + 4 * i + 2],
+                    'c_v' : x[offset + 4 * i + 3]
+                })
 
-        for i in range(n):
-            attr['interface_forces'].append({
-                'c_np': x[offset + 4 * i + 0],
-                'c_nn': x[offset + 4 * i + 1],
-                'c_u' : x[offset + 4 * i + 2],
-                'c_v' : x[offset + 4 * i + 3]
-            })
-
-        offset += 4 * n
+            offset += 4 * n
 
 
 # ==============================================================================

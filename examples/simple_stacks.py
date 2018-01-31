@@ -54,7 +54,7 @@ identify_interfaces(
 
 # equilibrium
 
-compute_interface_forces(assembly)
+compute_interface_forces(assembly, verbose=True)
 
 # visualise
 

@@ -1,0 +1,402 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RhinoUI major_ver="2" minor_ver="0" guid="cf65e28a-87af-4aaa-b02f-91dbc9f5402c" localize="False" default_language_id="1033">
+  <extend_rhino_menus>
+    <menu guid="3acba103-ae0a-41e7-b7a7-82f8ee5849b9">
+      <text>
+        <locale_1033>Extend Rhino Menus</locale_1033>
+      </text>
+    </menu>
+  </extend_rhino_menus>
+  <menus />
+  <tool_bar_groups>
+    <tool_bar_group guid="60e34ade-b982-47b2-8912-0bcecbb3f80b" dock_bar_guid32="00000000-0000-0000-0000-000000000000" dock_bar_guid64="7c292a84-4b4c-4302-a3a7-5b2bbb4c82d1" active_tool_bar_group="c2b0e4c5-4e26-4b4a-93c7-53eea798fba0" single_file="False" hide_single_tab="False" point_floating="-5,125">
+      <text>
+        <locale_1033>RBE</locale_1033>
+      </text>
+      <tool_bar_group_item guid="c2b0e4c5-4e26-4b4a-93c7-53eea798fba0" major_version="1" minor_version="1">
+        <text>
+          <locale_1033>RBE.main</locale_1033>
+        </text>
+        <tool_bar_id>d6af821c-27f5-4fb0-b69e-d87e1f4b7d7f</tool_bar_id>
+      </tool_bar_group_item>
+      <tool_bar_group_item guid="54562a0f-e16e-494c-b623-2d2e080bdb25" major_version="1" minor_version="1">
+        <text>
+          <locale_1033>RBE.assembly</locale_1033>
+        </text>
+        <tool_bar_id>5acad652-9936-4784-9959-49a454adadf7</tool_bar_id>
+      </tool_bar_group_item>
+      <tool_bar_group_item guid="b1129e02-a242-4ff8-8db3-dd66bf6d449e" major_version="1" minor_version="1">
+        <text>
+          <locale_1033>RBE.rbe</locale_1033>
+        </text>
+        <tool_bar_id>b50fd5eb-7b39-4d1b-96bd-5fb8c4817580</tool_bar_id>
+      </tool_bar_group_item>
+      <tool_bar_group_item guid="746a459a-d280-4eef-8c15-a2193290e97e" major_version="1" minor_version="1">
+        <text>
+          <locale_1033>RBE.dem</locale_1033>
+        </text>
+        <tool_bar_id>60fdd04a-b68a-40f6-92a9-131459ca49a1</tool_bar_id>
+      </tool_bar_group_item>
+      <dock_bar_info dock_bar="False" docking="True" horz="False" visible="True" floating="False" mru_float_style="8192" bar_id="59460" mru_width="32767" point_pos="0,108" float_point="-5,125" rect_mru_dock_pos="0,108,1480,165" dock_location_u="59419" dock_location="top" float_size="56,58" />
+    </tool_bar_group>
+  </tool_bar_groups>
+  <tool_bars>
+    <tool_bar guid="d6af821c-27f5-4fb0-b69e-d87e1f4b7d7f" item_display_style="text_only">
+      <text>
+        <locale_1033>RBE.main</locale_1033>
+      </text>
+      <tool_bar_item guid="93eacb57-6f76-4e99-8afc-30f41b31a21c" button_display_mode="control_only" button_style="normal">
+        <text />
+        <left_macro_id>6f15c691-364b-41f9-8e90-e19eca560c8c</left_macro_id>
+      </tool_bar_item>
+      <tool_bar_item guid="87c23f4f-4f7b-4ddc-85a3-f229abf9392d" button_display_mode="control_only" button_style="normal">
+        <text />
+        <left_macro_id>80420383-6b1b-4512-9de2-590bd91005e9</left_macro_id>
+      </tool_bar_item>
+      <tool_bar_item guid="150f4397-997d-45dc-9f5a-9ed4b95a3a95" button_display_mode="control_only" button_style="normal">
+        <text />
+        <left_macro_id>97cbb73d-3753-46c5-ac28-36f19090034c</left_macro_id>
+      </tool_bar_item>
+    </tool_bar>
+    <tool_bar guid="5acad652-9936-4784-9959-49a454adadf7" item_display_style="text_only">
+      <text>
+        <locale_1033>RBE.assembly</locale_1033>
+      </text>
+      <tool_bar_item guid="34721543-8585-4855-9f38-07caaf5dc71f" button_display_mode="control_only" button_style="normal">
+        <text />
+        <left_macro_id>265edf5d-cbcc-4406-9f4c-28a9c150a697</left_macro_id>
+      </tool_bar_item>
+      <tool_bar_item guid="ba7c2b37-ee1d-491c-b053-0c94a1709fe5" button_display_mode="control_only" button_style="normal">
+        <text />
+        <left_macro_id>e426282a-e2c7-46bb-84e9-e8cf375e3c3c</left_macro_id>
+      </tool_bar_item>
+      <tool_bar_item guid="cbdc3672-8a4d-42e2-9f5b-cbe948c0248a" button_display_mode="control_only" button_style="spacer">
+        <text />
+      </tool_bar_item>
+      <tool_bar_item guid="b1e00173-c5a7-4fd2-a83f-b5bedc3ad01e" button_display_mode="control_only" button_style="normal">
+        <text />
+        <left_macro_id>91bc29db-67b7-4ed3-93fb-b3014bd9e86d</left_macro_id>
+      </tool_bar_item>
+      <tool_bar_item guid="aef34c70-3750-42dc-9a21-5257f9aef1b1" button_display_mode="control_only" button_style="normal">
+        <text />
+        <left_macro_id>faf68cae-da7d-4052-b9eb-4ad52dc23ec0</left_macro_id>
+      </tool_bar_item>
+      <tool_bar_item guid="0a4214a3-251a-4d54-8e80-5eb678c3feb8" button_display_mode="control_only" button_style="spacer">
+        <text />
+      </tool_bar_item>
+      <tool_bar_item guid="7eb76d49-1524-4297-887a-d865aa1215e3" button_display_mode="control_only" button_style="normal">
+        <text />
+        <left_macro_id>8cec8bdd-9ed3-4063-b672-762da68dd1d8</left_macro_id>
+        <right_macro_id>fcd017e1-1a6a-4504-afe1-f171ddceb5d2</right_macro_id>
+      </tool_bar_item>
+      <tool_bar_item guid="37364311-2525-496c-beb3-9ee4707b741e" button_display_mode="control_only" button_style="normal">
+        <text />
+        <left_macro_id>6407db30-35e3-48eb-8a08-481d27bbe13f</left_macro_id>
+        <right_macro_id>2804dd36-d7ec-4647-9c41-cee9c0e7111b</right_macro_id>
+      </tool_bar_item>
+      <tool_bar_item guid="1cc4ce94-8395-4229-a732-f528e08604e7" button_display_mode="control_only" button_style="spacer">
+        <text />
+      </tool_bar_item>
+      <tool_bar_item guid="9a9f9c00-a0bd-4218-bb6d-e6103f2bd8fe" button_display_mode="control_only" button_style="normal">
+        <text />
+        <left_macro_id>8ddf3c27-0eb4-40b7-9d58-d9cdba4a5e60</left_macro_id>
+      </tool_bar_item>
+    </tool_bar>
+    <tool_bar guid="b50fd5eb-7b39-4d1b-96bd-5fb8c4817580" item_display_style="text_only">
+      <text>
+        <locale_1033>RBE.rbe</locale_1033>
+      </text>
+      <tool_bar_item guid="7654e3d9-3a7a-4e1b-9986-955d329bb10e" button_display_mode="control_only" button_style="normal">
+        <text />
+        <left_macro_id>7142b5ff-203b-4995-9185-6c883031ee40</left_macro_id>
+      </tool_bar_item>
+      <tool_bar_item guid="d7238441-19df-4625-8f1c-e31fb2135fe7" button_display_mode="control_only" button_style="normal">
+        <text />
+        <left_macro_id>c2f22a36-553d-4a38-ab9b-f0ca6e2d7b48</left_macro_id>
+      </tool_bar_item>
+    </tool_bar>
+    <tool_bar guid="60fdd04a-b68a-40f6-92a9-131459ca49a1" item_display_style="text_only">
+      <text>
+        <locale_1033>RBE.dem</locale_1033>
+      </text>
+    </tool_bar>
+  </tool_bars>
+  <macros>
+    <macro_item guid="faf68cae-da7d-4052-b9eb-4ad52dc23ec0">
+      <text>
+        <locale_1033>rbe.assembly_edit_edge_attributes</locale_1033>
+      </text>
+      <tooltip>
+        <locale_1033>None</locale_1033>
+      </tooltip>
+      <help_text>
+        <locale_1033>None</locale_1033>
+      </help_text>
+      <button_text>
+        <locale_1033>assembly_e@</locale_1033>
+      </button_text>
+      <menu_text>
+        <locale_1033>assembly e@</locale_1033>
+      </menu_text>
+      <script>-_RunPythonScript (rbe.assembly_edit_edge_attributes())</script>
+    </macro_item>
+    <macro_item guid="91bc29db-67b7-4ed3-93fb-b3014bd9e86d">
+      <text>
+        <locale_1033>rbe.assembly_edit_vertex_attributes</locale_1033>
+      </text>
+      <tooltip>
+        <locale_1033>None</locale_1033>
+      </tooltip>
+      <help_text>
+        <locale_1033>None</locale_1033>
+      </help_text>
+      <button_text>
+        <locale_1033>assembly_v@</locale_1033>
+      </button_text>
+      <menu_text>
+        <locale_1033>assembly v@</locale_1033>
+      </menu_text>
+      <script>-_RunPythonScript (rbe.assembly_edit_vertex_attributes())</script>
+    </macro_item>
+    <macro_item guid="2804dd36-d7ec-4647-9c41-cee9c0e7111b">
+      <text>
+        <locale_1033>rbe.assembly_hide_edge_labels</locale_1033>
+      </text>
+      <tooltip>
+        <locale_1033>None</locale_1033>
+      </tooltip>
+      <help_text>
+        <locale_1033>None</locale_1033>
+      </help_text>
+      <button_text>
+        <locale_1033>assembly_hide_edge_labels</locale_1033>
+      </button_text>
+      <menu_text>
+        <locale_1033>assembly hide edge labels</locale_1033>
+      </menu_text>
+      <script>-_RunPythonScript (rbe.assembly_hide_edge_labels())</script>
+    </macro_item>
+    <macro_item guid="fcd017e1-1a6a-4504-afe1-f171ddceb5d2">
+      <text>
+        <locale_1033>rbe.assembly_hide_vertex_labels</locale_1033>
+      </text>
+      <tooltip>
+        <locale_1033>None</locale_1033>
+      </tooltip>
+      <help_text>
+        <locale_1033>None</locale_1033>
+      </help_text>
+      <button_text>
+        <locale_1033>assembly_hide_vertex_labels</locale_1033>
+      </button_text>
+      <menu_text>
+        <locale_1033>assembly hide vertex labels</locale_1033>
+      </menu_text>
+      <script>-_RunPythonScript (rbe.assembly_hide_vertex_labels())</script>
+    </macro_item>
+    <macro_item guid="8ddf3c27-0eb4-40b7-9d58-d9cdba4a5e60">
+      <text>
+        <locale_1033>rbe.assembly_move_vertex</locale_1033>
+      </text>
+      <tooltip>
+        <locale_1033>None</locale_1033>
+      </tooltip>
+      <help_text>
+        <locale_1033>None</locale_1033>
+      </help_text>
+      <button_text>
+        <locale_1033>assembly_move_vertex</locale_1033>
+      </button_text>
+      <menu_text>
+        <locale_1033>assembly move vertex</locale_1033>
+      </menu_text>
+      <script>-_RunPythonScript (rbe.assembly_move_vertex())</script>
+    </macro_item>
+    <macro_item guid="6407db30-35e3-48eb-8a08-481d27bbe13f">
+      <text>
+        <locale_1033>rbe.assembly_show_edge_labels</locale_1033>
+      </text>
+      <tooltip>
+        <locale_1033>None</locale_1033>
+      </tooltip>
+      <help_text>
+        <locale_1033>None</locale_1033>
+      </help_text>
+      <button_text>
+        <locale_1033>assembly_e#</locale_1033>
+      </button_text>
+      <menu_text>
+        <locale_1033>assembly e#</locale_1033>
+      </menu_text>
+      <script>-_RunPythonScript (rbe.assembly_show_edge_labels())</script>
+    </macro_item>
+    <macro_item guid="8cec8bdd-9ed3-4063-b672-762da68dd1d8">
+      <text>
+        <locale_1033>rbe.assembly_show_vertex_labels</locale_1033>
+      </text>
+      <tooltip>
+        <locale_1033>None</locale_1033>
+      </tooltip>
+      <help_text>
+        <locale_1033>None</locale_1033>
+      </help_text>
+      <button_text>
+        <locale_1033>assembly_v#</locale_1033>
+      </button_text>
+      <menu_text>
+        <locale_1033>assembly v#</locale_1033>
+      </menu_text>
+      <script>-_RunPythonScript (rbe.assembly_show_vertex_labels())</script>
+    </macro_item>
+    <macro_item guid="e426282a-e2c7-46bb-84e9-e8cf375e3c3c">
+      <text>
+        <locale_1033>rbe.blocks_from_meshes</locale_1033>
+      </text>
+      <tooltip>
+        <locale_1033>None</locale_1033>
+      </tooltip>
+      <help_text>
+        <locale_1033>None</locale_1033>
+      </help_text>
+      <button_text>
+        <locale_1033>from_meshes</locale_1033>
+      </button_text>
+      <menu_text>
+        <locale_1033>from meshes</locale_1033>
+      </menu_text>
+      <script>-_RunPythonScript (rbe.blocks_from_meshes())</script>
+    </macro_item>
+    <macro_item guid="265edf5d-cbcc-4406-9f4c-28a9c150a697">
+      <text>
+        <locale_1033>rbe.blocks_from_polysurfaces</locale_1033>
+      </text>
+      <tooltip>
+        <locale_1033>None</locale_1033>
+      </tooltip>
+      <help_text>
+        <locale_1033>None</locale_1033>
+      </help_text>
+      <button_text>
+        <locale_1033>from_polysrfs</locale_1033>
+      </button_text>
+      <menu_text>
+        <locale_1033>from polysrfs</locale_1033>
+      </menu_text>
+      <script>-_RunPythonScript (rbe.blocks_from_polysurfaces())</script>
+    </macro_item>
+    <macro_item guid="c2f22a36-553d-4a38-ab9b-f0ca6e2d7b48">
+      <text>
+        <locale_1033>rbe.compute_interface_forces</locale_1033>
+      </text>
+      <tooltip>
+        <locale_1033>None</locale_1033>
+      </tooltip>
+      <help_text>
+        <locale_1033>None</locale_1033>
+      </help_text>
+      <button_text>
+        <locale_1033>compute_interface_forces</locale_1033>
+      </button_text>
+      <menu_text>
+        <locale_1033>compute interface forces</locale_1033>
+      </menu_text>
+      <script>-_RunPythonScript (rbe.compute_interface_forces())</script>
+    </macro_item>
+    <macro_item guid="7142b5ff-203b-4995-9185-6c883031ee40">
+      <text>
+        <locale_1033>rbe.identify_interfaces</locale_1033>
+      </text>
+      <tooltip>
+        <locale_1033>None</locale_1033>
+      </tooltip>
+      <help_text>
+        <locale_1033>None</locale_1033>
+      </help_text>
+      <button_text>
+        <locale_1033>identify_interfaces</locale_1033>
+      </button_text>
+      <menu_text>
+        <locale_1033>identify interfaces</locale_1033>
+      </menu_text>
+      <script>-_RunPythonScript (rbe.identify_interfaces())</script>
+    </macro_item>
+    <macro_item guid="6f15c691-364b-41f9-8e90-e19eca560c8c">
+      <text>
+        <locale_1033>rbe.init</locale_1033>
+      </text>
+      <tooltip>
+        <locale_1033>None</locale_1033>
+      </tooltip>
+      <help_text>
+        <locale_1033>None</locale_1033>
+      </help_text>
+      <button_text>
+        <locale_1033>init</locale_1033>
+      </button_text>
+      <menu_text>
+        <locale_1033>init</locale_1033>
+      </menu_text>
+      <script>-_RunPythonScript ResetEngine (import rhinoscriptsyntax as rs;import sys;import os;path = rs.ToolbarCollectionPath('rbe');path = os.path.dirname(path);sys.path.insert(0, path);from rui_controller import RBEMacroController;rbe = RBEMacroController();rbe.init();)</script>
+    </macro_item>
+    <macro_item guid="80420383-6b1b-4512-9de2-590bd91005e9">
+      <text>
+        <locale_1033>rbe.update_settings</locale_1033>
+      </text>
+      <tooltip>
+        <locale_1033>None</locale_1033>
+      </tooltip>
+      <help_text>
+        <locale_1033>None</locale_1033>
+      </help_text>
+      <button_text>
+        <locale_1033>settings</locale_1033>
+      </button_text>
+      <menu_text>
+        <locale_1033>settings</locale_1033>
+      </menu_text>
+      <script>-_RunPythonScript (rbe.update_settings())</script>
+    </macro_item>
+    <macro_item guid="97cbb73d-3753-46c5-ac28-36f19090034c">
+      <text>
+        <locale_1033>rbe.update_view</locale_1033>
+      </text>
+      <tooltip>
+        <locale_1033>None</locale_1033>
+      </tooltip>
+      <help_text>
+        <locale_1033>None</locale_1033>
+      </help_text>
+      <button_text>
+        <locale_1033>view</locale_1033>
+      </button_text>
+      <menu_text>
+        <locale_1033>view</locale_1033>
+      </menu_text>
+      <script>-_RunPythonScript (rbe.update_view())</script>
+    </macro_item>
+  </macros>
+  <bitmaps>
+    <small_bitmap item_width="16" item_height="16">
+      <bitmap>iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACx
+jwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAATSURBVDhPYxgFo2AUjAIwYGAAAAQQAAGnRHxj
+AAAAAElFTkSuQmCCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==</bitmap>
+    </small_bitmap>
+    <normal_bitmap item_width="24" item_height="24">
+      <bitmap>iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACx
+jwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAYSURBVEhL7cEBAQAAAIIg/6+uIUAAAFwNCRgA
+AdACW14AAAAASUVORK5CYIIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==</bitmap>
+    </normal_bitmap>
+    <large_bitmap item_width="32" item_height="32">
+      <bitmap>iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACx
+jwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAaSURBVFhH7cEBAQAAAIIg/69uSEAAAADAuRoQ
+IAABnXhJQwAAAABJRU5ErkJgggAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==</bitmap>
+    </large_bitmap>
+  </bitmaps>
+  <scripts />
+</RhinoUI>

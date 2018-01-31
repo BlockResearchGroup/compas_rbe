@@ -2,8 +2,14 @@ from __future__ import print_function
 from __future__ import absolute_import
 from __future__ import division
 
+import sys
 from math import sqrt
-from scipy.sparse import coo_matrix
+
+try:
+    from scipy.sparse import coo_matrix
+except ImportError:
+    if 'ironpython' not in sys.version.lower():
+        raise
 
 from compas.geometry import cross_vectors
 
@@ -12,6 +18,12 @@ __author__    = ['Ursula Frick', 'Tom Van Mele', ]
 __copyright__ = 'Copyright 2016 - Block Research Group, ETH Zurich'
 __license__   = 'MIT License'
 __email__     = 'vanmelet@ethz.ch'
+
+
+__all__ = [
+    'make_Aeq',
+    'make_Aiq',
+]
 
 
 def make_Aeq(assembly, return_vcount=True):

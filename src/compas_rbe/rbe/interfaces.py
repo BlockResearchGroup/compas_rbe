@@ -2,14 +2,27 @@ from __future__ import print_function
 from __future__ import absolute_import
 from __future__ import division
 
+import sys
 from math import fabs
 
-from numpy import array
+try:
+    from numpy import array
+except ImportError:
+    if 'ironpython' not in sys.version.lower():
+        raise
 
-from scipy.linalg import solve
-from scipy.spatial import cKDTree
+try:
+    from scipy.linalg import solve
+    from scipy.spatial import cKDTree
+except ImportError:
+    if 'ironpython' not in sys.version.lower():
+        raise
 
-from shapely.geometry import Polygon
+try:
+    from shapely.geometry import Polygon
+except ImportError:
+    if 'ironpython' not in sys.version.lower():
+        raise
 
 from compas.geometry import global_coords_numpy
 
@@ -20,6 +33,11 @@ __license__   = 'MIT License'
 __email__     = 'vanmelet@ethz.ch'
 
 
+__all__ = [
+    'identify_interfaces'
+]
+
+
 def _find_nearest_neighbours(cloud, nmax):
     tree  = cKDTree(cloud)
     nnbrs = [tree.query(root, nmax) for root in cloud]
@@ -27,13 +45,12 @@ def _find_nearest_neighbours(cloud, nmax):
     return nnbrs
 
 
-def identify_interfaces_xfunc(data):
-    from compas_rbe.rbe.assembly import Assembly
-    from compas_rbe.rbe.block import Block
+def identify_interfaces_xfunc(data, **kwargs):
+    from compas_rbe.rbe import Assembly
+    from compas_rbe.rbe import Block
     assembly = Assembly.from_data(data['assembly'])
     assembly.blocks = {int(key): Block.from_data(data['blocks'][key]) for key in data['blocks']}
-    config = data['config']
-    identify_interfaces(assembly, **config)
+    identify_interfaces(assembly, **kwargs)
     return {
         'assembly': assembly.to_data(),
         'blocks': {str(key): assembly.blocks[key].to_data() for key in assembly.blocks}
