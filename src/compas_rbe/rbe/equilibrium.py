@@ -166,7 +166,7 @@ def compute_interface_forces(assembly, friction8=False, mu=0.6, density=1.0, ver
 
     problem = cvxpy.Problem(objective, constraints)
 
-    problem.solve(verbose=verbose, max_iters=max_iters)
+    problem.solve(solver=cvxpy.CVXOPT, verbose=verbose, max_iters=max_iters)
 
     if problem.status == cvxpy.OPTIMAL:
         x = array(x.value).reshape((-1, 1))
