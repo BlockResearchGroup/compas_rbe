@@ -5,7 +5,10 @@ import compas_rhino
 import compas_rbe
 
 from compas.utilities import XFunc
+
 from compas_rbe.cad.rhino import Assembly
+from compas_rbe.cad.rhino import Block
+
 from compas_rhino.helpers import NetworkArtist
 from compas_rhino.helpers import MeshArtist
 
@@ -149,16 +152,43 @@ class RBEMacroController(object):
     # blocks
     # --------------------------------------------------------------------------
 
-    # text => from_polys
+    # text => from_poly
     def blocks_from_polysurfaces(self):
         guids = compas_rhino.select_surfaces()
         self.assembly = Assembly.from_polysurfaces(guids)
         self.update_view()
 
-    # text => from_meshes
+    # text => from_mesh
     def blocks_from_meshes(self):
         guids = compas_rhino.select_meshes()
         self.assembly = Assembly.from_meshes(guids)
+        self.update_view()
+
+    # text => from_obj
+    def blocks_from_objs(self):
+        folder = compas_rhino.browse_for_folder(default=compas_rbe.DATA)
+        if not folder:
+            return
+        files = [f for f in os.listdir(folder) if f.endswith('.obj')]
+        if not files:
+            return
+        xform = [f for f in os.listdir(folder) if f.endswith('.txt')]
+        if not xform:
+            return
+
+        self.assembly = Assembly()
+
+        for file in files:
+            attr = {}
+            block = Block.from_obj(os.path.join(folder, file))
+            self.assembly.add_block(block, attr_dict=attr)
+
+        with open(os.path.join(folder, xform[0])) as f:
+            for line in f:
+                X = [[float(coord) for coord in row.split(',') if coord] for row in line.strip().split(' ')]
+
+                print(X)
+
         self.update_view()
 
     # --------------------------------------------------------------------------

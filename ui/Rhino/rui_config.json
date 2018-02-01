@@ -16,6 +16,7 @@
 
                 { "left" : "rbe.blocks_from_polysurfaces" },
                 { "left" : "rbe.blocks_from_meshes" },
+                { "left" : "rbe.blocks_from_objs" },
 
                 { "type": "separator" },
 
