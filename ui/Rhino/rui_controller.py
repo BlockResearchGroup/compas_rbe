@@ -1,5 +1,10 @@
+from __future__ import print_function
+from __future__ import absolute_import
+from __future__ import division
+
 import os
 import ast
+import json
 
 import compas_rhino
 import compas_rbe
@@ -59,13 +64,13 @@ class RBEMacroController(object):
 
             'eps.interfaces.forces' : 0.001,
 
-            'identify_interfaces.nmax' : 10,
-            'identify_interfaces.tmax' : 1e-6,
-            'identify_interfaces.amin' : 1e-1,
-            'identify_interfaces.lmin' : 1e-3,
-
-            'compute_interface_forces.verbose'   : True,
-            'compute_interface_forces.max_iters' : 100,
+            'algo.identify_interfaces.nmax' : 10,
+            'algo.identify_interfaces.tmax' : 1e-6,
+            'algo.identify_interfaces.amin' : 1e-1,
+            'algo.identify_interfaces.lmin' : 1e-3,
+            'algo.compute_forces.verbose'   : True,
+            'algo.compute_forces.max_iters' : 100,
+            'algo.compute_forces.solver'    : 'ECOS',
         }
 
     def init(self):
@@ -74,6 +79,45 @@ class RBEMacroController(object):
     # text => settings
     def update_settings(self):
         names  = sorted(self.settings.keys())
+        values = [str(self.settings[name]) for name in names]
+        values = compas_rhino.update_named_values(names, values)
+        if values:
+            for name, value in zip(names, values):
+                try:
+                    self.settings[name] = ast.literal_eval(value)
+                except (TypeError, ValueError):
+                    self.settings[name] = value
+            self.update_view()
+
+    # text => color
+    def update_color_settings(self):
+        names  = [name for name in sorted(self.settings.keys()) if name.startswith('color.')]
+        values = [str(self.settings[name]) for name in names]
+        values = compas_rhino.update_named_values(names, values)
+        if values:
+            for name, value in zip(names, values):
+                try:
+                    self.settings[name] = ast.literal_eval(value)
+                except (TypeError, ValueError):
+                    self.settings[name] = value
+            self.update_view()
+
+    # text => visibility
+    def update_visibility_settings(self):
+        names  = [name for name in sorted(self.settings.keys()) if name.startswith('visibility.')]
+        values = [str(self.settings[name]) for name in names]
+        values = compas_rhino.update_named_values(names, values)
+        if values:
+            for name, value in zip(names, values):
+                try:
+                    self.settings[name] = ast.literal_eval(value)
+                except (TypeError, ValueError):
+                    self.settings[name] = value
+            self.update_view()
+
+    # text => algo
+    def update_algo_settings(self):
+        names  = [name for name in sorted(self.settings.keys()) if name.startswith('algo.')]
         values = [str(self.settings[name]) for name in names]
         values = compas_rhino.update_named_values(names, values)
         if values:
@@ -124,7 +168,7 @@ class RBEMacroController(object):
             scale = self.settings['scale.interfaces.forces']
             eps   = self.settings['eps.interfaces.forces']
             lines = []
-            for u, v, attr in self.assembly.edges(True):
+            for a, b, attr in self.assembly.edges(True):
                 if attr['interface_forces']:
                     w = attr['interface_uvw'][2]
                     for i in range(len(attr['interface_points'])):
@@ -137,7 +181,7 @@ class RBEMacroController(object):
                                 'start' : sp,
                                 'end'   : [sp[axis] + scale * c_np * w[axis] for axis in range(3)],
                                 'color' : self.settings['color.compression'],
-                                'name'  : '{0}.force.{1}-{2}.{3}'.format(self.assembly.name, u, v, i),
+                                'name'  : '{0}.force.{1}-{2}.{3}'.format(self.assembly.name, a, b, i),
                                 'arrow' : 'end'
                             })
                         if scale * c_nn > eps:
@@ -146,12 +190,40 @@ class RBEMacroController(object):
                                 'start' : sp,
                                 'end'   : [sp[axis] - scale * c_nn * w[axis] for axis in range(3)],
                                 'color' : self.settings['color.tension'],
-                                'name'  : '{0}.force.{1}-{2}.{3}'.format(self.assembly.name, u, v, i),
+                                'name'  : '{0}.force.{1}-{2}.{3}'.format(self.assembly.name, a, b, i),
                                 'arrow' : 'end'
                             })
             compas_rhino.xdraw_lines(lines, layer="DEA::Forces")
-        if self.settings['visibility.interfaces.friction']:
-            pass
+        # if self.settings['visibility.interfaces.friction']:
+        #     scale = self.settings['scale.interfaces.forces']
+        #     eps   = self.settings['eps.interfaces.forces']
+        #     lines = []
+        #     for a, b, attr in self.assembly.edges(True):
+        #         if attr['interface_forces']:
+        #             u, v, w = attr['interface_uvw']
+        #             for i in range(len(attr['interface_points'])):
+        #                 sp   = attr['interface_points'][i]
+        #                 c_u = attr['interface_forces'][i]['c_u']
+        #                 c_v = attr['interface_forces'][i]['c_v']
+        #                 if scale * c_np > eps:
+        #                     # compression force
+        #                     lines.append({
+        #                         'start' : sp,
+        #                         'end'   : [sp[axis] + scale * c_np * w[axis] for axis in range(3)],
+        #                         'color' : self.settings['color.compression'],
+        #                         'name'  : '{0}.force.{1}-{2}.{3}'.format(self.assembly.name, a, b, i),
+        #                         'arrow' : 'end'
+        #                     })
+        #                 if scale * c_nn > eps:
+        #                     # tension force
+        #                     lines.append({
+        #                         'start' : sp,
+        #                         'end'   : [sp[axis] - scale * c_nn * w[axis] for axis in range(3)],
+        #                         'color' : self.settings['color.tension'],
+        #                         'name'  : '{0}.force.{1}-{2}.{3}'.format(self.assembly.name, a, b, i),
+        #                         'arrow' : 'end'
+        #                     })
+        #     compas_rhino.xdraw_lines(lines, layer="DEA::Forces")
 
     # --------------------------------------------------------------------------
     # blocks
@@ -173,7 +245,19 @@ class RBEMacroController(object):
     # assembly
     # --------------------------------------------------------------------------
 
-    # text => assembly_v@
+    # text => from_json
+    def assembly_from_json(self):
+        file = compas_rhino.browse_for_file(folder=compas_rbe.DATA)
+        if not file:
+            return
+        with open(file, 'r') as f:
+            data = json.load(f)
+        self.assembly = Assembly.from_data(data['assembly'])
+        for key, block in data['blocks'].items():
+            self.assembly.blocks[int(key)] = Block.from_data(block)
+        self.update_view()
+
+    # text => vertex_@
     def assembly_edit_vertex_attributes(self):
         keys = self.assembly.select_vertices()
         if not keys:
@@ -182,7 +266,7 @@ class RBEMacroController(object):
         if self.assembly.update_vertex_attributes(keys, names):
             self.update_view()
 
-    # text => assembly_e@
+    # text => edge_@
     def assembly_edit_edge_attributes(self):
         keys = self.assembly.select_edges()
         if not keys:
@@ -191,20 +275,21 @@ class RBEMacroController(object):
         if self.assembly.update_edge_attributes(keys, names):
             self.update_view()
 
-    # text => assembly_v#
+    # text => vertex_#
     def assembly_show_vertex_labels(self):
         pass
 
     def assembly_hide_vertex_labels(self):
         pass
 
-    # text => assembly_e#
+    # text => edge_#
     def assembly_show_edge_labels(self):
         pass
 
     def assembly_hide_edge_labels(self):
         pass
 
+    # text => move_vertex
     def assembly_move_vertex(self):
         pass
 
@@ -212,6 +297,7 @@ class RBEMacroController(object):
     # rbe
     # --------------------------------------------------------------------------
 
+    # text => identify_ifaces
     def identify_interfaces(self):
         data = {
             'assembly': self.assembly.to_data(),
@@ -219,10 +305,10 @@ class RBEMacroController(object):
         }
         result = identify_interfaces_(
             data,
-            nmax=self.settings['identify_interfaces.nmax'],
-            tmax=self.settings['identify_interfaces.tmax'],
-            amin=self.settings['identify_interfaces.amin'],
-            lmin=self.settings['identify_interfaces.lmin'],
+            nmax=self.settings['algo.identify_interfaces.nmax'],
+            tmax=self.settings['algo.identify_interfaces.tmax'],
+            amin=self.settings['algo.identify_interfaces.amin'],
+            lmin=self.settings['algo.identify_interfaces.lmin'],
             face_face=True,
             face_edge=False,
             face_vertex=False
@@ -232,15 +318,17 @@ class RBEMacroController(object):
             self.assembly.blocks[key].data = result['blocks'][str(key)]
         self.update_view()
 
-    def compute_interface_forces(self):
+    # text => compute_forces
+    def compute_forces(self):
         data = {
             'assembly': self.assembly.to_data(),
             'blocks'  : {str(key): self.assembly.blocks[key].to_data() for key in self.assembly.blocks},
         }
         result = compute_interface_forces_(
             data,
-            verbose=self.settings['compute_interface_forces.verbose'],
-            max_iters=self.settings['compute_interface_forces.max_iters']
+            solver=self.settings['algo.compute_forces.solver'],
+            verbose=self.settings['algo.compute_forces.verbose'],
+            max_iters=self.settings['algo.compute_forces.max_iters']
         )
         self.assembly.data = result['assembly']
         for key in self.assembly.blocks:
@@ -252,7 +340,7 @@ class RBEMacroController(object):
     # --------------------------------------------------------------------------
 
     # text => from_obj
-    def blocks_from_objs(self):
+    def shajay_blocks_from_objs(self):
         folder = compas_rhino.browse_for_folder(default=compas_rbe.DATA)
         if not folder:
             return
@@ -267,7 +355,7 @@ class RBEMacroController(object):
         self.update_view()
 
     # text => xform
-    def blocks_xform(self):
+    def shajay_blocks_transformation(self):
         file = compas_rhino.browse_for_file(folder=compas_rbe.DATA)
         if not file:
             return

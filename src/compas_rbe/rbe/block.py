@@ -52,7 +52,9 @@ class Block(Mesh):
         return center_of_mass_polyhedron((vertices, faces))
 
     def volume(self):
-        return volume_polyhedron(self)
+        v = volume_polyhedron(self)
+        print(v)
+        return v
 
 
 # ==============================================================================

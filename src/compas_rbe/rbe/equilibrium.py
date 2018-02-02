@@ -50,7 +50,13 @@ def compute_interface_forces_xfunc(data, **kwargs):
     }
 
 
-def compute_interface_forces(assembly, friction8=False, mu=0.6, density=1.0, verbose=False, max_iters=100):
+def compute_interface_forces(assembly,
+                             friction8=False,
+                             mu=0.6,
+                             density=1.0,
+                             verbose=False,
+                             max_iters=100,
+                             solver='ECOS'):
     r"""Compute the forces at the interfaces between the blocks of an assembly.
 
     Solve the following optimisation problem:
@@ -78,6 +84,11 @@ def compute_interface_forces(assembly, friction8=False, mu=0.6, density=1.0, ver
     fixed = [key_index[key] for key in fixed]
     free  = [index for index in range(n) if index not in fixed]
 
+    if verbose:
+        print('')
+        print(fixed)
+        print(free)
+
     # ==========================================================================
     # equality constraints
     # ==========================================================================
@@ -86,9 +97,8 @@ def compute_interface_forces(assembly, friction8=False, mu=0.6, density=1.0, ver
     A = A.toarray()
     A = A[[index * 6 + i for index in free for i in range(6)], :]
 
-    b = [[0, 0, assembly.blocks[key].volume() * density, 0, 0, 0] for key, attr in assembly.vertices(True)]
+    b = [[0, 0, -1 * assembly.blocks[key].volume() * density, 0, 0, 0] for key in assembly.vertices()]
     b = array(b, dtype=float)
-    b = -1.0 * b
     b = b[free, :].reshape((-1, 1), order='C')
     # row-major ordering => fx, fy, fz, mx, my, mz, fx, fy, fz, mx, my, mz, ...
 
@@ -157,7 +167,7 @@ def compute_interface_forces(assembly, friction8=False, mu=0.6, density=1.0, ver
 
     x = cvxpy.Variable(P.shape[0])
 
-    objective = cvxpy.Minimize(0.5 * cvxpy.quad_form(x, P) + q.T * x)
+    objective = cvxpy.Minimize(0.5 * cvxpy.quad_form(x, P))
 
     constraints = [
         A * x == b,
@@ -166,7 +176,7 @@ def compute_interface_forces(assembly, friction8=False, mu=0.6, density=1.0, ver
 
     problem = cvxpy.Problem(objective, constraints)
 
-    problem.solve(solver=cvxpy.CVXOPT, verbose=verbose, max_iters=max_iters)
+    problem.solve(solver=cvxpy.ECOS, verbose=verbose, max_iters=max_iters)
 
     if problem.status == cvxpy.OPTIMAL:
         x = array(x.value).reshape((-1, 1))
@@ -178,7 +188,14 @@ def compute_interface_forces(assembly, friction8=False, mu=0.6, density=1.0, ver
             print(problem.value)
 
     else:
-        x = None
+        if x.value is not None:
+            x = array(x.value).reshape((-1, 1))
+        else:
+            x = None
+
+        if verbose:
+            print('')
+            print(problem.status)
 
     # ==========================================================================
     # solve with cvxopt

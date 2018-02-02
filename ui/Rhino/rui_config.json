@@ -7,15 +7,28 @@
 
                 { "left" : "rbe.init" },
                 { "left" : "rbe.update_settings" },
-                { "left" : "rbe.update_view" }
+                { "left" : "rbe.update_view" },
+
+                { "type": "separator" },
+
+                { "left" : "rbe.update_color_settings" },
+                { "left" : "rbe.update_visibility_settings" },
+                { "left" : "rbe.update_algo_settings" }
             ]
 		},
+        {
+            "name"  : "RBE.blocks",
+            "items" : [
+
+                { "left" : "rbe.blocks_from_polysurfaces" },
+                { "left" : "rbe.blocks_from_meshes" }
+            ]
+        },
         {
             "name"  : "RBE.assembly", 
             "items" : [
 
-                { "left" : "rbe.blocks_from_polysurfaces" },
-                { "left" : "rbe.blocks_from_meshes" },
+                { "left" : "rbe.assembly_from_json" },
 
                 { "type": "separator" },
 
@@ -37,7 +50,7 @@
             "items" : [
 
                 { "left" : "rbe.identify_interfaces" },
-                { "left" : "rbe.compute_interface_forces" }
+                { "left" : "rbe.compute_forces" }
             ]
 		},
         {
@@ -48,8 +61,8 @@
             "name"  : "RBE.shajay",
             "items" : [
 
-                { "left" : "rbe.blocks_from_objs" },
-                { "left" : "rbe.blocks_xform" }
+                { "left" : "rbe.shajay_blocks_from_objs" },
+                { "left" : "rbe.shajay_blocks_transformation" }
 
             ]
         }
@@ -59,6 +72,7 @@
             "name"     : "RBE",
             "toolbars" : [
                 "RBE.main",
+                "RBE.blocks",
                 "RBE.assembly",
                 "RBE.rbe",
                 "RBE.dem",
