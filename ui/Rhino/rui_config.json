@@ -16,7 +16,6 @@
 
                 { "left" : "rbe.blocks_from_polysurfaces" },
                 { "left" : "rbe.blocks_from_meshes" },
-                { "left" : "rbe.blocks_from_objs" },
 
                 { "type": "separator" },
 
@@ -44,6 +43,15 @@
         {
             "name"  : "RBE.dem",
             "items" : []
+        },
+        {
+            "name"  : "RBE.shajay",
+            "items" : [
+
+                { "left" : "rbe.blocks_from_objs" },
+                { "left" : "rbe.blocks_xform" }
+
+            ]
         }
 	],
 	"toolbargroups": [
@@ -53,7 +61,8 @@
                 "RBE.main",
                 "RBE.assembly",
                 "RBE.rbe",
-                "RBE.dem"
+                "RBE.dem",
+                "RBE.shajay"
             ]
         }
 	]

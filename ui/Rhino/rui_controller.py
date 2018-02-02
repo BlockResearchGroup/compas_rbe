@@ -59,6 +59,11 @@ class RBEMacroController(object):
 
             'eps.interfaces.forces' : 0.001,
 
+            'identify_interfaces.nmax' : 10,
+            'identify_interfaces.tmax' : 1e-6,
+            'identify_interfaces.amin' : 1e-1,
+            'identify_interfaces.lmin' : 1e-3,
+
             'compute_interface_forces.verbose'   : True,
             'compute_interface_forces.max_iters' : 100,
         }
@@ -164,33 +169,6 @@ class RBEMacroController(object):
         self.assembly = Assembly.from_meshes(guids)
         self.update_view()
 
-    # text => from_obj
-    def blocks_from_objs(self):
-        folder = compas_rhino.browse_for_folder(default=compas_rbe.DATA)
-        if not folder:
-            return
-        files = [f for f in os.listdir(folder) if f.endswith('.obj')]
-        if not files:
-            return
-        xform = [f for f in os.listdir(folder) if f.endswith('.txt')]
-        if not xform:
-            return
-
-        self.assembly = Assembly()
-
-        for file in files:
-            attr = {}
-            block = Block.from_obj(os.path.join(folder, file))
-            self.assembly.add_block(block, attr_dict=attr)
-
-        with open(os.path.join(folder, xform[0])) as f:
-            for line in f:
-                X = [[float(coord) for coord in row.split(',') if coord] for row in line.strip().split(' ')]
-
-                print(X)
-
-        self.update_view()
-
     # --------------------------------------------------------------------------
     # assembly
     # --------------------------------------------------------------------------
@@ -239,7 +217,16 @@ class RBEMacroController(object):
             'assembly': self.assembly.to_data(),
             'blocks'  : {str(key): self.assembly.blocks[key].to_data() for key in self.assembly.blocks},
         }
-        result = identify_interfaces_(data)
+        result = identify_interfaces_(
+            data,
+            nmax=self.settings['identify_interfaces.nmax'],
+            tmax=self.settings['identify_interfaces.tmax'],
+            amin=self.settings['identify_interfaces.amin'],
+            lmin=self.settings['identify_interfaces.lmin'],
+            face_face=True,
+            face_edge=False,
+            face_vertex=False
+        )
         self.assembly.data = result['assembly']
         for key in self.assembly.blocks:
             self.assembly.blocks[key].data = result['blocks'][str(key)]
@@ -259,6 +246,35 @@ class RBEMacroController(object):
         for key in self.assembly.blocks:
             self.assembly.blocks[key].data = result['blocks'][str(key)]
         self.update_view()
+
+    # --------------------------------------------------------------------------
+    # shajay
+    # --------------------------------------------------------------------------
+
+    # text => from_obj
+    def blocks_from_objs(self):
+        folder = compas_rhino.browse_for_folder(default=compas_rbe.DATA)
+        if not folder:
+            return
+        files = [f for f in os.listdir(folder) if f.endswith('.obj')]
+        if not files:
+            return
+        self.assembly = Assembly()
+        for file in files:
+            attr = {}
+            block = Block.from_obj(os.path.join(folder, file))
+            self.assembly.add_block(block, attr_dict=attr)
+        self.update_view()
+
+    # text => xform
+    def blocks_xform(self):
+        file = compas_rhino.browse_for_file(folder=compas_rbe.DATA)
+        if not file:
+            return
+        with open(file) as f:
+            for line in f:
+                X = [[float(coord) for coord in row.split(',') if coord] for row in line.strip().split(' ')]
+                print(X)
 
 
 # ==============================================================================
