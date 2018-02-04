@@ -32,6 +32,18 @@ __license__   = 'MIT License'
 __email__     = 'vanmelet@ethz.ch'
 
 
+# shajay transforms
+# RBE => DEA
+# dem => threedec
+# add DEA.bullet
+# load bullet examples
+# support for file formats?
+# add DEA.interfaces
+# visualize friction
+# visualise forces as interpolated surface colors
+# combine vertex forces
+
+
 class RBEMacroController(object):
 
     instancename = 'rbe'

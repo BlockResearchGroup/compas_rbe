@@ -68,17 +68,10 @@ for data in supports:
         attr['z'] *= 0.01
     assembly.add_block(block, is_support=True)
 
-
-# for key, attr in assembly.vertices(True):
-#     print(key, attr)
-#     print(assembly.blocks[key])
-
-
 data = {
     'assembly': assembly.to_data(),
     'blocks'  : {str(key): block.to_data() for key, block in assembly.blocks.items()}
 }
-
 
 with open(os.path.join(compas_rbe.DATA, 'dmsc.json'), 'w+') as f:
     json.dump(data, f)

@@ -99,7 +99,6 @@ def identify_interfaces(assembly,
     # p1:   2D polygon of f1 in local coordinates
 
     for k in assembly.vertices():
-
         print(k)
 
         i      = key_index[k]
@@ -135,15 +134,25 @@ def identify_interfaces(assembly,
                     rst = {key: rst[k_i[key]] for key in nbr.vertices()}
 
                     for f1 in nbr.faces():
+
                         rst1 = [rst[key] for key in nbr.face_vertices(f1)]
 
                         if not all(fabs(t) < tmax for r, s, t in rst1):
                             continue
 
-                        p1 = Polygon([(r, s) for r, s, _ in rst1])
+                        p1 = Polygon([(r, s) for r, s, t in rst1])
+
+                        if p1.area == 0.0:
+                            continue
 
                         if p0.intersects(p1):
                             intersection = p0.intersection(p1)
+                            # try:
+                            #     intersection = p0.intersection(p1)
+                            # except Exception:
+                            #     print(p0, p1)
+                            #     continue
+                            # else:
                             area = intersection.area
 
                             if area >= amin:
@@ -167,4 +176,19 @@ def identify_interfaces(assembly,
 # ==============================================================================
 
 if __name__ == "__main__":
-    pass
+
+    import os
+    import json
+
+    import compas_rbe
+    from compas_rbe.rbe import Block
+    from compas_rbe.rbe import Assembly
+
+    with open(os.path.join(compas_rbe.DATA, 'shajay2.json')) as f:
+        data = json.load(f)
+        assembly = Assembly.from_data(data['assembly'])
+        assembly.blocks = {int(key): Block.from_data(data['blocks'][key]) for key in data['blocks']}
+
+    identify_interfaces(assembly, tmax=1.0, amin=1e-6, nmax=2)
+
+    print(assembly)
