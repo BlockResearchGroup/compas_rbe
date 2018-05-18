@@ -10,7 +10,7 @@ from compas.viewers.core.drawing import xdraw_polygons
 from compas.viewers.core.drawing import xdraw_lines
 from compas.viewers.core.drawing import xdraw_points
 
-sys.path.insert(0, '/Users/vanmelet/compas-dev/compas-apps/meshlab/src')
+sys.path.insert(0, '/Users/vanmelet/Code/BlockResearchGroup/compas-apps/meshlab/src')
 
 from widgets.glview import GLView
 

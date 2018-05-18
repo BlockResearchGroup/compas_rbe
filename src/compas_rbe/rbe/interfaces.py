@@ -108,12 +108,16 @@ def identify_interfaces(assembly,
 
         if face_face:
 
+            # parallelise?
+            # exclude faces with parallel normals
+            # e.g. exclude overlapping top faces of two neighbouring blocks in same row
+
             for f0, (origin, uvw) in frames.items():
                 A    = array(uvw)
                 o    = array(origin).reshape((-1, 1))
                 xyz0 = array(block.face_coordinates(f0)).reshape((-1, 3)).T
                 rst0 = solve(A.T, xyz0 - o).T.tolist()
-                p0   = Polygon([(r, s) for r, s, _ in rst0])
+                p0   = Polygon(rst0)
 
                 for j in nbrs:
                     n = index_key[j]
@@ -137,10 +141,10 @@ def identify_interfaces(assembly,
 
                         rst1 = [rst[key] for key in nbr.face_vertices(f1)]
 
-                        if not all(fabs(t) < tmax for r, s, t in rst1):
+                        if any(fabs(t) > tmax for r, s, t in rst1):
                             continue
 
-                        p1 = Polygon([(r, s) for r, s, t in rst1])
+                        p1 = Polygon(rst1)
 
                         if p1.area == 0.0:
                             continue
@@ -157,7 +161,7 @@ def identify_interfaces(assembly,
 
                             if area >= amin:
 
-                                coords = [[x, y, 0.0] for x, y in intersection.exterior.coords]
+                                coords = [[x, y, 0.0] for x, y, z in intersection.exterior.coords]
                                 coords = global_coords_numpy(o, A, coords)
 
                                 attr = {
@@ -184,11 +188,18 @@ if __name__ == "__main__":
     from compas_rbe.rbe import Block
     from compas_rbe.rbe import Assembly
 
-    with open(os.path.join(compas_rbe.DATA, 'shajay2.json')) as f:
+    from compas_rbe.utilities.plotter import view_all
+
+    with open(os.path.join(compas_rbe.DATA, 'solid_tri_meshes_missaligned.json')) as f:
         data = json.load(f)
-        assembly = Assembly.from_data(data['assembly'])
-        assembly.blocks = {int(key): Block.from_data(data['blocks'][key]) for key in data['blocks']}
 
-    identify_interfaces(assembly, tmax=1.0, amin=1e-6, nmax=2)
+        data = data[0]
 
-    print(assembly)
+        assembly = Assembly.from_data(data)
+        assembly.blocks = {int(key): Block.from_data(data[key]) for key in data[0]}
+
+    # identify_interfaces(assembly, tmax=1.0, amin=1e-6, nmax=2)
+
+    # # print(assembly)
+
+    # view_all(assembly, assembly.blocks, 1e-1, 1e-3, 5*1e-4, [-1.5, 1.5], [-1.5, 1.5], [0, 3])

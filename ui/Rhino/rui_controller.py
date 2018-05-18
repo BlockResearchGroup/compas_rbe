@@ -44,9 +44,9 @@ __email__     = 'vanmelet@ethz.ch'
 # combine vertex forces
 
 
-class RBEMacroController(object):
+class DEAMacroController(object):
 
-    instancename = 'rbe'
+    instancename = 'dea'
 
     def __init__(self):
         self.assembly = None
@@ -346,35 +346,6 @@ class RBEMacroController(object):
         for key in self.assembly.blocks:
             self.assembly.blocks[key].data = result['blocks'][str(key)]
         self.update_view()
-
-    # --------------------------------------------------------------------------
-    # shajay
-    # --------------------------------------------------------------------------
-
-    # text => from_obj
-    def shajay_blocks_from_objs(self):
-        folder = compas_rhino.browse_for_folder(default=compas_rbe.DATA)
-        if not folder:
-            return
-        files = [f for f in os.listdir(folder) if f.endswith('.obj')]
-        if not files:
-            return
-        self.assembly = Assembly()
-        for file in files:
-            attr = {}
-            block = Block.from_obj(os.path.join(folder, file))
-            self.assembly.add_block(block, attr_dict=attr)
-        self.update_view()
-
-    # text => xform
-    def shajay_blocks_transformation(self):
-        file = compas_rhino.browse_for_file(folder=compas_rbe.DATA)
-        if not file:
-            return
-        with open(file) as f:
-            for line in f:
-                X = [[float(coord) for coord in row.split(',') if coord] for row in line.strip().split(' ')]
-                print(X)
 
 
 # ==============================================================================

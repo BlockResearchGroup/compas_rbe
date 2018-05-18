@@ -2,81 +2,81 @@
 	"menus": [],
 	"toolbars": [
 		{
-            "name"  : "RBE.main", 
+            "name"  : "DEA.main", 
             "items" : [
 
-                { "left" : "rbe.init" },
-                { "left" : "rbe.update_settings" },
-                { "left" : "rbe.update_view" },
+                { "left" : "dea.init" },
+                { "left" : "dea.update_settings" },
+                { "left" : "dea.update_view" },
 
                 { "type": "separator" },
 
-                { "left" : "rbe.update_color_settings" },
-                { "left" : "rbe.update_visibility_settings" },
-                { "left" : "rbe.update_algo_settings" }
+                { "left" : "dea.update_color_settings" },
+                { "left" : "dea.update_visibility_settings" },
+                { "left" : "dea.update_algo_settings" }
             ]
 		},
         {
-            "name"  : "RBE.blocks",
+            "name"  : "DEA.elements",
             "items" : [
 
-                { "left" : "rbe.blocks_from_polysurfaces" },
-                { "left" : "rbe.blocks_from_meshes" }
+                { "left" : "dea.blocks_from_polysurfaces" },
+                { "left" : "dea.blocks_from_meshes" }
             ]
         },
         {
-            "name"  : "RBE.assembly", 
+            "name"  : "DEA.assembly", 
             "items" : [
 
-                { "left" : "rbe.assembly_from_json" },
+                { "left" : "dea.assembly_from_json" },
 
                 { "type": "separator" },
 
-                { "left" : "rbe.assembly_edit_vertex_attributes" },
-                { "left" : "rbe.assembly_edit_edge_attributes" },
+                { "left" : "dea.assembly_edit_vertex_attributes" },
+                { "left" : "dea.assembly_edit_edge_attributes" },
 
                 { "type": "separator" },
 
-                { "left" : "rbe.assembly_show_vertex_labels", "right" : "rbe.assembly_hide_vertex_labels" },
-                { "left" : "rbe.assembly_show_edge_labels", "right" : "rbe.assembly_hide_edge_labels" },
+                { "left" : "dea.assembly_show_vertex_labels", "right" : "dea.assembly_hide_vertex_labels" },
+                { "left" : "dea.assembly_show_edge_labels", "right" : "dea.assembly_hide_edge_labels" },
 
                 { "type": "separator" },
 
-                { "left" : "rbe.assembly_move_vertex" }
+                { "left" : "dea.assembly_move_vertex" }
             ]
+        },
+        {
+            "name"  : "DEA.interfaces",
+            "items" : []
         },
 		{
-            "name"  : "RBE.rbe", 
+            "name"  : "DEA.rbe", 
             "items" : [
 
-                { "left" : "rbe.identify_interfaces" },
-                { "left" : "rbe.compute_forces" }
+                { "left" : "dea.identify_interfaces" },
+                { "left" : "dea.compute_forces" }
             ]
 		},
         {
-            "name"  : "RBE.dem",
+            "name"  : "DEA.3dec",
             "items" : []
         },
         {
-            "name"  : "RBE.shajay",
-            "items" : [
-
-                { "left" : "rbe.shajay_blocks_from_objs" },
-                { "left" : "rbe.shajay_blocks_transformation" }
-
-            ]
+            "name"  : "DEA.bullet",
+            "items" : []
         }
 	],
 	"toolbargroups": [
         {
-            "name"     : "RBE",
+            "name"     : "DEA",
             "toolbars" : [
-                "RBE.main",
-                "RBE.blocks",
-                "RBE.assembly",
-                "RBE.rbe",
-                "RBE.dem",
-                "RBE.shajay"
+                "DEA.main",
+                "DEA.elements",
+                "DEA.assembly",
+                "DEA.interfaces",
+                "DEA.rbe",
+                "DEA.3dec",
+                "DEA.bullet"
             ]
         }
 	]

@@ -60,4 +60,5 @@ compute_interface_forces(assembly, verbose=True)
 
 app = AssemblyViewerBasic(assembly)
 
+app.setup()
 app.start()

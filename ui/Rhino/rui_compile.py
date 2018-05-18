@@ -19,6 +19,6 @@ __all__ = []
 if __name__ == "__main__":
 
     from compas_rhino.ui.rui import compile_rui
-    from rui_controller import RBEMacroController
+    from rui_controller import DEAMacroController
 
-    compile_rui(RBEMacroController, 'rui_controller', rui_config='rui_config.json')
+    compile_rui(DEAMacroController, 'rui_controller', rui_config='rui_config.json')
