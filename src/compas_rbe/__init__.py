@@ -1,15 +1,18 @@
 """
-.. _compas_rbe:
-
 ********************************************************************************
 compas_rbe
 ********************************************************************************
 
-.. module:: compas_rbe
+.. currentmodule:: compas_rbe
 
 
 .. toctree::
     :maxdepth: 1
+
+    compas_rbe.assemblies
+    compas_rbe.equilibrium
+    compas_rbe.rhino
+    compas_rbe.utilities
 
 """
 

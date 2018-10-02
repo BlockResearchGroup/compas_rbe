@@ -6,13 +6,11 @@ import json
 
 import compas_rbe
 
-from compas_rbe.rbe.block import Block
-from compas_rbe.rbe.assembly import Assembly
+from compas_rbe.assemblies import Block
+from compas_rbe.assemblies import Assembly
+from compas_rbe.assemblies import identify_interfaces
 
-from compas_rbe.rbe.interfaces import identify_interfaces
-from compas_rbe.rbe.equilibrium import compute_interface_forces
-
-from compas_rbe.viewers.basic import AssemblyViewerBasic
+from compas_rbe.equilibrium import compute_interface_forces
 
 
 # initialize BlockModel and list of blocks
@@ -27,7 +25,7 @@ with open(filepath, 'r') as fp:
     data = json.load(fp)
     for item in data:
         for fkey, cycle in item['face'].items():
-            start = cycle.keys()[0]
+            start = list(cycle.keys())[0]
             key = cycle[start]
             item['face'][fkey] = [start]
             while True:
@@ -56,9 +54,6 @@ identify_interfaces(
 
 compute_interface_forces(assembly, verbose=True)
 
-# visualise
+# result
 
-app = AssemblyViewerBasic(assembly)
-
-app.setup()
-app.start()
+print(assembly)
