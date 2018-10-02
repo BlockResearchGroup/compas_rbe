@@ -99,3 +99,13 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+# compas_rbe
+
+*.3dmbak
+*.rhl
+
+temp/**
+!temp/PLACEHOLDER
+
+.DS_Store
