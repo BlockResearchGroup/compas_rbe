@@ -36,6 +36,8 @@ DATA = os.path.abspath(os.path.join(HOME, 'data'))
 DOCS = os.path.abspath(os.path.join(HOME, 'docs'))
 TEMP = os.path.abspath(os.path.join(HOME, 'temp'))
 
+SRC = os.path.abspath(os.path.join(HOME, 'src'))
+
 
 def _find_resource(filename):
     filename = filename.strip('/')
@@ -73,4 +75,4 @@ def requirements():
             print(line.strip())
 
 
-__all__ = ['HOME', 'DATA', 'DOCS', 'TEMP', 'get', 'license', 'requirements', 'version']
+__all__ = ['HOME', 'DATA', 'DOCS', 'TEMP', 'SRC', 'get', 'license', 'requirements', 'version']

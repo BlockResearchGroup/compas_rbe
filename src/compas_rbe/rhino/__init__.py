@@ -1,10 +1,10 @@
 from __future__ import absolute_import
 
-from . import assemblyhelper
-from . import blockhelper
+from . import helpers
+from . import artists
 
-from .assemblyhelper import *
-from .blockhelper import *
+from .helpers import *
+from .artists import *
 
 
-__all__ = assemblyhelper.__all__ + blockhelper.__all__
+__all__ = helpers.__all__ + artists.__all__

@@ -4,6 +4,7 @@ from __future__ import division
 
 import json
 
+import compas
 import compas_rbe
 
 from compas_rbe.assemblies import Block

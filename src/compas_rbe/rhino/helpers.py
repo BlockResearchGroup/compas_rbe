@@ -18,7 +18,15 @@ __license__   = 'MIT license'
 __email__     = 'vanmelet@ethz.ch'
 
 
-__all__ = ['BlockHelper']
+__all__ = ['AssemblyHelper', 'BlockHelper']
+
+
+class AssemblyHelper(VertexSelector,
+                     EdgeSelector,
+                     VertexModifier,
+                     EdgeModifier):
+
+    pass    
 
 
 class BlockHelper(VertexSelector,
