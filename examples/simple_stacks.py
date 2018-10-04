@@ -12,6 +12,7 @@ from compas_rbe.assemblies import Assembly
 from compas_rbe.assemblies import identify_interfaces
 
 from compas_rbe.equilibrium import compute_interface_forces
+from compas_rbe.viewer import AssemblyViewer
 
 
 # initialize BlockModel and list of blocks
@@ -57,4 +58,6 @@ compute_interface_forces(assembly, verbose=True)
 
 # result
 
-print(assembly)
+viewer = AssemblyViewer()
+viewer.assembly = assembly
+viewer.show()
