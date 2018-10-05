@@ -10,8 +10,8 @@ import compas_rbe
 
 from compas_rhino.utilities import XFunc
 
-from compas_rbe.assemblies import Block
-from compas_rbe.assemblies import Assembly
+from compas_rbe.datastructures import Block
+from compas_rbe.datastructures import Assembly
 
 from compas_rbe.rhino import AssemblyArtist
 from compas_rbe.rhino import AssemblyHelper

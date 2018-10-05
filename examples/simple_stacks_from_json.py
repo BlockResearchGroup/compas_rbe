@@ -7,9 +7,9 @@ import json
 import compas
 import compas_rbe
 
-from compas_rbe.assemblies import Block
-from compas_rbe.assemblies import Assembly
-from compas_rbe.assemblies import identify_interfaces
+from compas_rbe.datastructures import Block
+from compas_rbe.datastructures import Assembly
+from compas_rbe.datastructures import identify_interfaces
 
 from compas_rbe.equilibrium import compute_interface_forces
 from compas_rbe.viewer import AssemblyViewer

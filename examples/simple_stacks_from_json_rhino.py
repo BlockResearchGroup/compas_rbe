@@ -10,8 +10,8 @@ import compas_rbe
 
 from compas_rhino.utilities import XFunc
 
-from compas_rbe.assemblies import Block
-from compas_rbe.assemblies import Assembly
+from compas_rbe.datastructures import Block
+from compas_rbe.datastructures import Assembly
 
 from compas_rbe.rhino import AssemblyArtist
 
@@ -20,7 +20,7 @@ from compas_rbe.rhino import AssemblyArtist
 # external functions
 # ==============================================================================
 
-identify_interfaces = XFunc('compas_rbe.assemblies.identify_interfaces_xfunc')
+identify_interfaces = XFunc('compas_rbe.datastructures.identify_interfaces_xfunc')
 identify_interfaces.tmpdir = compas_rbe.TEMP
 
 compute_interface_forces = XFunc('compas_rbe.equilibrium.compute_interface_forces_xfunc')

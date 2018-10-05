@@ -1,3 +1,17 @@
+"""
+********************************************************************************
+compas_rbe.viewer
+********************************************************************************
+
+.. currentmodule:: compas_rbe.viewer
+
+
+.. autosummary::
+    :toctree: generated/
+
+
+"""
+
 from __future__ import print_function
 from __future__ import absolute_import
 from __future__ import division

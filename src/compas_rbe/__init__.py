@@ -9,10 +9,10 @@ compas_rbe
 .. toctree::
     :maxdepth: 1
 
-    compas_rbe.assemblies
+    compas_rbe.datastructures
     compas_rbe.equilibrium
     compas_rbe.rhino
-    compas_rbe.utilities
+    compas_rbe.viewer
 
 """
 
