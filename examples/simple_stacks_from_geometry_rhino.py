@@ -138,6 +138,7 @@ for key in assembly.blocks:
 # draw forces
 # ==============================================================================
 
-artist.draw_forces()
+# artist.draw_forces()
+artist.color_interfaces()
 
 artist.redraw()

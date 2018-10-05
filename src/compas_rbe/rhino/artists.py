@@ -2,6 +2,8 @@ from __future__ import print_function
 from __future__ import absolute_import
 from __future__ import division
 
+from compas.utilities import i_to_blue
+
 import compas_rhino
 
 from compas_rhino.artists import MeshArtist
@@ -47,7 +49,7 @@ class AssemblyArtist(NetworkArtist):
         layer = "{}::Interfaces".format(self.layer) if self.layer else None
         faces = []
         for u, v, attr in self.assembly.edges(True):
-            points = attr['interface_points'] + attr['interface_points'][0:1]
+            points = attr['interface_points']
             faces.append({
                 'points': points,
                 'name'  : "{}.interface.{}-{}".format(self.assembly.name, u, v),
@@ -91,6 +93,22 @@ class AssemblyArtist(NetworkArtist):
 
         compas_rhino.xdraw_lines(lines, layer=layer, clear=False, redraw=False)
 
+    def color_interfaces(self):
+        for u, v, attr in self.assembly.edges(True):
+            name = "{}.interface.{}-{}".format(self.assembly.name, u, v)
+            guids = compas_rhino.get_objects(name=name)
+            if not guids:
+                continue
+            guid = guids[0]
+            call = [force['c_np'] for force in attr['interface_forces']]
+            cmax = max(call)
+            cmin = 0
+            colors = []
+            for i in range(len(attr['interface_points'])):
+                c = attr['interface_forces'][i]['c_np']
+                blue = i_to_blue((c - cmin) / (cmax - cmin))
+                colors.append(blue)
+            compas_rhino.set_mesh_vertex_colors(guid, colors)
 
 
 class BlockArtist(MeshArtist):
