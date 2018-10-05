@@ -35,6 +35,10 @@ __all__ = [
 ]
 
 
+class Interface(object):
+    pass
+
+
 def _find_nearest_neighbours(cloud, nmax):
     tree  = cKDTree(cloud)
     nnbrs = [tree.query(root, nmax) for root in cloud]

@@ -31,6 +31,7 @@ from compas.utilities import flatten
 from compas.viewers import core
 
 from compas_rbe.viewer.model import BlockView
+from compas_rbe.viewer.model import InterfaceView
 
 
 __all__ = ['Controller']
@@ -46,7 +47,7 @@ def flist(items):
 class Controller(core.controller.Controller):
     settings = core.controller.Controller.settings or {}
 
-    settings['vertices.size:value'] = 1.0
+    settings['vertices.size:value'] = 5
     settings['vertices.size:minval'] = 1
     settings['vertices.size:maxval'] = 100
     settings['vertices.size:step'] = 1
@@ -62,15 +63,18 @@ class Controller(core.controller.Controller):
     settings['edges.color'] = '#666666'
     settings['faces.color:front'] = '#cccccc'
     settings['faces.color:back'] = '#ff5e99'
-    settings['normals.color'] = '#0092d2'
+
+    settings['interfaces.color:front'] = '#cccccc'
+    settings['interfaces.color:back'] = '#ff5e99'
 
     settings['vertices.on'] = True
     settings['edges.on'] = True
-    settings['faces.on'] = True
+    settings['faces.on'] = False
+    settings['interfaces.on'] = True
 
-    settings['vertices.labels.on'] = False
-    settings['edges.labels.on'] = False
-    settings['faces.labels.on'] = False
+    # settings['vertices.labels.on'] = False
+    # settings['edges.labels.on'] = False
+    # settings['faces.labels.on'] = False
 
     settings['camera.elevation:value'] = -10
     settings['camera.elevation:minval'] = -180
@@ -100,6 +104,7 @@ class Controller(core.controller.Controller):
         super(Controller, self).__init__(app)
         self._assembly = None
         self._blocks = None
+        self._interfaces = None
 
     @property
     def view(self):
@@ -112,13 +117,22 @@ class Controller(core.controller.Controller):
     @assembly.setter
     def assembly(self, assembly):
         self._assembly = assembly
+
         self._blocks = []
-        for key in assembly.blocks:
+        for key, attr in assembly.vertices(True):
             self._blocks.append(BlockView(assembly.blocks[key]))
+
+        self._interfaces = []
+        for u, v, attr in assembly.edges(True):
+            self._interfaces.append(InterfaceView(attr))
 
     @property
     def blocks(self):
         return self._blocks
+
+    @property
+    def interfaces(self):
+        return self._interfaces
 
     def center_assembly(self):
         xyz = self.assembly.get_vertices_attributes('xyz')
@@ -159,6 +173,10 @@ class Controller(core.controller.Controller):
     # ==========================================================================
     # visibility
     # ==========================================================================
+
+    def toggle_interfaces(self, state):
+        self.settings['interfaces.on'] = state == QtCore.Qt.Checked
+        self.view.updateGL()
 
     def toggle_faces(self, state):
         self.settings['faces.on'] = state == QtCore.Qt.Checked

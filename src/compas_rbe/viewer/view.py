@@ -34,10 +34,10 @@ class View(GLWidget):
     def __init__(self, controller):
         super(View, self).__init__()
         self.controller = controller
-        self.n = 0
         self.v = 0
         self.e = 0
-        self.f = 0
+        self.b = 0
+        self.i = 0
 
     @property
     def assembly(self):
@@ -46,6 +46,10 @@ class View(GLWidget):
     @property
     def blocks(self):
         return self.controller.blocks
+
+    @property
+    def interfaces(self):
+        return self.controller.interfaces
 
     @property
     def settings(self):
@@ -140,6 +144,21 @@ class View(GLWidget):
     def block_array_faces_color_back(self, block):
         return flist(hex_to_rgb(self.settings['faces.color:back']) for key in block.xyz)
 
+    def interface_array_xyz(self, interface):
+        return flist(interface.xyz)
+
+    def interface_array_faces_front(self, interface):
+        return flist(interface.faces)
+
+    def interface_array_faces_back(self, interface):
+        return flist(face[::-1] for face in interface.faces)
+
+    def interface_array_faces_color_front(self, interface):
+        return flist(hex_to_rgb(self.settings['interfaces.color:front']) for key in interface.xyz)
+
+    def interface_array_faces_color_back(self, interface):
+        return flist(hex_to_rgb(self.settings['interfaces.color:back']) for key in interface.xyz)
+
     # ==========================================================================
     # CAD
     # ==========================================================================
@@ -173,9 +192,12 @@ class View(GLWidget):
         self.draw_buffers()
 
     def make_buffers(self):
-        self.buffers = []
+        self.buffers = {
+            "blocks" : [],
+            "interfaces" : [],
+        }
         for block in self.blocks:
-            self.buffers.append({
+            self.buffers["blocks"].append({
                 'xyz'              : self.make_vertex_buffer(self.block_array_xyz(block)),
                 'vertices'         : self.make_index_buffer(self.block_array_vertices(block)),
                 'edges'            : self.make_index_buffer(self.block_array_edges(block)),
@@ -190,6 +212,15 @@ class View(GLWidget):
                 'e'                : len(self.block_array_edges(block)),
                 'f'                : len(self.block_array_faces_front(block)),
             })
+        for interface in self.interfaces:
+            self.buffers["interfaces"].append({
+                'xyz'                   : self.make_vertex_buffer(self.interface_array_xyz(interface)),
+                'interfaces:front'      : self.make_index_buffer(self.interface_array_faces_front(interface)),
+                'interfaces:back'       : self.make_index_buffer(self.interface_array_faces_back(interface)),
+                'interfaces.color:front': self.make_vertex_buffer(self.interface_array_faces_color_front(interface), dynamic=True),
+                'interfaces.color:back' : self.make_vertex_buffer(self.interface_array_faces_color_back(interface), dynamic=True),
+                'f'                     : len(self.interface_array_faces_front(interface)),
+            })
 
     def draw_buffers(self):
         if not self.buffers:
@@ -198,7 +229,7 @@ class View(GLWidget):
         glEnableClientState(GL_VERTEX_ARRAY)
         glEnableClientState(GL_COLOR_ARRAY)
 
-        for b in self.buffers:
+        for b in self.buffers["blocks"]:
 
             glBindBuffer(GL_ARRAY_BUFFER, b['xyz'])
             glVertexPointer(3, GL_FLOAT, 0, None)
@@ -227,6 +258,23 @@ class View(GLWidget):
                 glColorPointer(3, GL_FLOAT, 0, None)
                 glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, b['vertices'])
                 glDrawElements(GL_POINTS, b['v'], GL_UNSIGNED_INT, None)
+
+        for b in self.buffers["interfaces"]:
+
+            glBindBuffer(GL_ARRAY_BUFFER, b['xyz'])
+            glVertexPointer(3, GL_FLOAT, 0, None)
+
+            if self.settings['interfaces.on']:
+                glBindBuffer(GL_ARRAY_BUFFER, b['interfaces.color:front'])
+                glColorPointer(3, GL_FLOAT, 0, None)
+                glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, b['interfaces:front'])
+                glDrawElements(GL_TRIANGLES, b['f'], GL_UNSIGNED_INT, None)
+
+                glBindBuffer(GL_ARRAY_BUFFER, b['interfaces.color:back'])
+                glColorPointer(3, GL_FLOAT, 0, None)
+                glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, b['interfaces:back'])
+                glDrawElements(GL_TRIANGLES, b['f'], GL_UNSIGNED_INT, None)
+
 
         glDisableClientState(GL_COLOR_ARRAY)
         glDisableClientState(GL_VERTEX_ARRAY)

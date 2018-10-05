@@ -39,9 +39,10 @@ CONFIG = {
                     'type'  : 'group',
                     'text'  : None,
                     'items' : [
-                        {'type' : 'checkbox', 'text' : 'vertices', 'action' : 'toggle_vertices', 'state' : True, },
-                        {'type' : 'checkbox', 'text' : 'edges', 'action' : 'toggle_edges', 'state' : True, },
-                        {'type' : 'checkbox', 'text' : 'faces', 'action' : 'toggle_faces', 'state' : True, },
+                        {'type' : 'checkbox', 'text' : 'vertices',    'action' : 'toggle_vertices',   'state' : Controller.settings['vertices.on'], },
+                        {'type' : 'checkbox', 'text' : 'edges',       'action' : 'toggle_edges',      'state' : Controller.settings['edges.on'], },
+                        {'type' : 'checkbox', 'text' : 'faces',       'action' : 'toggle_faces',      'state' : Controller.settings['faces.on'], },
+                        {'type' : 'checkbox', 'text' : 'interfaces',  'action' : 'toggle_interfaces', 'state' : Controller.settings['interfaces.on'], },
                     ]
                 },
             ]
@@ -107,6 +108,9 @@ CONFIG = {
                             'edit'   : 'edit_width_edges',
                         }
                     ]
+                },
+                {
+                    'type'   : 'stretch',
                 }
             ]
         },

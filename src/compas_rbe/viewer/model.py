@@ -4,9 +4,10 @@ from __future__ import division
 
 
 from compas.utilities import pairwise
+from compas.geometry import centroid_points
 
 
-__all__ = ['BlockView']
+__all__ = ['BlockView', 'InterfaceView']
 
 
 class BlockView(object):
@@ -17,10 +18,6 @@ class BlockView(object):
         self._vertices = None
         self._faces = None
         self.block = block
-
-    @property
-    def block(self):
-        return self._block
 
     @property
     def xyz(self):
@@ -39,6 +36,10 @@ class BlockView(object):
         key_index = self.block.key_index()
         for u, v in self.block.edges():
             yield key_index[u], key_index[v]
+
+    @property
+    def block(self):
+        return self._block
 
     @block.setter
     def block(self, block):
@@ -66,6 +67,54 @@ class BlockView(object):
                 xyz.append(o)
                 for a, b in pairwise(fvertices + fvertices[0:1]):
                     faces.append([a, b, v])
+
+        self._xyz = xyz
+        self._faces = faces
+
+
+class InterfaceView(object):
+
+    def __init__(self, interface):
+        self._interface = None
+        self._xyz = None
+        self._faces = None
+        self.interface = interface
+
+    @property
+    def xyz(self):
+        return self._xyz
+
+    @property
+    def faces(self):
+        return self._faces
+
+    @property
+    def interface(self):
+        return self._interface
+
+    @interface.setter
+    def interface(self, interface):
+        self._interface = interface
+
+        faces = []
+        xyz = interface['interface_points']
+
+        f = len(xyz)
+
+        if f < 3:
+            pass
+
+        elif f == 3:
+            faces.append([0, 1, 2])
+
+        elif f == 4:
+            faces.append([0, 1, 2])
+            faces.append([2, 3, 0])
+        else:
+            c = centroid_points(xyz)
+            xyz.append(c)
+            for a, b in pairwise(list(range(0, f))):
+                faces.append([a, b, f])
 
         self._xyz = xyz
         self._faces = faces
