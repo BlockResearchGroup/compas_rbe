@@ -30,7 +30,7 @@ class AssemblyArtist(NetworkArtist):
         return self.datastructure
     
     @assembly.setter
-    def assembly(self, asembly):
+    def assembly(self, assembly):
         self.datastructure = assembly
 
     def draw_blocks(self):

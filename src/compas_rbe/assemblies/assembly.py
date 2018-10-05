@@ -37,9 +37,13 @@ class Assembly(Network):
             'interface_forces' : None,
         })
 
+    # from/to data
+    # from/to json
+
     @classmethod
     def from_polysurfaces(cls, guids):
         import compas_rhino
+        from compas_rbe.assemblies import Block
 
         names = compas_rhino.get_object_names(guids)
         assembly = cls()
@@ -63,6 +67,7 @@ class Assembly(Network):
     def from_meshes(cls, guids):
         import compas_rhino
         from compas_rhino.helpers import mesh_from_guid
+        from compas_rbe.assemblies import Block
 
         names = compas_rhino.get_object_names(guids)
         assembly = cls()
