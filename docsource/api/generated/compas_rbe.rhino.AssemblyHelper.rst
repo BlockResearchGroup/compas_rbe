@@ -1,17 +1,21 @@
-compas\_rbe.rhino.AssemblyHelper
-================================
+.. rst-class:: detail
+
+AssemblyHelper
+===============================
 
 .. currentmodule:: compas_rbe.rhino
+
+.. .. inheritance-diagram:: AssemblyHelper
 
 .. autoclass:: AssemblyHelper
 
    
-   .. automethod:: __init__
-
    
    .. rubric:: Methods
 
    .. autosummary::
+      :toctree:
+
    
       ~AssemblyHelper.move_edge
       ~AssemblyHelper.move_vertex

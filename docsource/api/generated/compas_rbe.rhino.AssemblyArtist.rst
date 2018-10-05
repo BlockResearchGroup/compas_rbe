@@ -1,17 +1,21 @@
-compas\_rbe.rhino.AssemblyArtist
-================================
+.. rst-class:: detail
+
+AssemblyArtist
+===============================
 
 .. currentmodule:: compas_rbe.rhino
+
+.. .. inheritance-diagram:: AssemblyArtist
 
 .. autoclass:: AssemblyArtist
 
    
-   .. automethod:: __init__
-
    
    .. rubric:: Methods
 
    .. autosummary::
+      :toctree:
+
    
       ~AssemblyArtist.__init__
       ~AssemblyArtist.clear

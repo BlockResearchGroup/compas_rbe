@@ -1,17 +1,21 @@
-compas\_rbe.rhino.BlockArtist
-=============================
+.. rst-class:: detail
+
+BlockArtist
+============================
 
 .. currentmodule:: compas_rbe.rhino
+
+.. .. inheritance-diagram:: BlockArtist
 
 .. autoclass:: BlockArtist
 
    
-   .. automethod:: __init__
-
    
    .. rubric:: Methods
 
    .. autosummary::
+      :toctree:
+
    
       ~BlockArtist.__init__
       ~BlockArtist.clear

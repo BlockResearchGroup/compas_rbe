@@ -18,11 +18,11 @@
         <link rel="stylesheet" type="text/css" href="../../_static/css/compas-reference.css" />
 
         
-            <link rel="next" title="compas_rbe.viewer" href="../compas_rbe.viewer.html" />
+            <link rel="next" title="BlockHelper.move_edge" href="compas_rbe.rhino.BlockHelper.move_edge.html" />
         
         
         
-            <link rel="prev" title="compas_rbe.rhino.AssemblyHelper" href="compas_rbe.rhino.AssemblyHelper.html" />
+            <link rel="prev" title="AssemblyHelper.update_vertex_attributes" href="compas_rbe.rhino.AssemblyHelper.update_vertex_attributes.html" />
         
 
         <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
@@ -57,17 +57,12 @@
 
                         
 
-                        <div class="section" id="compas-rbe-rhino-blockhelper">
-<h1>compas_rbe.rhino.BlockHelper</h1>
+                        <div class="detail section" id="blockhelper">
+<h1>BlockHelper</h1>
 <dl class="class">
 <dt id="compas_rbe.rhino.BlockHelper">
 <em class="property">class </em><code class="descclassname">compas_rbe.rhino.</code><code class="descname">BlockHelper</code></dt>
-<dd><dl class="method">
-<dt id="compas_rbe.rhino.BlockHelper.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
-<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
-</dd></dl>
-
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">compas_rhino.selectors.vertexselector.VertexSelector</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">compas_rhino.selectors.edgeselector.EdgeSelector</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">compas_rhino.selectors.faceselector.FaceSelector</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">compas_rhino.modifiers.vertexmodifier.VertexModifier</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">compas_rhino.modifiers.edgemodifier.EdgeModifier</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">compas_rhino.modifiers.facemodifier.FaceModifier</span></code></p>
 <p class="rubric">Methods</p>
 <table class="longtable docutils">
 <colgroup>
@@ -75,43 +70,43 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">move_edge</span></code>(self, key[, constraint, allow_off])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_rbe.rhino.BlockHelper.move_edge.html#compas_rbe.rhino.BlockHelper.move_edge" title="compas_rbe.rhino.BlockHelper.move_edge"><code class="xref py py-obj docutils literal notranslate"><span class="pre">move_edge</span></code></a>(self, key[, constraint, allow_off])</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">move_face</span></code>(self, key[, constraint, allow_off])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_rbe.rhino.BlockHelper.move_face.html#compas_rbe.rhino.BlockHelper.move_face" title="compas_rbe.rhino.BlockHelper.move_face"><code class="xref py py-obj docutils literal notranslate"><span class="pre">move_face</span></code></a>(self, key[, constraint, allow_off])</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">move_vertex</span></code>(self, key[, constraint, allow_off])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_rbe.rhino.BlockHelper.move_vertex.html#compas_rbe.rhino.BlockHelper.move_vertex" title="compas_rbe.rhino.BlockHelper.move_vertex"><code class="xref py py-obj docutils literal notranslate"><span class="pre">move_vertex</span></code></a>(self, key[, constraint, allow_off])</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">move_vertices</span></code>(self, keys)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_rbe.rhino.BlockHelper.move_vertices.html#compas_rbe.rhino.BlockHelper.move_vertices" title="compas_rbe.rhino.BlockHelper.move_vertices"><code class="xref py py-obj docutils literal notranslate"><span class="pre">move_vertices</span></code></a>(self, keys)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">select_edge</span></code>(self[, message])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_rbe.rhino.BlockHelper.select_edge.html#compas_rbe.rhino.BlockHelper.select_edge" title="compas_rbe.rhino.BlockHelper.select_edge"><code class="xref py py-obj docutils literal notranslate"><span class="pre">select_edge</span></code></a>(self[, message])</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">select_edges</span></code>(self[, message])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_rbe.rhino.BlockHelper.select_edges.html#compas_rbe.rhino.BlockHelper.select_edges" title="compas_rbe.rhino.BlockHelper.select_edges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">select_edges</span></code></a>(self[, message])</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">select_face</span></code>(self[, message])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_rbe.rhino.BlockHelper.select_face.html#compas_rbe.rhino.BlockHelper.select_face" title="compas_rbe.rhino.BlockHelper.select_face"><code class="xref py py-obj docutils literal notranslate"><span class="pre">select_face</span></code></a>(self[, message])</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">select_faces</span></code>(self[, message])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_rbe.rhino.BlockHelper.select_faces.html#compas_rbe.rhino.BlockHelper.select_faces" title="compas_rbe.rhino.BlockHelper.select_faces"><code class="xref py py-obj docutils literal notranslate"><span class="pre">select_faces</span></code></a>(self[, message])</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">select_vertex</span></code>(self[, message])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_rbe.rhino.BlockHelper.select_vertex.html#compas_rbe.rhino.BlockHelper.select_vertex" title="compas_rbe.rhino.BlockHelper.select_vertex"><code class="xref py py-obj docutils literal notranslate"><span class="pre">select_vertex</span></code></a>(self[, message])</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">select_vertices</span></code>(self[, message])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_rbe.rhino.BlockHelper.select_vertices.html#compas_rbe.rhino.BlockHelper.select_vertices" title="compas_rbe.rhino.BlockHelper.select_vertices"><code class="xref py py-obj docutils literal notranslate"><span class="pre">select_vertices</span></code></a>(self[, message])</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_edge_attributes</span></code>(self, keys[, names])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_rbe.rhino.BlockHelper.update_edge_attributes.html#compas_rbe.rhino.BlockHelper.update_edge_attributes" title="compas_rbe.rhino.BlockHelper.update_edge_attributes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_edge_attributes</span></code></a>(self, keys[, names])</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_face_attributes</span></code>(self, keys[, names])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_rbe.rhino.BlockHelper.update_face_attributes.html#compas_rbe.rhino.BlockHelper.update_face_attributes" title="compas_rbe.rhino.BlockHelper.update_face_attributes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_face_attributes</span></code></a>(self, keys[, names])</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_vertex_attributes</span></code>(self, keys[, names])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_rbe.rhino.BlockHelper.update_vertex_attributes.html#compas_rbe.rhino.BlockHelper.update_vertex_attributes" title="compas_rbe.rhino.BlockHelper.update_vertex_attributes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_vertex_attributes</span></code></a>(self, keys[, names])</p></td>
 <td><p></p></td>
 </tr>
 </tbody>
@@ -181,7 +176,7 @@
                     
 
                     <ul class="nav flex-column" id="compas-localnav">
-<li class="nav-item"><a class="nav-link reference internal" href="#">compas_rbe.rhino.BlockHelper</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#">BlockHelper</a></li>
 </ul>
 
 

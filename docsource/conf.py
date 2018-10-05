@@ -42,15 +42,16 @@ extensions = [
 
 # autodoc options
 
-autodoc_default_options = {
-    'members' : None,
-    'special-members' : ""
-    
-}
+autodoc_default_flags = [
+    "show-inheritance",
+    "no-inherited-members",
+    "no-special-members",
+    "no-private-members",
+]
 
 autodoc_member_order = 'alphabetical'
 
-autodoc_mock_imports = ["compas"]
+autoclass_content = "class"
 
 # autosummary options
 

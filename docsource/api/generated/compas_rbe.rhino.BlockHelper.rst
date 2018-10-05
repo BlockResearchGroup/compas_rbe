@@ -1,17 +1,21 @@
-compas\_rbe.rhino.BlockHelper
-=============================
+.. rst-class:: detail
+
+BlockHelper
+============================
 
 .. currentmodule:: compas_rbe.rhino
+
+.. .. inheritance-diagram:: BlockHelper
 
 .. autoclass:: BlockHelper
 
    
-   .. automethod:: __init__
-
    
    .. rubric:: Methods
 
    .. autosummary::
+      :toctree:
+
    
       ~BlockHelper.move_edge
       ~BlockHelper.move_face

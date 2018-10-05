@@ -1,17 +1,21 @@
-compas\_rbe.datastructures.Block
-================================
+.. rst-class:: detail
+
+Block
+===============================
 
 .. currentmodule:: compas_rbe.datastructures
+
+.. .. inheritance-diagram:: Block
 
 .. autoclass:: Block
 
    
-   .. automethod:: __init__
-
    
    .. rubric:: Methods
 
    .. autosummary::
+      :toctree:
+
    
       ~Block.__init__
       ~Block.add_face

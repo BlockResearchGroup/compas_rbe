@@ -1,17 +1,21 @@
-compas\_rbe.datastructures.Assembly
-===================================
+.. rst-class:: detail
+
+Assembly
+==================================
 
 .. currentmodule:: compas_rbe.datastructures
+
+.. .. inheritance-diagram:: Assembly
 
 .. autoclass:: Assembly
 
    
-   .. automethod:: __init__
-
    
    .. rubric:: Methods
 
    .. autosummary::
+      :toctree:
+
    
       ~Assembly.__init__
       ~Assembly.add_block
