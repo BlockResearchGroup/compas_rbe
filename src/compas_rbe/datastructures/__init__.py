@@ -11,6 +11,9 @@ compas_rbe.datastructures
 .. currentmodule:: compas_rbe.datastructures
 
 
+Classes
+=======
+
 .. autosummary::
     :toctree: generated/
     :nosignatures:
@@ -18,16 +21,27 @@ compas_rbe.datastructures
     Assembly
     Block
 
+
+Functions
+=========
+
+.. autosummary::
+    :toctree: generated/
+    :nosignatures:
+
+    identify_interfaces
+
+
 """
 
 from __future__ import absolute_import
 
-from . import assembly
-from . import block
-from . import interface
-
 from .assembly import *
 from .block import *
 from .interface import *
+
+from . import assembly
+from . import block
+from . import interface
 
 __all__ = assembly.__all__ + block.__all__ + interface.__all__

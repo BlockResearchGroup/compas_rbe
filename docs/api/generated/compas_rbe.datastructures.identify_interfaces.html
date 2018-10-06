@@ -18,11 +18,11 @@
         <link rel="stylesheet" type="text/css" href="../../_static/css/compas-reference.css" />
 
         
-            <link rel="next" title="Assembly.__init__" href="compas_rbe.datastructures.Assembly.__init__.html" />
+            <link rel="next" title="compas_rbe.equilibrium" href="../compas_rbe.equilibrium.html" />
         
         
         
-            <link rel="prev" title="Assembly.data" href="compas_rbe.datastructures.Assembly.data.html" />
+            <link rel="prev" title="Block.volume" href="compas_rbe.datastructures.Block.volume.html" />
         
 
         <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
@@ -57,19 +57,39 @@
 
                         
 
-                        <div class="detail section" id="assembly-name">
-<h1>Assembly.name</h1>
-<dl class="attribute">
-<dt id="compas_rbe.datastructures.Assembly.name">
-<code class="descclassname">Assembly.</code><code class="descname">name</code></dt>
-<dd><p>The name of the data structure.</p>
-<p>Any value assigned to this property will be stored in the attribute dict
-of the data structure instance.</p>
+                        <div class="detail section" id="identify-interfaces">
+<h1>identify_interfaces</h1>
+<dl class="function">
+<dt id="compas_rbe.datastructures.identify_interfaces">
+<code class="descclassname">compas_rbe.datastructures.</code><code class="descname">identify_interfaces</code><span class="sig-paren">(</span><em>assembly</em>, <em>nmax=10</em>, <em>tmax=1e-06</em>, <em>amin=0.1</em>, <em>lmin=0.001</em>, <em>face_face=True</em>, <em>face_edge=False</em>, <em>face_vertex=False</em><span class="sig-paren">)</span></dt>
+<dd><p>Identify the interfaces between the blocks of an assembly.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)">str</a></p>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>assembly</strong> (<em>compas_rbe.datastructures.Assembly</em>) – An assembly of discrete blocks.</p></li>
+<li><p><strong>nmax</strong> (<em>int, optional</em>) – Maximum number of neighbours per block.
+Default is <code class="docutils literal notranslate"><span class="pre">10</span></code>.</p></li>
+<li><p><strong>tmax</strong> (<em>float, optional</em>) – Maximum deviation from the perfectly flat interface plane.
+Default is <code class="docutils literal notranslate"><span class="pre">1e-6</span></code>.</p></li>
+<li><p><strong>amin</strong> (<em>float, optional</em>) – Minimum area of a “face-face” interface.
+Default is <code class="docutils literal notranslate"><span class="pre">1e-1</span></code>.</p></li>
+<li><p><strong>lmin</strong> (<em>float, optional</em>) – Minimum length of a “face-edge” interface.
+Default is <code class="docutils literal notranslate"><span class="pre">1e-3</span></code>.</p></li>
+<li><p><strong>face_face</strong> (<em>bool, optional</em>) – Test for “face-face” interfaces.
+Default is <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p></li>
+<li><p><strong>face_edge</strong> (<em>bool, optional</em>) – Test for “face-edge” interfaces.
+Default is <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+<li><p><strong>face_vertex</strong> (<em>bool, optional</em>) – Test for “face-vertex” interfaces.
+Default is <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+</ul>
 </dd>
 </dl>
+<p class="rubric">References</p>
+<p>The identification of interfaces is discussed in detail here <a class="reference internal" href="../../publications.html#frick2016" id="id1">[Frick2016]</a>.</p>
+<p class="rubric">Examples</p>
+<div class="language-python notranslate"><div class="highlight"><pre><code><span></span><span class="k">pass</span>
+</code></pre></div>
+</div>
 </dd></dl>
 
 </div>
@@ -135,7 +155,7 @@ of the data structure instance.</p>
                     
 
                     <ul class="nav flex-column" id="compas-localnav">
-<li class="nav-item"><a class="nav-link reference internal" href="#">Assembly.name</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#">identify_interfaces</a></li>
 </ul>
 
 

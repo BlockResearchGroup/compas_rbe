@@ -84,21 +84,6 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="compas_rbe.datastructures.Assembly.name.html#compas_rbe.datastructures.Assembly.name" title="compas_rbe.datastructures.Assembly.name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">name</span></code></a></p></td>
 <td><p>The name of the data structure.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_rbe.datastructures.Assembly.x.html#compas_rbe.datastructures.Assembly.x" title="compas_rbe.datastructures.Assembly.x"><code class="xref py py-obj docutils literal notranslate"><span class="pre">x</span></code></a></p></td>
-<td><p>The X coordinates of the vertices.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_rbe.datastructures.Assembly.xy.html#compas_rbe.datastructures.Assembly.xy" title="compas_rbe.datastructures.Assembly.xy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">xy</span></code></a></p></td>
-<td><p>The XY coordinates of the vertices.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_rbe.datastructures.Assembly.xyz.html#compas_rbe.datastructures.Assembly.xyz" title="compas_rbe.datastructures.Assembly.xyz"><code class="xref py py-obj docutils literal notranslate"><span class="pre">xyz</span></code></a></p></td>
-<td><p>The XYZ coordinates of the vertices.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_rbe.datastructures.Assembly.y.html#compas_rbe.datastructures.Assembly.y" title="compas_rbe.datastructures.Assembly.y"><code class="xref py py-obj docutils literal notranslate"><span class="pre">y</span></code></a></p></td>
-<td><p>The Y coordinates of the vertices.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_rbe.datastructures.Assembly.z.html#compas_rbe.datastructures.Assembly.z" title="compas_rbe.datastructures.Assembly.z"><code class="xref py py-obj docutils literal notranslate"><span class="pre">z</span></code></a></p></td>
-<td><p>The Z coordinates of the vertices.</p></td>
-</tr>
 </tbody>
 </table>
 <p class="rubric">Methods</p>
@@ -112,15 +97,18 @@
 <td><p>Initialize self.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="compas_rbe.datastructures.Assembly.add_block.html#compas_rbe.datastructures.Assembly.add_block" title="compas_rbe.datastructures.Assembly.add_block"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_block</span></code></a>(block[, attr_dict])</p></td>
-<td><p></p></td>
+<td><p>Add a block to the assembly.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="compas_rbe.datastructures.Assembly.add_support.html#compas_rbe.datastructures.Assembly.add_support" title="compas_rbe.datastructures.Assembly.add_support"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_support</span></code></a>(block[, attr_dict])</p></td>
-<td><p></p></td>
+<td><p>Add a support to the assembly.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_rbe.datastructures.Assembly.from_meshes.html#compas_rbe.datastructures.Assembly.from_meshes" title="compas_rbe.datastructures.Assembly.from_meshes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_meshes</span></code></a>(guids)</p></td>
-<td><p></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_rbe.datastructures.Assembly.from_json.html#compas_rbe.datastructures.Assembly.from_json" title="compas_rbe.datastructures.Assembly.from_json"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_json</span></code></a>(filepath)</p></td>
+<td><p>Construct a datastructure from structured data contained in a json file.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_rbe.datastructures.Assembly.from_polysurfaces.html#compas_rbe.datastructures.Assembly.from_polysurfaces" title="compas_rbe.datastructures.Assembly.from_polysurfaces"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_polysurfaces</span></code></a>(guids)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_rbe.datastructures.Assembly.from_meshes.html#compas_rbe.datastructures.Assembly.from_meshes" title="compas_rbe.datastructures.Assembly.from_meshes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_meshes</span></code></a>(guids)</p></td>
+<td><p>Class method for constructing an assembly from blocks represented by Rhino meshes.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_rbe.datastructures.Assembly.from_polysurfaces.html#compas_rbe.datastructures.Assembly.from_polysurfaces" title="compas_rbe.datastructures.Assembly.from_polysurfaces"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_polysurfaces</span></code></a>(guids)</p></td>
 <td><p>Class method for constructing an assembly from blocks represented by Rhino poly surfaces.</p></td>
 </tr>
 </tbody>

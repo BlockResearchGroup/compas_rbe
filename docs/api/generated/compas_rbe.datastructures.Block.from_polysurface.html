@@ -62,7 +62,21 @@
 <dl class="classmethod">
 <dt id="compas_rbe.datastructures.Block.from_polysurface">
 <em class="property">classmethod </em><code class="descclassname">Block.</code><code class="descname">from_polysurface</code><span class="sig-paren">(</span><em>guid</em><span class="sig-paren">)</span></dt>
-<dd></dd></dl>
+<dd><p>Class method for constructing a block fro a Rhino poly-surface.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>guid</strong> (<em>str</em>) – The GUID of the poly-surface.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>Block</em> – The block corresponding to the poly-surface.</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>In Rhino, poly-surfaces are organised such that the cycle directions of
+the individual sub-surfaces produce normal vectors that point out of the
+enclosed volume. The normal vectors of the faces of the mesh, therefore
+also point “out” of the enclosed volume.</p>
+</dd></dl>
 
 </div>
 

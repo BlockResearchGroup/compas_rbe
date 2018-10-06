@@ -18,7 +18,7 @@
         <link rel="stylesheet" type="text/css" href="../../_static/css/compas-reference.css" />
 
         
-            <link rel="next" title="Assembly.from_meshes" href="compas_rbe.datastructures.Assembly.from_meshes.html" />
+            <link rel="next" title="Assembly.from_json" href="compas_rbe.datastructures.Assembly.from_json.html" />
         
         
         
@@ -62,7 +62,23 @@
 <dl class="method">
 <dt id="compas_rbe.datastructures.Assembly.add_support">
 <code class="descclassname">Assembly.</code><code class="descname">add_support</code><span class="sig-paren">(</span><em>block</em>, <em>attr_dict=None</em>, <em>**kwattr</em><span class="sig-paren">)</span></dt>
-<dd></dd></dl>
+<dd><p>Add a support to the assembly.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>block</strong> (<em>compas_rbe.datastructures.Block</em>) – The block to add.</p></li>
+<li><p><strong>attr_dict</strong> (<em>dict, optional</em>) – A dictionary of block attributes.
+Default is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>hashable</em> – The identifier of the block.</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>The support block is added as a vertex in the assembly data structure.
+The XYZ coordinates of the vertex are the coordinates of the centroid of the block.</p>
+</dd></dl>
 
 </div>
 

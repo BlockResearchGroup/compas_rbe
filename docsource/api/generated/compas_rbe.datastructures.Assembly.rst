@@ -18,11 +18,6 @@ Assembly
       ~Assembly.adjacency
       ~Assembly.data
       ~Assembly.name
-      ~Assembly.x
-      ~Assembly.xy
-      ~Assembly.xyz
-      ~Assembly.y
-      ~Assembly.z
    
    
 
@@ -38,6 +33,7 @@ Assembly
       ~Assembly.__init__
       ~Assembly.add_block
       ~Assembly.add_support
+      ~Assembly.from_json
       ~Assembly.from_meshes
       ~Assembly.from_polysurfaces
    

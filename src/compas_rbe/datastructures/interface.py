@@ -60,6 +60,45 @@ def identify_interfaces(assembly,
                         face_face=True,
                         face_edge=False,
                         face_vertex=False):
+    """Identify the interfaces between the blocks of an assembly.
+
+    Parameters
+    ----------
+    assembly : compas_rbe.datastructures.Assembly
+        An assembly of discrete blocks.
+    nmax : int, optional
+        Maximum number of neighbours per block.
+        Default is ``10``.
+    tmax : float, optional
+        Maximum deviation from the perfectly flat interface plane.
+        Default is ``1e-6``.
+    amin : float, optional
+        Minimum area of a "face-face" interface.
+        Default is ``1e-1``.
+    lmin : float, optional
+        Minimum length of a "face-edge" interface.
+        Default is ``1e-3``.
+    face_face : bool, optional
+        Test for "face-face" interfaces.
+        Default is ``True``.
+    face_edge : bool, optional
+        Test for "face-edge" interfaces.
+        Default is ``False``.
+    face_vertex : bool, optional
+        Test for "face-vertex" interfaces.
+        Default is ``False``.
+
+    References
+    ----------
+    The identification of interfaces is discussed in detail here [Frick2016]_.
+
+    Examples
+    --------
+    .. code-block:: python
+
+        pass
+
+    """
 
     key_index   = {key: index for index, key in enumerate(assembly.vertices())}
     index_key   = {index: key for index, key in enumerate(assembly.vertices())}

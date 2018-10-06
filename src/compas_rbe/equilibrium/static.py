@@ -15,18 +15,16 @@ try:
     from numpy import diagflat
     from numpy import absolute
 except ImportError:
-    if 'ironpython' not in sys.version.lower():
-        raise
+    compas.raise_if_not_ironpython()
 
 try:
     import cvxopt
     import cvxpy
 except ImportError:
-    if 'ironpython' not in sys.version.lower():
-        raise
+    compas.raise_if_not_ironpython()
 
-from .utilities import make_Aeq
-from .utilities import make_Aiq
+from compas_rbe.equilibrium.utilities import make_Aeq
+from compas_rbe.equilibrium.utilities import make_Aiq
 
 
 __all__ = [
@@ -52,7 +50,7 @@ def compute_interface_forces(assembly,
                              mu=0.6,
                              density=1.0,
                              verbose=False,
-                             max_iters=100,
+                             maxiters=100,
                              solver='ECOS'):
     r"""Compute the forces at the interfaces between the blocks of an assembly.
 
@@ -60,6 +58,13 @@ def compute_interface_forces(assembly,
 
     .. math::
 
+        \begin{aligned}
+
+            & \underset{x}{\text{minimise}} & \quad 0.5 \, \mathbf{x}^{T} \mathbf{P} \mathbf{x} + \mathbf{q}^{T} \mathbf{x} \\
+            & \text{such that}              & \quad \mathbf{A} \mathbf{x} = \mathbf{b} \\
+            &                               & \quad \mathbf{G} \mathbf{x} = \mathbf{h} \\
+
+        \end{aligned}
 
     Parameters
     ----------
@@ -67,7 +72,37 @@ def compute_interface_forces(assembly,
         The rigid block assembly.
     friction8 : bool, optional
         Use an eight-sided friction pyramid.
-        Default is False.
+        Default is ``False``.
+    mu : float, optional
+        ?
+    density : float, optional
+        Density of the block material.
+        Default is ``1.0``
+    verbose : bool, optional
+        Print information during the execution of the algorithm.
+        Default is ``False``.
+    maxiters : int, optional
+        Maximum number of iterations used by the solver.
+        Default is ``100``.
+    solver : {'ECOS', 'CVXOPT'}, optional
+        The solver to be used internally.
+        Default is ``'ECOS'``.
+
+    Returns
+    -------
+    None
+        The assembly is updated in place.
+
+    References
+    ----------
+    The computational procedure for calculating the interface forces is described
+    in detail in [Frick2015]_
+
+    Examples
+    --------
+    .. code-block:: python
+
+        pass
 
     """
 
@@ -95,6 +130,7 @@ def compute_interface_forces(assembly,
     b = [[0, 0, -1 * assembly.blocks[key].volume() * density, 0, 0, 0] for key in assembly.vertices()]
     b = array(b, dtype=float)
     b = b[free, :].reshape((-1, 1), order='C')
+
     # row-major ordering => fx, fy, fz, mx, my, mz, fx, fy, fz, mx, my, mz, ...
 
     # ==========================================================================
@@ -174,7 +210,7 @@ def compute_interface_forces(assembly,
 
     problem = cvxpy.Problem(objective, constraints)
 
-    problem.solve(solver=cvxpy.ECOS, verbose=verbose, max_iters=max_iters)
+    problem.solve(solver=cvxpy.ECOS, verbose=verbose, max_iters=maxiters)
 
     if problem.status == cvxpy.OPTIMAL:
         x = array(x.value).reshape((-1, 1))

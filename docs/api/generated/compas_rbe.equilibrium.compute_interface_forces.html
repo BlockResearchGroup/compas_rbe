@@ -18,11 +18,11 @@
         <link rel="stylesheet" type="text/css" href="../../_static/css/compas-reference.css" />
 
         
-            <link rel="next" title="Assembly.__init__" href="compas_rbe.datastructures.Assembly.__init__.html" />
+            <link rel="next" title="compas_rbe.rhino" href="../compas_rbe.rhino.html" />
         
         
         
-            <link rel="prev" title="Assembly.data" href="compas_rbe.datastructures.Assembly.data.html" />
+            <link rel="prev" title="compas_rbe.equilibrium" href="../compas_rbe.equilibrium.html" />
         
 
         <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
@@ -57,19 +57,45 @@
 
                         
 
-                        <div class="detail section" id="assembly-name">
-<h1>Assembly.name</h1>
-<dl class="attribute">
-<dt id="compas_rbe.datastructures.Assembly.name">
-<code class="descclassname">Assembly.</code><code class="descname">name</code></dt>
-<dd><p>The name of the data structure.</p>
-<p>Any value assigned to this property will be stored in the attribute dict
-of the data structure instance.</p>
+                        <div class="detail section" id="compute-interface-forces">
+<h1>compute_interface_forces</h1>
+<dl class="function">
+<dt id="compas_rbe.equilibrium.compute_interface_forces">
+<code class="descclassname">compas_rbe.equilibrium.</code><code class="descname">compute_interface_forces</code><span class="sig-paren">(</span><em>assembly</em>, <em>friction8=False</em>, <em>mu=0.6</em>, <em>density=1.0</em>, <em>verbose=False</em>, <em>maxiters=100</em>, <em>solver='ECOS'</em><span class="sig-paren">)</span></dt>
+<dd><p>Compute the forces at the interfaces between the blocks of an assembly.</p>
+<p>Solve the following optimisation problem:</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\begin{aligned}\\\begin{split}    &amp; \underset{x}{\text{minimise}} &amp; \quad 0.5 \mathbf{x}^{T} \mathbf{P} \mathbf{x} + \mathbf{q}^{T} \mathbf{x} \\
+    &amp; \text{such that}              &amp; \quad \mathbf{A} \mathbf{x} = \mathbf{b} \\
+    &amp;                               &amp; \quad \mathbf{G} \mathbf{x} = \mathbf{h} \\\end{split}\\\end{aligned}\end{aligned}\end{align} \]</div>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)">str</a></p>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>assembly</strong> (<em>Assembly</em>) – The rigid block assembly.</p></li>
+<li><p><strong>friction8</strong> (<em>bool, optional</em>) – Use an eight-sided friction pyramid.
+Default is <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+<li><p><strong>mu</strong> (<em>float, optional</em>) – ?</p></li>
+<li><p><strong>density</strong> (<em>float, optional</em>) – Density of the block material.
+Default is <code class="docutils literal notranslate"><span class="pre">1.0</span></code></p></li>
+<li><p><strong>verbose</strong> (<em>bool, optional</em>) – Print information during the execution of the algorithm.
+Default is <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+<li><p><strong>maxiters</strong> (<em>int, optional</em>) – Maximum number of iterations used by the solver.
+Default is <code class="docutils literal notranslate"><span class="pre">100</span></code>.</p></li>
+<li><p><strong>solver</strong> (<em>{‘ECOS’, ‘CVXOPT’}, optional</em>) – The solver to be used internally.
+Default is <code class="docutils literal notranslate"><span class="pre">'ECOS'</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>None</em> – The assembly is updated in place.</p>
 </dd>
 </dl>
+<p class="rubric">References</p>
+<p>The computational procedure for calculating the interface forces is described
+in detail in <a class="reference internal" href="../../publications.html#frick2015" id="id1">[Frick2015]</a></p>
+<p class="rubric">Examples</p>
+<div class="language-python notranslate"><div class="highlight"><pre><code><span></span><span class="k">pass</span>
+</code></pre></div>
+</div>
 </dd></dl>
 
 </div>
@@ -106,8 +132,8 @@ of the data structure instance.</p>
 <li class="nav-item"><a class="nav-link reference internal" href="../../examples.html">Examples</a></li>
 <li class="nav-item active"><a class="nav-link reference internal" href="../../api.html">API Reference</a><ul class="nav active">
 <li class="nav-item active"><a class="nav-link reference internal" href="../compas_rbe.html">compas_rbe</a><ul class="nav active">
-<li class="nav-item active"><a class="nav-link reference internal" href="../compas_rbe.datastructures.html">compas_rbe.datastructures</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="../compas_rbe.equilibrium.html">compas_rbe.equilibrium</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="../compas_rbe.datastructures.html">compas_rbe.datastructures</a></li>
+<li class="nav-item active"><a class="nav-link reference internal" href="../compas_rbe.equilibrium.html">compas_rbe.equilibrium</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="../compas_rbe.rhino.html">compas_rbe.rhino</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="../compas_rbe.viewer.html">compas_rbe.viewer</a></li>
 </ul>
@@ -135,7 +161,7 @@ of the data structure instance.</p>
                     
 
                     <ul class="nav flex-column" id="compas-localnav">
-<li class="nav-item"><a class="nav-link reference internal" href="#">Assembly.name</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#">compute_interface_forces</a></li>
 </ul>
 
 
