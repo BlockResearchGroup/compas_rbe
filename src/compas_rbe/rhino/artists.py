@@ -65,7 +65,12 @@ class AssemblyArtist(NetworkArtist):
         * By default, blocks are drawn on a sublayer of the base layer, if a base layer was specified.
         * Block names have the following pattern: ``"{assembly_name}.block.{block_id}"``
         * Faces and vertices can be drawn using the corresponding flags.
-        * Block components (faces, edges, vertices) have the following pattern: ``"{assembly_name}.block.{block_id}.[face|egde|vertex].{face_id|edge_id|vertex_id}"``
+        * Block components have the following pattern: 
+
+          * face: ``"{assembly_name}.block.{block_id}.face.{face_id}"``
+          * edge: ``"{assembly_name}.block.{block_id}.edge.{edge_id}"``
+          * vertex: ``"{assembly_name}.block.{block_id}.vertex.{vertex_id}"``
+
 
         Examples
         --------

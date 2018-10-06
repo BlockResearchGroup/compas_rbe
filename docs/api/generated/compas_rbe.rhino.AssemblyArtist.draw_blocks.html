@@ -79,7 +79,13 @@ Default is <code class="docutils literal notranslate"><span class="pre">False</s
 <li><p>By default, blocks are drawn on a sublayer of the base layer, if a base layer was specified.</p></li>
 <li><p>Block names have the following pattern: <code class="docutils literal notranslate"><span class="pre">&quot;{assembly_name}.block.{block_id}&quot;</span></code></p></li>
 <li><p>Faces and vertices can be drawn using the corresponding flags.</p></li>
-<li><p>Block components (faces, edges, vertices) have the following pattern: <code class="docutils literal notranslate"><span class="pre">&quot;{assembly_name}.block.{block_id}.[face|egde|vertex].{face_id|edge_id|vertex_id}&quot;</span></code></p></li>
+<li><p>Block components have the following pattern:</p>
+<ul>
+<li><p>face: <code class="docutils literal notranslate"><span class="pre">&quot;{assembly_name}.block.{block_id}.face.{face_id}&quot;</span></code></p></li>
+<li><p>edge: <code class="docutils literal notranslate"><span class="pre">&quot;{assembly_name}.block.{block_id}.edge.{edge_id}&quot;</span></code></p></li>
+<li><p>vertex: <code class="docutils literal notranslate"><span class="pre">&quot;{assembly_name}.block.{block_id}.vertex.{vertex_id}&quot;</span></code></p></li>
+</ul>
+</li>
 </ul>
 <p class="rubric">Examples</p>
 <div class="language-python notranslate"><div class="highlight"><pre><code><span></span><span class="k">pass</span>
