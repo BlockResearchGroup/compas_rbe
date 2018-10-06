@@ -61,8 +61,22 @@
 <h1>AssemblyArtist</h1>
 <dl class="class">
 <dt id="compas_rbe.rhino.AssemblyArtist">
-<em class="property">class </em><code class="descclassname">compas_rbe.rhino.</code><code class="descname">AssemblyArtist</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">compas_rhino.artists.networkartist.NetworkArtist</span></code></p>
+<em class="property">class </em><code class="descclassname">compas_rbe.rhino.</code><code class="descname">AssemblyArtist</code><span class="sig-paren">(</span><em>assembly</em>, <em>layer=None</em><span class="sig-paren">)</span></dt>
+<dd><p>Bases: <a class="reference external" href="https://compas-dev.github.io/main/api/generated/compas_rhino.artists.NetworkArtist.html#compas_rhino.artists.NetworkArtist" title="(in COMPAS v0.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">compas_rhino.artists.NetworkArtist</span></code></a></p>
+<p>An artist for visualisation of assemblies inn Rhino.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>assembly</strong> (<em>compas_rbe.datastructures.Assembly</em>) – The assembly data structure.</p></li>
+<li><p><strong>layer</strong> (<em>str, optional</em>) – The base layer for drawing.
+Default is <code class="docutils literal notranslate"><span class="pre">None</span></code>, which means drawing in the current layer.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="language-python notranslate"><div class="highlight"><pre><code><span></span><span class="k">pass</span>
+</code></pre></div>
+</div>
 <p class="rubric">Attributes</p>
 <table class="longtable docutils">
 <colgroup>
@@ -71,7 +85,7 @@
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="compas_rbe.rhino.AssemblyArtist.assembly.html#compas_rbe.rhino.AssemblyArtist.assembly" title="compas_rbe.rhino.AssemblyArtist.assembly"><code class="xref py py-obj docutils literal notranslate"><span class="pre">assembly</span></code></a></p></td>
-<td><p></p></td>
+<td><p>the assembly data structure.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="compas_rbe.rhino.AssemblyArtist.layer.html#compas_rbe.rhino.AssemblyArtist.layer" title="compas_rbe.rhino.AssemblyArtist.layer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">layer</span></code></a></p></td>
 <td><p>The layer that contains the mesh.</p></td>
@@ -88,14 +102,14 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_rbe.rhino.AssemblyArtist.__init__.html#compas_rbe.rhino.AssemblyArtist.__init__" title="compas_rbe.rhino.AssemblyArtist.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(*args, **kwargs)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_rbe.rhino.AssemblyArtist.__init__.html#compas_rbe.rhino.AssemblyArtist.__init__" title="compas_rbe.rhino.AssemblyArtist.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(assembly[, layer])</p></td>
 <td><p>Initialize self.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="compas_rbe.rhino.AssemblyArtist.color_interfaces.html#compas_rbe.rhino.AssemblyArtist.color_interfaces" title="compas_rbe.rhino.AssemblyArtist.color_interfaces"><code class="xref py py-obj docutils literal notranslate"><span class="pre">color_interfaces</span></code></a>()</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_rbe.rhino.AssemblyArtist.draw_blocks.html#compas_rbe.rhino.AssemblyArtist.draw_blocks" title="compas_rbe.rhino.AssemblyArtist.draw_blocks"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_blocks</span></code></a>()</p></td>
-<td><p></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_rbe.rhino.AssemblyArtist.draw_blocks.html#compas_rbe.rhino.AssemblyArtist.draw_blocks" title="compas_rbe.rhino.AssemblyArtist.draw_blocks"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_blocks</span></code></a>([show_faces, show_vertices])</p></td>
+<td><p>Draw the blocks of the assembly.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="compas_rbe.rhino.AssemblyArtist.draw_forces.html#compas_rbe.rhino.AssemblyArtist.draw_forces" title="compas_rbe.rhino.AssemblyArtist.draw_forces"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_forces</span></code></a>([scale, eps])</p></td>
 <td><p></p></td>

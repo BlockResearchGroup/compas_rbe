@@ -14,22 +14,66 @@ __all__ = ['AssemblyArtist', 'BlockArtist']
 
 
 class AssemblyArtist(NetworkArtist):
+    """An artist for visualisation of assemblies inn Rhino.
 
-    def __init__(self, *args, **kwargs):
-        super(AssemblyArtist, self).__init__(*args, **kwargs)
+    Parameters
+    ----------
+    assembly : compas_rbe.datastructures.Assembly
+        The assembly data structure.
+    layer : str, optional
+        The base layer for drawing.
+        Default is ``None``, which means drawing in the current layer.
+
+    Examples
+    --------
+    .. code-block:: python
+
+        pass
+
+    """
+
+    def __init__(self, assembly, layer=None):
+        super(AssemblyArtist, self).__init__(assembly, layer=layer)
         self.defaults.update({
 
         })
 
     @property
     def assembly(self):
+        """Assembly : the assembly data structure."""
         return self.datastructure
     
     @assembly.setter
     def assembly(self, assembly):
         self.datastructure = assembly
 
-    def draw_blocks(self):
+    def draw_blocks(self, show_faces=False, show_vertices=False):
+        """Draw the blocks of the assembly.
+
+        Parameters
+        ----------
+        show_faces : bool, optional
+            Draw the faces of the block.
+            Default is ``False``.
+        show_vertices : bool, optional
+            Draw the vertices of the block.
+            Default is ``False``.
+
+        Notes
+        -----
+        * By default, blocks are drawn as wireframes.
+        * By default, blocks are drawn on a sublayer of the base layer, if a base layer was specified.
+        * Block names have the following pattern: ``"{assembly_name}.block.{block_id}"``
+        * Faces and vertices can be drawn using the corresponding flags.
+        * Block components (faces, edges, vertices) have the following pattern: ``"{assembly_name}.block.{block_id}.[face|egde|vertex].{face_id|edge_id|vertex_id}"``
+
+        Examples
+        --------
+        .. code-block:: python
+        
+            pass
+
+        """
         layer = "{}::Blocks".format(self.layer) if self.layer else None
         artist = BlockArtist(None, layer=layer)
         for key, attr in self.assembly.vertices(True):
@@ -37,6 +81,10 @@ class AssemblyArtist(NetworkArtist):
             block.name = "{}.block.{}".format(self.assembly.name, key)
             artist.block = block
             artist.draw_edges()
+            if show_faces:
+                artist.draw_faces()
+            if show_vertices:
+                artist.draw_vertices()
         artist.redraw()
 
     def draw_interfaces(self):

@@ -61,8 +61,31 @@
 <h1>AssemblyArtist.draw_blocks</h1>
 <dl class="method">
 <dt id="compas_rbe.rhino.AssemblyArtist.draw_blocks">
-<code class="descclassname">AssemblyArtist.</code><code class="descname">draw_blocks</code><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
-<dd></dd></dl>
+<code class="descclassname">AssemblyArtist.</code><code class="descname">draw_blocks</code><span class="sig-paren">(</span><em>show_faces=False</em>, <em>show_vertices=False</em><span class="sig-paren">)</span></dt>
+<dd><p>Draw the blocks of the assembly.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>show_faces</strong> (<em>bool, optional</em>) – Draw the faces of the block.
+Default is <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+<li><p><strong>show_vertices</strong> (<em>bool, optional</em>) – Draw the vertices of the block.
+Default is <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>By default, blocks are drawn as wireframes.</p></li>
+<li><p>By default, blocks are drawn on a sublayer of the base layer, if a base layer was specified.</p></li>
+<li><p>Block names have the following pattern: <code class="docutils literal notranslate"><span class="pre">&quot;{assembly_name}.block.{block_id}&quot;</span></code></p></li>
+<li><p>Faces and vertices can be drawn using the corresponding flags.</p></li>
+<li><p>Block components (faces, edges, vertices) have the following pattern: <code class="docutils literal notranslate"><span class="pre">&quot;{assembly_name}.block.{block_id}.[face|egde|vertex].{face_id|edge_id|vertex_id}&quot;</span></code></p></li>
+</ul>
+<p class="rubric">Examples</p>
+<div class="language-python notranslate"><div class="highlight"><pre><code><span></span><span class="k">pass</span>
+</code></pre></div>
+</div>
+</dd></dl>
 
 </div>
 
