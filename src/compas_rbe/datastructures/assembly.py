@@ -7,17 +7,19 @@ import ast
 from compas.datastructures import Network
 
 
-__author__    = ['Tom Van Mele', ]
-__copyright__ = 'Copyright 2016, Block Research Group - ETH Zurich'
-__license__   = 'MIT license'
-__email__     = 'vanmelet@ethz.ch'
-
-
 __all__ = ['Assembly']
 
 
 class Assembly(Network):
-    """A data structure for discrete element assemblies."""
+    """A data structure for discrete element assemblies.
+
+    Examples
+    --------
+    .. code-block:: python
+
+        pass
+
+    """
 
     def __init__(self):
         super(Assembly, self).__init__()
@@ -42,6 +44,21 @@ class Assembly(Network):
 
     @classmethod
     def from_polysurfaces(cls, guids):
+        """Class method for constructing an assembly from blocks represented by
+        Rhino poly surfaces.
+
+        Parameters
+        ----------
+        guids : list of str
+            A list of GUIDs identifying the poly-surfaces representing the blocks of the assembly.
+
+        Examples
+        --------
+        .. code-block:: python
+
+            pass
+    
+        """
         import compas_rhino
         from compas_rbe.assemblies import Block
 

@@ -14,12 +14,6 @@ except ImportError:
 from compas.geometry import cross_vectors
 
 
-__author__    = ['Ursula Frick', 'Tom Van Mele', ]
-__copyright__ = 'Copyright 2016 - Block Research Group, ETH Zurich'
-__license__   = 'MIT License'
-__email__     = 'vanmelet@ethz.ch'
-
-
 __all__ = [
     'make_Aeq',
     'make_Aiq',

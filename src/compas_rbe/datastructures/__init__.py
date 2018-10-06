@@ -3,11 +3,17 @@
 compas_rbe.datastructures
 ********************************************************************************
 
+.. figure:: /_images/compas_rbe-assembly_interfaces.png
+    :figclass: figure
+    :class: figure-img img-fluid
+
+
 .. currentmodule:: compas_rbe.datastructures
 
 
 .. autosummary::
     :toctree: generated/
+    :nosignatures:
 
     Assembly
     Block

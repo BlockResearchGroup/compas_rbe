@@ -5,9 +5,12 @@ BlockHelper
 
 .. currentmodule:: compas_rbe.rhino
 
-.. .. inheritance-diagram:: BlockHelper
-
 .. autoclass:: BlockHelper
+
+   
+   
+   
+
 
    
    
@@ -15,23 +18,6 @@ BlockHelper
 
    .. autosummary::
       :toctree:
-
-   
-      ~BlockHelper.move_edge
-      ~BlockHelper.move_face
-      ~BlockHelper.move_vertex
-      ~BlockHelper.move_vertices
-      ~BlockHelper.select_edge
-      ~BlockHelper.select_edges
-      ~BlockHelper.select_face
-      ~BlockHelper.select_faces
-      ~BlockHelper.select_vertex
-      ~BlockHelper.select_vertices
-      ~BlockHelper.update_edge_attributes
-      ~BlockHelper.update_face_attributes
-      ~BlockHelper.update_vertex_attributes
-   
-   
 
    
    

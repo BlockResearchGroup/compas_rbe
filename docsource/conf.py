@@ -35,6 +35,7 @@ extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.autosummary',
     'sphinx.ext.intersphinx',
+    'sphinx.ext.inheritance_diagram',
     'sphinx.ext.mathjax',
     'sphinx.ext.napoleon',
     'matplotlib.sphinxext.plot_directive',
@@ -44,9 +45,6 @@ extensions = [
 
 autodoc_default_flags = [
     "show-inheritance",
-    "no-inherited-members",
-    "no-special-members",
-    "no-private-members",
 ]
 
 autodoc_member_order = 'alphabetical'
@@ -87,7 +85,10 @@ plot_html_show_formats = False
 
 # intersphinx options
 
-intersphinx_mapping = {'python': ('https://docs.python.org/', None)}
+intersphinx_mapping = {
+    'python': ('https://docs.python.org/', None),
+    'compas': ('https://compas-dev.github.io/main', 'https://compas-dev.github.io/main/objects.inv'),
+}
 
 
 # -- Options for HTML output ----------------------------------------------

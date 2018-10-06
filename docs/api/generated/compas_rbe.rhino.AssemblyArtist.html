@@ -18,7 +18,7 @@
         <link rel="stylesheet" type="text/css" href="../../_static/css/compas-reference.css" />
 
         
-            <link rel="next" title="AssemblyArtist.__init__" href="compas_rbe.rhino.AssemblyArtist.__init__.html" />
+            <link rel="next" title="AssemblyArtist.assembly" href="compas_rbe.rhino.AssemblyArtist.assembly.html" />
         
         
         
@@ -63,6 +63,24 @@
 <dt id="compas_rbe.rhino.AssemblyArtist">
 <em class="property">class </em><code class="descclassname">compas_rbe.rhino.</code><code class="descname">AssemblyArtist</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">compas_rhino.artists.networkartist.NetworkArtist</span></code></p>
+<p class="rubric">Attributes</p>
+<table class="longtable docutils">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_rbe.rhino.AssemblyArtist.assembly.html#compas_rbe.rhino.AssemblyArtist.assembly" title="compas_rbe.rhino.AssemblyArtist.assembly"><code class="xref py py-obj docutils literal notranslate"><span class="pre">assembly</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_rbe.rhino.AssemblyArtist.layer.html#compas_rbe.rhino.AssemblyArtist.layer" title="compas_rbe.rhino.AssemblyArtist.layer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">layer</span></code></a></p></td>
+<td><p>The layer that contains the mesh.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_rbe.rhino.AssemblyArtist.network.html#compas_rbe.rhino.AssemblyArtist.network" title="compas_rbe.rhino.AssemblyArtist.network"><code class="xref py py-obj docutils literal notranslate"><span class="pre">network</span></code></a></p></td>
+<td><p>The network that should be painted.</p></td>
+</tr>
+</tbody>
+</table>
 <p class="rubric">Methods</p>
 <table class="longtable docutils">
 <colgroup>
@@ -73,80 +91,17 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="compas_rbe.rhino.AssemblyArtist.__init__.html#compas_rbe.rhino.AssemblyArtist.__init__" title="compas_rbe.rhino.AssemblyArtist.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(*args, **kwargs)</p></td>
 <td><p>Initialize self.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_rbe.rhino.AssemblyArtist.clear.html#compas_rbe.rhino.AssemblyArtist.clear" title="compas_rbe.rhino.AssemblyArtist.clear"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clear</span></code></a>()</p></td>
-<td><p>Clear the vertices and edges of the network, without clearing the other elements in the layer.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_rbe.rhino.AssemblyArtist.clear_edgelabels.html#compas_rbe.rhino.AssemblyArtist.clear_edgelabels" title="compas_rbe.rhino.AssemblyArtist.clear_edgelabels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clear_edgelabels</span></code></a>([keys])</p></td>
-<td><p>Clear all edge labels previously drawn by the <code class="docutils literal notranslate"><span class="pre">EdgeArtist</span></code>.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_rbe.rhino.AssemblyArtist.clear_edges.html#compas_rbe.rhino.AssemblyArtist.clear_edges" title="compas_rbe.rhino.AssemblyArtist.clear_edges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clear_edges</span></code></a>([keys])</p></td>
-<td><p>Clear all edges previously drawn by the <code class="docutils literal notranslate"><span class="pre">EdgeArtist</span></code>.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_rbe.rhino.AssemblyArtist.clear_layer.html#compas_rbe.rhino.AssemblyArtist.clear_layer" title="compas_rbe.rhino.AssemblyArtist.clear_layer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clear_layer</span></code></a>()</p></td>
-<td><p>Clear the main layer of the artist.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_rbe.rhino.AssemblyArtist.clear_vertexlabels.html#compas_rbe.rhino.AssemblyArtist.clear_vertexlabels" title="compas_rbe.rhino.AssemblyArtist.clear_vertexlabels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clear_vertexlabels</span></code></a>([keys])</p></td>
-<td><p>Clear all vertex labels previously drawn by the <code class="docutils literal notranslate"><span class="pre">VertexArtist</span></code>.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_rbe.rhino.AssemblyArtist.clear_vertices.html#compas_rbe.rhino.AssemblyArtist.clear_vertices" title="compas_rbe.rhino.AssemblyArtist.clear_vertices"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clear_vertices</span></code></a>([keys])</p></td>
-<td><p>Clear all vertices previously drawn by the <code class="docutils literal notranslate"><span class="pre">VertexArtist</span></code>.</p></td>
-</tr>
 <tr class="row-even"><td><p><a class="reference internal" href="compas_rbe.rhino.AssemblyArtist.color_interfaces.html#compas_rbe.rhino.AssemblyArtist.color_interfaces" title="compas_rbe.rhino.AssemblyArtist.color_interfaces"><code class="xref py py-obj docutils literal notranslate"><span class="pre">color_interfaces</span></code></a>()</p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="compas_rbe.rhino.AssemblyArtist.draw_blocks.html#compas_rbe.rhino.AssemblyArtist.draw_blocks" title="compas_rbe.rhino.AssemblyArtist.draw_blocks"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_blocks</span></code></a>()</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_rbe.rhino.AssemblyArtist.draw_edgelabels.html#compas_rbe.rhino.AssemblyArtist.draw_edgelabels" title="compas_rbe.rhino.AssemblyArtist.draw_edgelabels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_edgelabels</span></code></a>([text, color])</p></td>
-<td><p>Draw labels for a selection of edges.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_rbe.rhino.AssemblyArtist.draw_edges.html#compas_rbe.rhino.AssemblyArtist.draw_edges" title="compas_rbe.rhino.AssemblyArtist.draw_edges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_edges</span></code></a>([keys, color])</p></td>
-<td><p>Draw a selection of edges.</p></td>
-</tr>
 <tr class="row-even"><td><p><a class="reference internal" href="compas_rbe.rhino.AssemblyArtist.draw_forces.html#compas_rbe.rhino.AssemblyArtist.draw_forces" title="compas_rbe.rhino.AssemblyArtist.draw_forces"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_forces</span></code></a>([scale, eps])</p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="compas_rbe.rhino.AssemblyArtist.draw_interfaces.html#compas_rbe.rhino.AssemblyArtist.draw_interfaces" title="compas_rbe.rhino.AssemblyArtist.draw_interfaces"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_interfaces</span></code></a>()</p></td>
 <td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_rbe.rhino.AssemblyArtist.draw_lines.html#compas_rbe.rhino.AssemblyArtist.draw_lines" title="compas_rbe.rhino.AssemblyArtist.draw_lines"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_lines</span></code></a>(lines[, layer, clear_layer, redraw])</p></td>
-<td><p>Draw a collection of lines.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_rbe.rhino.AssemblyArtist.draw_points.html#compas_rbe.rhino.AssemblyArtist.draw_points" title="compas_rbe.rhino.AssemblyArtist.draw_points"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_points</span></code></a>(points[, layer, clear_layer, redraw])</p></td>
-<td><p>Draw a collection of points.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_rbe.rhino.AssemblyArtist.draw_polygons.html#compas_rbe.rhino.AssemblyArtist.draw_polygons" title="compas_rbe.rhino.AssemblyArtist.draw_polygons"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_polygons</span></code></a>(polygons[, layer, …])</p></td>
-<td><p>Draw a collection of polygons.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_rbe.rhino.AssemblyArtist.draw_vertexlabels.html#compas_rbe.rhino.AssemblyArtist.draw_vertexlabels" title="compas_rbe.rhino.AssemblyArtist.draw_vertexlabels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_vertexlabels</span></code></a>([text, color])</p></td>
-<td><p>Draw labels for a selection vertices.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_rbe.rhino.AssemblyArtist.draw_vertices.html#compas_rbe.rhino.AssemblyArtist.draw_vertices" title="compas_rbe.rhino.AssemblyArtist.draw_vertices"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_vertices</span></code></a>([keys, color])</p></td>
-<td><p>Draw a selection of vertices.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_rbe.rhino.AssemblyArtist.redraw.html#compas_rbe.rhino.AssemblyArtist.redraw" title="compas_rbe.rhino.AssemblyArtist.redraw"><code class="xref py py-obj docutils literal notranslate"><span class="pre">redraw</span></code></a>([timeout])</p></td>
-<td><p>Redraw the Rhino view.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_rbe.rhino.AssemblyArtist.save.html#compas_rbe.rhino.AssemblyArtist.save" title="compas_rbe.rhino.AssemblyArtist.save"><code class="xref py py-obj docutils literal notranslate"><span class="pre">save</span></code></a>(path[, width, height, scale, …])</p></td>
-<td><p>Save the current screen view.</p></td>
-</tr>
-</tbody>
-</table>
-<p class="rubric">Attributes</p>
-<table class="longtable docutils">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">assembly</span></code></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">layer</span></code></p></td>
-<td><p><em>str</em> – The layer that contains the mesh.</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">network</span></code></p></td>
-<td><p><em>compas.datastructures.Network</em> – The network that should be painted.</p></td>
 </tr>
 </tbody>
 </table>
@@ -215,7 +170,9 @@
                     
 
                     <ul class="nav flex-column" id="compas-localnav">
-<li class="nav-item"><a class="nav-link reference internal" href="#">AssemblyArtist</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#">AssemblyArtist</a><ul class="nav">
+</ul>
+</li>
 </ul>
 
 
@@ -230,7 +187,7 @@
             
 
             
-                Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.7.
+                Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.1.
             
         </footer>
 
