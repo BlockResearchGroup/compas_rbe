@@ -21,7 +21,7 @@ from compas_rbe.rhino import AssemblyHelper
 # external functions
 # ==============================================================================
 
-identify_interfaces = XFunc('compas_rbe.assemblies.identify_interfaces_xfunc')
+identify_interfaces = XFunc('compas_rbe.datastructures.identify_interfaces_xfunc')
 identify_interfaces.tmpdir = compas_rbe.TEMP
 
 compute_interface_forces = XFunc('compas_rbe.equilibrium.compute_interface_forces_xfunc')

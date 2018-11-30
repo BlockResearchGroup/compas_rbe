@@ -34,8 +34,8 @@ __all__ = [
 
 
 def compute_interface_forces_xfunc(data, **kwargs):
-    from compas_rbe.assemblies import Assembly
-    from compas_rbe.assemblies import Block
+    from compas_rbe.datastructures import Assembly
+    from compas_rbe.datastructures import Block
     assembly = Assembly.from_data(data['assembly'])
     assembly.blocks = {int(key): Block.from_data(data['blocks'][key]) for key in data['blocks']}
     compute_interface_forces(assembly, **kwargs)
