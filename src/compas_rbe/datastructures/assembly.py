@@ -71,7 +71,7 @@ class Assembly(Network):
     
         """
         import compas_rhino
-        from compas_rbe.assemblies import Block
+        from compas_rbe.datastructures import Block
 
         names = compas_rhino.get_object_names(guids)
         assembly = cls()
@@ -119,7 +119,7 @@ class Assembly(Network):
         """
         import compas_rhino
         from compas_rhino.helpers import mesh_from_guid
-        from compas_rbe.assemblies import Block
+        from compas_rbe.datastructures import Block
 
         names = compas_rhino.get_object_names(guids)
         assembly = cls()
