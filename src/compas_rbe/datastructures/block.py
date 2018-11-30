@@ -5,7 +5,7 @@ from __future__ import division
 from compas.geometry import centroid_points
 from compas.geometry import cross_vectors
 from compas.geometry import normalize_vector
-from compas.geometry import center_of_mass_polyhedron
+from compas.geometry import centroid_polyhedron
 from compas.geometry import volume_polyhedron
 
 from compas.datastructures import Mesh
@@ -113,7 +113,7 @@ class Block(Mesh):
         """
         vertices = [self.vertex_coordinates(key) for key in self.vertices()]
         faces = [self.face_vertices(fkey) for fkey in self.faces()]
-        return center_of_mass_polyhedron((vertices, faces))
+        return centroid_polyhedron((vertices, faces))
 
     def volume(self):
         """Compute the volume of the block.
