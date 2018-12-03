@@ -7,4 +7,4 @@ from compas_rbe.datastructures import Assembly
 guids = compas_rhino.select_meshes()
 assembly = Assembly.from_meshes(guids)
 
-assembly.to_json(compas_rbe.get('gnene_vault_blocks.json'))
+assembly.to_json(compas_rbe.get('gene_vault_blocks.json'))
