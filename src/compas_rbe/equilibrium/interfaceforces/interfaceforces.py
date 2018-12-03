@@ -175,7 +175,7 @@ def compute_interfaceforces(assembly,
 
     if verbose:
         print('')
-        print('min   0.5 * xT * P * x + qT * x')
+        print('min   0.5 * xT * P * x (+ qT * x)')
         print('s.t.  A * x == b')
         print('      G * x <= h')
         print('')
@@ -196,62 +196,85 @@ def compute_interfaceforces(assembly,
     # 1 / f+, 1, 1 / f+, 1 / f+
 
     # ==========================================================================
-    # solve with cvxpy
+    # solve with cvxpy:ECOS
     # ==========================================================================
 
-    if compas.PY3:
-        x = cvxpy.Variable((P.shape[0], 1))
-    else:
-        x = cvxpy.Variable(P.shape[0])
+    if solver == 'ECOS':
 
-    objective = cvxpy.Minimize(0.5 * cvxpy.quad_form(x, P))
-
-    constraints = [
-        A * x == b,
-        G * x <= h
-    ]
-
-    problem = cvxpy.Problem(objective, constraints)
-
-    problem.solve(solver=cvxpy.ECOS, verbose=verbose, max_iters=maxiters)
-
-    if problem.status == cvxpy.OPTIMAL:
-        x = array(x.value).reshape((-1, 1))
-
-        if verbose:
-            print('')
-            print('optimal value')
-            print('-------------')
-            print(problem.value)
-
-    else:
-        if x.value is not None:
-            x = array(x.value).reshape((-1, 1))
+        if compas.PY3:
+            x = cvxpy.Variable((P.shape[0], 1))
         else:
-            x = None
+            x = cvxpy.Variable(P.shape[0])
 
-        if verbose:
-            print('')
-            print(problem.status)
+        objective = cvxpy.Minimize(0.5 * cvxpy.quad_form(x, P))
+
+        constraints = [
+            A * x == b,
+            G * x <= h
+        ]
+
+        problem = cvxpy.Problem(objective, constraints)
+
+        problem.solve(solver=cvxpy.ECOS, verbose=verbose, max_iters=maxiters)
+
+        if problem.status == cvxpy.OPTIMAL:
+            x = array(x.value).reshape((-1, 1))
+
+            if verbose:
+                print('')
+                print('optimal value')
+                print('-------------')
+                print(problem.value)
+
+        else:
+            if x.value is not None:
+                x = array(x.value).reshape((-1, 1))
+            else:
+                x = None
+
+            if verbose:
+                print('')
+                print(problem.status)
 
     # ==========================================================================
     # solve with cvxopt
     # (use sparse matrices!)
     # ==========================================================================
 
-    # res = cvxopt.solvers.qp(
-    #     cvxopt.sparse(cvxopt.matrix(P), tc='d'),
-    #     cvxopt.matrix(q),
-    #     cvxopt.sparse(cvxopt.matrix(G), tc='d'),
-    #     cvxopt.matrix(h),
-    #     cvxopt.sparse(cvxopt.matrix(A), tc='d'),
-    #     cvxopt.matrix(b)
-    # )
+    if solver == 'CVXOPT':
 
-    # x = array(res['x']).reshape((-1, 1))
+        res = cvxopt.solvers.qp(
+            cvxopt.sparse(cvxopt.matrix(P), tc='d'),
+            cvxopt.matrix(q),
+            cvxopt.sparse(cvxopt.matrix(G), tc='d'),
+            cvxopt.matrix(h),
+            cvxopt.sparse(cvxopt.matrix(A), tc='d'),
+            cvxopt.matrix(b)
+        )
 
-    # if verbose:
-    #     print res['primal objective']
+        if res['status'] == 'optimal':
+            x = array(res['x']).reshape((-1, 1))
+
+            if verbose:
+                print(res['primal objective'])
+
+        else:
+            if res['x']:
+                x = array(res['x']).reshape((-1, 1))
+            else:
+                x = None
+
+            if verbose:
+                print('')
+                print(problem.status)
+
+    # ==========================================================================
+    # solve with libigl
+    # ==========================================================================
+
+    if solver == 'IGL':
+
+        pass
 
     # ==========================================================================
     # update
@@ -283,7 +306,7 @@ def compute_interfaceforces(assembly,
 
 
 # ==============================================================================
-# Debugging
+# Main
 # ==============================================================================
 
 if __name__ == "__main__":

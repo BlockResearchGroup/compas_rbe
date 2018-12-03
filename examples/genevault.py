@@ -21,7 +21,7 @@ assembly = Assembly.from_json(compas_rbe.get('genevault.json'))
 
 identify_interfaces(
     assembly,
-    nmax=5,
+    nmax=10,
     tmax=0.05,
     amin=0.01,
     lmin=0.01,

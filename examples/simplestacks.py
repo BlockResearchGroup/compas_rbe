@@ -29,7 +29,7 @@ identify_interfaces(
 
 # equilibrium
 
-compute_interfaceforces(assembly, verbose=True)
+compute_interfaceforces(assembly, verbose=True, solver='CVXOPT')
 
 # result
 
