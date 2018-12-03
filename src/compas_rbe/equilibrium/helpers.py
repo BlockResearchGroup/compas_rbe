@@ -21,8 +21,13 @@ __all__ = [
 
 
 def make_Aeq(assembly, return_vcount=True):
-    """Create the equilibrium matrix."""
+    """Create the equilibrium matrix.
 
+    Parameters
+    ----------
+    assembly : compas_rbe.datastructures.Assembly
+
+    """
     rows = []
     cols = []
     data = []

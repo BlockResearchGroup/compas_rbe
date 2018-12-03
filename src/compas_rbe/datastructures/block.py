@@ -25,13 +25,13 @@ class Block(Mesh):
 
     """
 
+    __module__ = 'compas.datastructures'
+
     def __init__(self):
         super(Block, self).__init__()
         self.attributes.update({
             'name': 'Block'
         })
-        self.default_vertex_attributes.update({})
-        self.default_edge_attributes.update({})
 
     @classmethod
     def from_polysurface(cls, guid):

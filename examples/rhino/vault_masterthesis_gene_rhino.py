@@ -21,12 +21,15 @@ from compas_rbe.rhino import AssemblyHelper
 # external functions
 # ==============================================================================
 
-identify_interfaces = XFunc('compas_rbe.datastructures.identify_interfaces_xfunc')
+identify_interfaces = XFunc('compas_rbe.interfaces.identify_interfaces')
+
+identify_interfaces.argtypes = [Assembly]
+identify_interfaces.kwargtypes = {}
+identify_interfaces.restypes = []
 identify_interfaces.tmpdir = compas_rbe.TEMP
 
-compute_interface_forces = XFunc('compas_rbe.equilibrium.compute_interface_forces_xfunc')
+compute_interface_forces = XFunc('compas_rbe.equilibrium.compute_interfaceforces')
 compute_interface_forces.tmpdir = compas_rbe.TEMP
-
 
 # ==============================================================================
 # make an artist
@@ -34,7 +37,6 @@ compute_interface_forces.tmpdir = compas_rbe.TEMP
 
 artist = AssemblyArtist(None, layer='RBE')
 artist.clear_layer()
-
 
 # ==============================================================================
 # initialise assembly from Rhino geometry
@@ -54,16 +56,19 @@ artist.draw_vertices(color={key: '#ff0000' for key in assembly.vertices_where({'
 
 artist.redraw()
 
-
 # ==============================================================================
 # identify support
+#
+# note that block attributes can be set using the names of the corresponding
+# Rhino geometry objects
+#
+# e.g.: {'is_support': True}
 # ==============================================================================
 
 # key = AssemblyHelper.select_vertices(assembly, "Select the vertex representing the support block.")
 
 # if key is not None:
 #     assembly.set_vertex_attribute(key, 'is_support', True)
-
 
 # ==============================================================================
 # draw blocks
@@ -73,7 +78,6 @@ artist.clear_vertices()
 artist.draw_vertices(color={key: '#ff0000' for key in assembly.vertices_where({'is_support': True})})
 
 artist.redraw()
-
 
 # ==============================================================================
 # identify block interfaces
@@ -104,7 +108,6 @@ assembly.data = result['assembly']
 for key in assembly.blocks:
     assembly.blocks[key].data = result['blocks'][str(key)]
 
-
 # ==============================================================================
 # draw interfaces
 # ==============================================================================
@@ -113,7 +116,6 @@ artist.draw_edges()
 artist.draw_interfaces()
 
 artist.redraw()
-
 
 # ==============================================================================
 # compute equilibrium
@@ -132,7 +134,6 @@ assembly.data = result['assembly']
 
 for key in assembly.blocks:
     assembly.blocks[key].data = result['blocks'][str(key)]
-
 
 # ==============================================================================
 # draw forces

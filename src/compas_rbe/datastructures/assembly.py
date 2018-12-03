@@ -3,6 +3,7 @@ from __future__ import absolute_import
 from __future__ import division
 
 import ast
+import json
 
 from compas.datastructures import Network
 
@@ -10,8 +11,19 @@ from compas.datastructures import Network
 __all__ = ['Assembly']
 
 
+# should an assembly be composed of a network attribute 
+# and a block collection
+# rather than inherit from network
+# and add inconsistent stuff to that interface?
+
+
 class Assembly(Network):
     """A data structure for discrete element assemblies.
+
+    Attributes
+    ----------
+    blocks : dict
+        A dictionary of blocks, with each block represented by a mesh.
 
     Examples
     --------
@@ -20,6 +32,8 @@ class Assembly(Network):
         pass
 
     """
+
+    __module__ = 'compas_rbe.datastructures'
 
     def __init__(self):
         super(Assembly, self).__init__()
@@ -39,10 +53,26 @@ class Assembly(Network):
             'interface_forces' : None,
         })
 
+    # @classmethod
+    # def from_data(cls, data):
+    #     assembly = super(cls, None).from_data(data['assembly'])
+    #     asembly.blocks = {int(key): Block.from_data(data['blocks'][key]) for key in data['blocks']}
+    #     return assembly
 
     @classmethod
     def from_json(cls, filepath):
-        pass
+        from compas_rbe.datastructures import Block
+
+        with open(filepath, 'r') as fo:
+            data = json.load(fo)
+    
+            # vertex keys in an assembly can be of any hashable type
+            # keys in the blocks dict should be treated the same way!
+
+            assembly = cls.from_data(data['assembly'])
+            assembly.blocks = {int(key): Block.from_data(data['blocks'][key]) for key in data['blocks']}
+
+        return assembly
 
     @classmethod
     def from_polysurfaces(cls, guids):
@@ -139,6 +169,20 @@ class Assembly(Network):
 
         return assembly
 
+    def to_json(self, filepath):
+        data = {
+            'assembly' : self.to_data(),
+            'blocks': {str(key): self.blocks[key].to_data() for key in self.blocks}
+        }
+        with open(filepath, 'w') as fo:
+            json.dump(data, fo)
+
+    def to_polysurfaces(self):
+        pass
+
+    def to_meshes(self):
+        pass
+
     def add_block(self, block, attr_dict=None, **kwattr):
         """Add a block to the assembly.
 
@@ -197,7 +241,7 @@ class Assembly(Network):
 
 
 # ==============================================================================
-# Debugging
+# Main
 # ==============================================================================
 
 if __name__ == "__main__":

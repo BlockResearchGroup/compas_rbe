@@ -34,14 +34,9 @@ Functions
 
 """
 
-from __future__ import absolute_import
+from __future__ import absolute_import, division, print_function
 
 from .assembly import *
 from .block import *
-from .interface import *
 
-from . import assembly
-from . import block
-from . import interface
-
-__all__ = assembly.__all__ + block.__all__ + interface.__all__
+__all__ = [name for name in dir() if not name.startswith('_')]

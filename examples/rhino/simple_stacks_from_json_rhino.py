@@ -14,65 +14,64 @@ from compas_rbe.datastructures import Block
 from compas_rbe.datastructures import Assembly
 
 from compas_rbe.rhino import AssemblyArtist
-from compas_rbe.rhino import AssemblyHelper
 
 
 # ==============================================================================
 # external functions
 # ==============================================================================
 
-identify_interfaces = XFunc('compas_rbe.datastructures.identify_interfaces_xfunc')
+identify_interfaces = XFunc('compas_rbe.interfaces.identify_interfaces_xfunc')
 identify_interfaces.tmpdir = compas_rbe.TEMP
 
-compute_interface_forces = XFunc('compas_rbe.equilibrium.compute_interface_forces_xfunc')
+compute_interface_forces = XFunc('compas_rbe.equilibrium.compute_interfaceforces_xfunc')
 compute_interface_forces.tmpdir = compas_rbe.TEMP
 
+# # for rhinomac
 
-# ==============================================================================
-# make an artist
-# ==============================================================================
+# identify_interfaces.paths  = [compas_rbe.SRC]
+# compute_interface_forces.paths  = [compas_rbe.SRC]
 
-artist = AssemblyArtist(None, layer='RBE')
-artist.clear_layer()
+# mypython = "/Users/vanmelet/anaconda3/bin/python"
 
-
-# ==============================================================================
-# initialise assembly from Rhino geometry
-# ==============================================================================
-
-guids = compas_rhino.select_surfaces()
-assembly = Assembly.from_polysurfaces(guids)
-
-artist.assembly = assembly
-
-# ==============================================================================
-# draw blocks
-# ==============================================================================
-
-artist.draw_blocks()
-artist.draw_vertices(color={key: '#ff0000' for key in assembly.vertices_where({'is_support': True})})
-
-artist.redraw()
+# identify_interfaces.python = mypython
+# compute_interface_forces.python = mypython
 
 
 # ==============================================================================
-# identify support
+# initialise assembly from stored block data
 # ==============================================================================
 
-key = AssemblyHelper.select_vertex(assembly, "Select the vertex representing the support block.")
+assembly = Assembly()
 
-if key is not None:
-    assembly.set_vertex_attribute(key, 'is_support', True)
+# read block geometry data from sample json file
 
+filepath = compas_rbe.get('simple_stack2.json')
 
-# ==============================================================================
-# draw blocks
-# ==============================================================================
+with open(filepath, 'r') as fp:
+    data = json.load(fp)
 
-artist.clear_vertices()
-artist.draw_vertices(color={key: '#ff0000' for key in assembly.vertices_where({'is_support': True})})
+    for item in data:
 
-artist.redraw()
+        # simple_stack2.json still uses a dict of half-edges to represent a face
+        # instead of simple lists
+        for fkey, cycle in item['face'].items():
+            start = list(cycle.keys())[0]
+            key = cycle[start]
+            item['face'][fkey] = [start]
+            while True:
+                if key == start:
+                    break
+                item['face'][fkey].append(key)
+                key = cycle[key]
+
+        assembly.add_block(Block.from_data(item))
+
+# mark the first block as support
+# this will keep it fixed and allow it to provide reaction forces
+
+for key, attr in assembly.vertices(True):
+    if assembly.blocks[key].attributes['name'] == 'Block_0':
+        attr['is_support'] = True
 
 
 # ==============================================================================
@@ -106,16 +105,6 @@ for key in assembly.blocks:
 
 
 # ==============================================================================
-# draw interfaces
-# ==============================================================================
-
-artist.draw_edges()
-artist.draw_interfaces()
-
-artist.redraw()
-
-
-# ==============================================================================
 # compute equilibrium
 # ==============================================================================
 
@@ -135,10 +124,14 @@ for key in assembly.blocks:
 
 
 # ==============================================================================
-# draw forces
+# draw result
 # ==============================================================================
 
-# artist.draw_forces()
-artist.color_interfaces()
+artist = AssemblyArtist(assembly, layer='RBE')
+artist.clear_layer()
+
+artist.draw_blocks()
+artist.draw_interfaces()
+artist.draw_forces()
 
 artist.redraw()

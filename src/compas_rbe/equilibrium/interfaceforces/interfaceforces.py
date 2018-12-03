@@ -23,35 +23,38 @@ try:
 except ImportError:
     compas.raise_if_not_ironpython()
 
-from compas_rbe.equilibrium.utilities import make_Aeq
-from compas_rbe.equilibrium.utilities import make_Aiq
+from compas_rbe.equilibrium.helpers import make_Aeq
+from compas_rbe.equilibrium.helpers import make_Aiq
 
 
 __all__ = [
-    'compute_interface_forces',
-    'compute_interface_forces_xfunc'
+    'compute_interfaceforces',
+    'compute_interfaceforces_xfunc'
 ]
 
 
-def compute_interface_forces_xfunc(data, **kwargs):
+def compute_interfaceforces_xfunc(data, **kwargs):
     from compas_rbe.datastructures import Assembly
     from compas_rbe.datastructures import Block
+
     assembly = Assembly.from_data(data['assembly'])
     assembly.blocks = {int(key): Block.from_data(data['blocks'][key]) for key in data['blocks']}
-    compute_interface_forces(assembly, **kwargs)
+
+    compute_interfaceforces(assembly, **kwargs)
+
     return {
         'assembly': assembly.to_data(),
         'blocks': {str(key): assembly.blocks[key].to_data() for key in assembly.blocks}
     }
 
 
-def compute_interface_forces(assembly,
-                             friction8=False,
-                             mu=0.6,
-                             density=1.0,
-                             verbose=False,
-                             maxiters=100,
-                             solver='ECOS'):
+def compute_interfaceforces(assembly,
+                            friction8=False,
+                            mu=0.6,
+                            density=1.0,
+                            verbose=False,
+                            maxiters=100,
+                            solver='ECOS'):
     r"""Compute the forces at the interfaces between the blocks of an assembly.
 
     Solve the following optimisation problem:

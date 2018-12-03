@@ -29,10 +29,6 @@ __all__ = [
 ]
 
 
-class Interface(object):
-    pass
-
-
 def _find_nearest_neighbours(cloud, nmax):
     tree  = cKDTree(cloud)
     nnbrs = [tree.query(root, nmax) for root in cloud]
@@ -43,9 +39,12 @@ def _find_nearest_neighbours(cloud, nmax):
 def identify_interfaces_xfunc(data, **kwargs):
     from compas_rbe.datastructures import Assembly
     from compas_rbe.datastructures import Block
+
     assembly = Assembly.from_data(data['assembly'])
     assembly.blocks = {int(key): Block.from_data(data['blocks'][key]) for key in data['blocks']}
+
     identify_interfaces(assembly, **kwargs)
+
     return {
         'assembly': assembly.to_data(),
         'blocks': {str(key): assembly.blocks[key].to_data() for key in assembly.blocks}
