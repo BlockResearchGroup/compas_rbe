@@ -15,7 +15,7 @@ from compas_rbe.viewer import AssemblyViewer
 
 # initialize assembly and blocks from json file
 
-assembly = Assembly.from_json(compas_rbe.get('simple_stack_4.json'))
+assembly = Assembly.from_json(compas_rbe.get('corbel_blocks.json'))
 
 print(list(assembly.vertices_where({'is_support': True})))
 

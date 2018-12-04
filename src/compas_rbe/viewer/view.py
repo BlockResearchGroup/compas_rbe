@@ -59,64 +59,6 @@ class View(GLWidget):
     # arrays
     # ==========================================================================
 
-    # @property
-    # def array_xyz(self):
-    #     xyz = []
-    #     for block in self.blocks:
-    #         xyz += block.xyz
-    #     return flist(xyz)
-
-    # @property
-    # def array_vertices(self):
-    #     vertices = []
-    #     for block in self.blocks:
-    #         i = len(vertices)
-    #         vertices += [key + i for key in block.vertices]
-    #     return vertices
-
-    # @property
-    # def array_edges(self):
-    #     i = 0
-    #     edges = []
-    #     for block in self.blocks:
-    #         edges += [[u + i, v + i] for u, v in block.edges]
-    #         i += len(list(block.vertices))
-    #     return flist(edges)
-
-    # @property
-    # def array_faces_front(self):
-    #     i = 0
-    #     faces = []
-    #     for block in self.blocks:
-    #         faces += [[u + i for u in face] for face in block.faces]
-    #         i += len(list(block.vertices))
-    #     return flist(faces)
-
-    # @property
-    # def array_faces_back(self):
-    #     i = 0
-    #     faces = []
-    #     for block in self.blocks:
-    #         faces += [[u + i for u in face] for face in block.faces]
-    #         i += len(list(block.vertices))
-    #     return flist(face[::-1] for face in faces)
-
-    # @property
-    # def array_vertices_color(self):
-    #     return flist(hex_to_rgb(self.settings['vertices.color']) for _ in self.array_vertices)
-
-    # @property
-    # def array_edges_color(self):
-    #     return flist(hex_to_rgb(self.settings['edges.color']) for _ in self.array_vertices)
-
-    # @property
-    # def array_faces_color_front(self):
-    #     return flist(hex_to_rgb(self.settings['faces.color:front']) for _ in self.array_xyz)
-
-    # @property
-    # def array_faces_color_back(self):
-    #     return flist(hex_to_rgb(self.settings['faces.color:back']) for _ in self.array_xyz)
-
     def block_array_xyz(self, block):
         return flist(block.xyz)
 
@@ -198,6 +140,8 @@ class View(GLWidget):
             "forces" : [],
         }
         for block in self.blocks:
+            # combine all block vertex coordinates in one buffer
+            # use a map to find the vertex coordinates of a specific block
             self.buffers["blocks"].append({
                 'xyz'              : self.make_vertex_buffer(self.block_array_xyz(block)),
                 'vertices'         : self.make_index_buffer(self.block_array_vertices(block)),
@@ -214,6 +158,7 @@ class View(GLWidget):
                 'f'                : len(self.block_array_faces_front(block)),
             })
         for interface in self.interfaces:
+            # combine all interface vertices in a single 
             self.buffers["interfaces"].append({
                 'xyz'                   : self.make_vertex_buffer(self.interface_array_xyz(interface)),
                 'interfaces:front'      : self.make_index_buffer(self.interface_array_faces_front(interface)),

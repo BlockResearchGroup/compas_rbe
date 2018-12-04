@@ -1,4 +1,6 @@
 // g++ -shared -fPIC src/main.cpp -o iforces.so
+// g++ -shared -fPIC -I/opt/local/eigen -I/opt/local/libigl/include src/main.cpp -o iforces.so
+// or use export CPLUS_INCLUDE_PATH=/opt/local/eigen:/opt/local/libigl/include
 
 #include <igl/cotmatrix.h>
 #include <Eigen/Dense>
