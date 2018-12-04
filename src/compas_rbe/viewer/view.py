@@ -195,6 +195,7 @@ class View(GLWidget):
         self.buffers = {
             "blocks" : [],
             "interfaces" : [],
+            "forces" : [],
         }
         for block in self.blocks:
             self.buffers["blocks"].append({

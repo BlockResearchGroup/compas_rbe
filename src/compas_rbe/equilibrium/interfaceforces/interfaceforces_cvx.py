@@ -27,34 +27,16 @@ from compas_rbe.equilibrium.helpers import make_Aeq
 from compas_rbe.equilibrium.helpers import make_Aiq
 
 
-__all__ = [
-    'compute_interfaceforces',
-    'compute_interfaceforces_xfunc'
-]
+__all__ = ['compute_iforces']
 
 
-def compute_interfaceforces_xfunc(data, **kwargs):
-    from compas_rbe.datastructures import Assembly
-    from compas_rbe.datastructures import Block
-
-    assembly = Assembly.from_data(data['assembly'])
-    assembly.blocks = {int(key): Block.from_data(data['blocks'][key]) for key in data['blocks']}
-
-    compute_interfaceforces(assembly, **kwargs)
-
-    return {
-        'assembly': assembly.to_data(),
-        'blocks': {str(key): assembly.blocks[key].to_data() for key in assembly.blocks}
-    }
-
-
-def compute_interfaceforces(assembly,
-                            friction8=False,
-                            mu=0.6,
-                            density=1.0,
-                            verbose=False,
-                            maxiters=100,
-                            solver='ECOS'):
+def compute_iforces(assembly,
+                    friction8=False,
+                    mu=0.6,
+                    density=1.0,
+                    verbose=True,
+                    maxiters=1000,
+                    solver=None):
     r"""Compute the forces at the interfaces between the blocks of an assembly.
 
     Solve the following optimisation problem:
@@ -87,9 +69,9 @@ def compute_interfaceforces(assembly,
     maxiters : int, optional
         Maximum number of iterations used by the solver.
         Default is ``100``.
-    solver : {'ECOS', 'CVXOPT'}, optional
+    solver : {'OSQP', 'ECOS', 'CVXOPT', 'MOSEK', 'CPLEX'}, optional
         The solver to be used internally.
-        Default is ``'ECOS'``.
+        Default is ``None``.
 
     Returns
     -------
@@ -116,11 +98,6 @@ def compute_interfaceforces(assembly,
     fixed = [key for key in assembly.vertices_where({'is_support': True})]
     fixed = [key_index[key] for key in fixed]
     free  = [index for index in range(n) if index not in fixed]
-
-    if verbose:
-        print('')
-        print(fixed)
-        print(free)
 
     # ==========================================================================
     # equality constraints
@@ -151,23 +128,12 @@ def compute_interfaceforces(assembly,
 
     a1 = 1.0   # weights on the compression forces
     a2 = 1e+5  # weights on the tension forces
-    a3 = 1e+2  # weights on the friction forces (same as compression weights in Whiting)
-
-    # add alpha := 1 / compression forces
+    a3 = 1.0   # weights on the friction forces (same as compression weights in Whiting)
 
     p = array([a1, a2, a3, a3] * vcount)
     P = diagflat(p)
 
     q = zeros((4 * vcount, 1))
-
-    # ==========================================================================
-    # weighting matrix
-    # ==========================================================================
-
-    # w = cvxpy.Variable(P.shape[0])
-
-    # w = ones((P.shape[0], 1))
-    # W = cvxpy.diag(w)
 
     # ==========================================================================
     # sanity check
@@ -186,95 +152,85 @@ def compute_interfaceforces(assembly,
         print('      A', A.shape)
         print('      b', b.shape)
 
-    # instead do:
-    # min   0.5 * xT * W * P * x (+ qT * x)
-
-    # solve iteratively
-    # at every iteration
-    # update W based on the compression forces in the previous iteration
-    # W is diagonal with
-    # 1 / f+, 1, 1 / f+, 1 / f+
-
     # ==========================================================================
-    # solve with cvxpy:ECOS
+    # solve
     # ==========================================================================
 
+    # ECOS
+    # ----
+    # max_iters (100)
+    # abstol (1e-7)
+    # reltol (1e-6)
+    # feastol (1e-7)
+    # abstol_inacc (5e-5)
+    # reltol_inacc (5e-5)
+    # feastol_inacc (1e-4)
+
+    # CVXOPT
+    # ------
+    # max_iters (100)
+    # abstol (1e-7)
+    # reltol (1e-6)
+    # feastol (1e-7)
+    # refinement (1)
+    # kktsolver ('chol', 'robust')
+
+    # OSQP
+    # ----
+    # max_iter (100)
+    # ...
+
+    # solver_specific_opts
+
+    if solver == 'OSQP':
+        solver = cvxpy.OSQP
     if solver == 'ECOS':
-
-        if compas.PY3:
-            x = cvxpy.Variable((P.shape[0], 1))
-        else:
-            x = cvxpy.Variable(P.shape[0])
-
-        objective = cvxpy.Minimize(0.5 * cvxpy.quad_form(x, P))
-
-        constraints = [
-            A * x == b,
-            G * x <= h
-        ]
-
-        problem = cvxpy.Problem(objective, constraints)
-
-        problem.solve(solver=cvxpy.ECOS, verbose=verbose, max_iters=maxiters)
-
-        if problem.status == cvxpy.OPTIMAL:
-            x = array(x.value).reshape((-1, 1))
-
-            if verbose:
-                print('')
-                print('optimal value')
-                print('-------------')
-                print(problem.value)
-
-        else:
-            if x.value is not None:
-                x = array(x.value).reshape((-1, 1))
-            else:
-                x = None
-
-            if verbose:
-                print('')
-                print(problem.status)
-
-    # ==========================================================================
-    # solve with cvxopt
-    # (use sparse matrices!)
-    # ==========================================================================
-
+        solver = cvxpy.ECOS
     if solver == 'CVXOPT':
+        solver = cvxpy.CVXOPT
+    if solver == 'MOSEK':
+        solver = cvxpy.MOSEK
+    if solver == 'CPLEX':
+        solver = cvxpy.CPLEX
 
-        res = cvxopt.solvers.qp(
-            cvxopt.sparse(cvxopt.matrix(P), tc='d'),
-            cvxopt.matrix(q),
-            cvxopt.sparse(cvxopt.matrix(G), tc='d'),
-            cvxopt.matrix(h),
-            cvxopt.sparse(cvxopt.matrix(A), tc='d'),
-            cvxopt.matrix(b)
-        )
+    if compas.PY3:
+        x = cvxpy.Variable((P.shape[0], 1))
+    else:
+        x = cvxpy.Variable(P.shape[0])
 
-        if res['status'] == 'optimal':
-            x = array(res['x']).reshape((-1, 1))
+    objective = cvxpy.Minimize(0.5 * cvxpy.quad_form(x, P))
 
-            if verbose:
-                print(res['primal objective'])
+    constraints = [
+        A * x == b,
+        G * x <= h
+    ]
 
-        else:
-            if res['x']:
-                x = array(res['x']).reshape((-1, 1))
-            else:
-                x = None
+    problem = cvxpy.Problem(objective, constraints)
 
-            if verbose:
-                print('')
-                print(problem.status)
+    problem.solve(solver=solver, verbose=verbose)
 
-    # ==========================================================================
-    # solve with libigl
-    # ==========================================================================
+    if not verbose:
+        print(problem.status)
 
-    if solver == 'IGL':
+    # OPTIMAL
+    # INFEASIBLE
+    # UNBOUNDED
+    # OPTIMAL_INACCURATE
+    # INFEASIBLE_INACCURATE
+    # UNBOUNDED_INACCURATE
 
-        pass
+    if problem.status == cvxpy.OPTIMAL:
+        x = array(x.value).reshape((-1, 1))
+
+        print(problem.value)
+
+    elif problem.status == cvxpy.OPTIMAL_INACCURATE:
+        x = array(x.value).reshape((-1, 1))
+
+        print(problem.value)
+
+    else:
+        x = None
 
     # ==========================================================================
     # update

@@ -140,22 +140,25 @@ class AssemblyArtist(NetworkArtist):
 
         compas_rhino.xdraw_lines(lines, layer=layer, clear=False, redraw=False)
 
-    def color_interfaces(self):
-        for u, v, attr in self.assembly.edges(True):
-            name = "{}.interface.{}-{}".format(self.assembly.name, u, v)
-            guids = compas_rhino.get_objects(name=name)
-            if not guids:
-                continue
-            guid = guids[0]
-            call = [force['c_np'] for force in attr['interface_forces']]
-            cmax = max(call)
-            cmin = 0
-            colors = []
-            for i in range(len(attr['interface_points'])):
-                c = attr['interface_forces'][i]['c_np']
-                blue = i_to_blue((c - cmin) / (cmax - cmin))
-                colors.append(blue)
-            compas_rhino.set_mesh_vertex_colors(guid, colors)
+    def draw_selfweight(self, scale=None, eps=None):
+        pass
+
+    # def color_interfaces(self):
+    #     for u, v, attr in self.assembly.edges(True):
+    #         name = "{}.interface.{}-{}".format(self.assembly.name, u, v)
+    #         guids = compas_rhino.get_objects(name=name)
+    #         if not guids:
+    #             continue
+    #         guid = guids[0]
+    #         call = [force['c_np'] for force in attr['interface_forces']]
+    #         cmax = max(call)
+    #         cmin = 0
+    #         colors = []
+    #         for i in range(len(attr['interface_points'])):
+    #             c = attr['interface_forces'][i]['c_np']
+    #             blue = i_to_blue((c - cmin) / (cmax - cmin))
+    #             colors.append(blue)
+    #         compas_rhino.set_mesh_vertex_colors(guid, colors)
 
 
 class BlockArtist(MeshArtist):

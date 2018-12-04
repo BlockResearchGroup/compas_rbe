@@ -115,6 +115,7 @@ class InterfaceView(object):
             xyz.append(c)
             for a, b in pairwise(list(range(0, f))):
                 faces.append([a, b, f])
+            faces.append([b, 0, f])
 
         self._xyz = xyz
         self._faces = faces
