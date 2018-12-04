@@ -18,7 +18,6 @@ except ImportError:
     compas.raise_if_not_ironpython()
 
 try:
-    import cvxopt
     import cvxpy
 except ImportError:
     compas.raise_if_not_ironpython()
@@ -82,6 +81,19 @@ def compute_iforces(assembly,
     ----------
     The computational procedure for calculating the interface forces is described
     in detail in [Frick2015]_
+
+    Notes
+    -----
+    * CVXPY adaptive weights: https://www.cvxpy.org/examples/applications/sparse_solution.html
+    * OOPQ-Eigen: https://github.com/ethz-asl/ooqp_eigen_interface
+    * OOPQ: http://pages.cs.wisc.edu/~swright/ooqp/
+    * HSL archive: http://www.hsl.rl.ac.uk/archive/index.html
+    * CVXOPT qp: http://cvxopt.org/userguide/coneprog.html#quadratic-programming
+    * CVXPY solver options: http://www.cvxpy.org/tutorial/advanced/index.html#setting-solver-options
+    * Comparison of solver performance: https://scaron.info/blog/quadratic-programming-in-python.html
+    * OSQP solver settings: https://osqp.org/docs/interfaces/solver_settings.html#solver-settings
+    * CVXPY background: http://www.cvxpy.org/short_course/index.html
+
 
     Examples
     --------
@@ -156,40 +168,35 @@ def compute_iforces(assembly,
     # solve
     # ==========================================================================
 
-    # ECOS
-    # ----
-    # max_iters (100)
-    # abstol (1e-7)
-    # reltol (1e-6)
-    # feastol (1e-7)
-    # abstol_inacc (5e-5)
-    # reltol_inacc (5e-5)
-    # feastol_inacc (1e-4)
-
-    # CVXOPT
-    # ------
-    # max_iters (100)
-    # abstol (1e-7)
-    # reltol (1e-6)
-    # feastol (1e-7)
-    # refinement (1)
-    # kktsolver ('chol', 'robust')
-
-    # OSQP
-    # ----
-    # max_iter (100)
-    # ...
-
     # solver_specific_opts
 
     if solver == 'OSQP':
         solver = cvxpy.OSQP
+        # max_iter (100)
+        # ...
+
     if solver == 'ECOS':
         solver = cvxpy.ECOS
+        # max_iters (100)
+        # abstol (1e-7)
+        # reltol (1e-6)
+        # feastol (1e-7)
+        # abstol_inacc (5e-5)
+        # reltol_inacc (5e-5)
+        # feastol_inacc (1e-4)
+
     if solver == 'CVXOPT':
         solver = cvxpy.CVXOPT
+        # max_iters (100)
+        # abstol (1e-7)
+        # reltol (1e-6)
+        # feastol (1e-7)
+        # refinement (1)
+        # kktsolver ('chol', 'robust')
+
     if solver == 'MOSEK':
         solver = cvxpy.MOSEK
+
     if solver == 'CPLEX':
         solver = cvxpy.CPLEX
 
