@@ -132,7 +132,7 @@ def identify_interfaces(assembly,
     # p1:   2D polygon of f1 in local coordinates
 
     for k in assembly.vertices():
-        print(k)
+        # print(k)
 
         i      = key_index[k]
         block  = assembly.blocks[k]
