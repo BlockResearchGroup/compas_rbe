@@ -6,6 +6,7 @@ __all__ = ['planarize_interfaces']
 
 
 def planarize_interfaces(assembly):
+    # TODO: this planarize interfaces for block geometries
 
     print(assembly)
 

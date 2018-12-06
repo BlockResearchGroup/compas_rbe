@@ -7,7 +7,7 @@ import compas_rbe
 
 from compas_rbe.datastructures import Assembly
 
-from compas_rbe.interfaces import identify_interfaces
+from compas_rbe.interfaces import identify_interfaces_bestfit
 from compas_rbe.interfaces import planarize_interfaces
 from compas_rbe.equilibrium import compute_iforces
 
@@ -21,7 +21,7 @@ assembly = Assembly.from_json(compas_rbe.get('simple_stack_curvedsrf2.json'))
 
 # identify block interfaces and update block_model
 
-identify_interfaces(
+identify_interfaces_bestfit(
     assembly,
     nmax=10,
     tmax=0.5,
@@ -33,7 +33,7 @@ identify_interfaces(
 # planarize_interfaces(assembly.edge)
 
 # equilibrium
-compute_iforces(assembly, solver='CPLEX', verbose=True)
+# compute_iforces(assembly, solver='CPLEX', verbose=True)
 
 # result
 

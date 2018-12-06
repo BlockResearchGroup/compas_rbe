@@ -8,8 +8,12 @@ from compas.geometry import normalize_vector
 from compas.geometry import centroid_polyhedron
 from compas.geometry import volume_polyhedron
 
-from compas.datastructures import Mesh
+from compas.geometry.algorithms.bestfit import bestfit_plane
+from compas.geometry import project_points_plane
+from compas.geometry import normalize_vector
+from compas.geometry import cross_vectors
 
+from compas.datastructures import Mesh
 
 __all__ = ['Block']
 
@@ -20,7 +24,7 @@ class Block(Mesh):
     Examples
     --------
     .. code-block:: python
-    
+
         pass
 
     """
@@ -29,9 +33,7 @@ class Block(Mesh):
 
     def __init__(self):
         super(Block, self).__init__()
-        self.attributes.update({
-            'name': 'Block'
-        })
+        self.attributes.update({'name': 'Block'})
 
     @classmethod
     def from_polysurface(cls, guid):
@@ -67,7 +69,8 @@ class Block(Mesh):
             The XYZ location of the centroid.
 
         """
-        return centroid_points([self.vertex_coordinates(key) for key in self.vertices()])
+        return centroid_points(
+            [self.vertex_coordinates(key) for key in self.vertices()])
 
     def frames(self):
         """Compute the local frame of each face of the block.
@@ -98,6 +101,49 @@ class Block(Mesh):
         o = xyz[0]
         w = self.face_normal(fkey)
         u = [xyz[1][i] - o[i] for i in range(3)]
+        v = cross_vectors(w, u)
+        uvw = normalize_vector(u), normalize_vector(v), normalize_vector(w)
+        return o, uvw
+
+    def frames_planar(self):
+        """Compute the local frame of each planarized face of the block.
+
+        Returns
+        -------
+        dict
+            A dictionary mapping face identifiers to face frames.
+
+        """
+        return {fkey: self.frame_planar(fkey) for fkey in self.faces()}
+
+    def frame_planar(self, fkey):
+        """Planarize and compute the frame of a specific face.
+
+        Parameters
+        ----------
+        fkey : hashable
+            The identifier of the frame.
+
+        Returns
+        -------
+        frame
+            The frame of the specified face.
+
+        """
+
+        xyz = self.face_coordinates(fkey)
+
+        b_plane = bestfit_plane(xyz)
+        b_xyz = project_points_plane(xyz, b_plane)
+
+        o = b_xyz[0]
+        w = b_plane[1]
+        u = (
+            b_xyz[2][0] - b_xyz[1][0],
+            b_xyz[2][1] - b_xyz[1][1],
+            b_xyz[2][2] - b_xyz[1][2],
+        )
+
         v = cross_vectors(w, u)
         uvw = normalize_vector(u), normalize_vector(v), normalize_vector(w)
         return o, uvw
