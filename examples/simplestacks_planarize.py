@@ -8,13 +8,14 @@ import compas_rbe
 from compas_rbe.datastructures import Assembly
 
 from compas_rbe.interfaces import identify_interfaces
+from compas_rbe.interfaces import planarize_interfaces
 from compas_rbe.equilibrium import compute_iforces
 
 from compas_rbe.viewer import AssemblyViewer
 
 # initialize assembly and blocks from json file
 
-assembly = Assembly.from_json(compas_rbe.get('simple_stack_curvedsrf.json'))
+assembly = Assembly.from_json(compas_rbe.get('simple_stack_curvedsrf2.json'))
 
 # print(list(assembly.vertices_where({'is_support': True})))
 
@@ -23,12 +24,13 @@ assembly = Assembly.from_json(compas_rbe.get('simple_stack_curvedsrf.json'))
 identify_interfaces(
     assembly,
     nmax=10,
-    tmax=0.05,
+    tmax=0.5,
     amin=0.01,
     lmin=0.01,
 )
 
 # TODO: Planerize all interfaces first before compute interface forces
+# planarize_interfaces(assembly.edge)
 
 # equilibrium
 compute_iforces(assembly, solver='CPLEX', verbose=True)
