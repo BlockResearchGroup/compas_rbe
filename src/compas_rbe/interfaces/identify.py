@@ -104,6 +104,13 @@ def identify_interfaces(assembly,
         pass
 
     """
+    # replace by something proper
+    assembly.edge = {}
+    assembly.halfedge = {}
+    for key in assembly.vertices():
+        assembly.edge[key] = {}
+        assembly.halfedge[key] = {}
+    # replace
 
     key_index = {key: index for index, key in enumerate(assembly.vertices())}
     index_key = {index: key for index, key in enumerate(assembly.vertices())}
