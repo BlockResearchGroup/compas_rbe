@@ -13,9 +13,11 @@ from compas_rbe.equilibrium import compute_iforces
 from compas_rbe.viewer import AssemblyViewer
 
 
+stack = 'simple_stack_4'
+
 # initialize assembly and blocks from json file
 
-assembly = Assembly.from_json(compas_rbe.get('corbel_blocks.json'))
+assembly = Assembly.from_json(compas_rbe.get('{}.json'.format(stack)))
 
 print(list(assembly.vertices_where({'is_support': True})))
 
@@ -35,6 +37,8 @@ compute_iforces(assembly, solver='CPLEX', verbose=True)
 
 # result
 
-viewer = AssemblyViewer()
-viewer.assembly = assembly
-viewer.show()
+assembly.to_json(compas_rbe.get('{}_result.json'.format(stack)))
+
+# viewer = AssemblyViewer()
+# viewer.assembly = assembly
+# viewer.show()
