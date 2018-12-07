@@ -1,0 +1,62 @@
+{
+    "menus" : [],
+
+    "toolbars" : [
+        {
+            "name"  : "RBE", 
+            "items" : [
+                { "text" : "init", "left" : "rbe.init" },
+                { "text" : "settings", "left" : "rbe.update_settings" }
+            ]
+        },
+        {
+            "name"  : "RBE.assembly", 
+            "items" : [
+                { "text" : "json", "left" : "rbe.assembly_from_json", "right" : "rbe.assembly_to_json" },
+
+                { "type" : "separator" },
+
+                { "text" : "V_attr", "left" : "rbe.assembly_update_vertex_attr", "right" : "" },
+                { "text" : "E_attr", "left" : "rbe.assembly_update_edge_attr",   "right" : "" },
+
+                { "type" : "separator" },
+
+                { "text" : "V_select", "left" : "rbe.assembly_select_vertices" },
+                { "text" : "E_select", "left" : "rbe.assembly_select_edges" }
+            ]
+        },
+        {
+            "name"  : "RBE.blocks", 
+            "items" : [
+                { "text" : "polysurfs", "left" : "rbe.blocks_from_polysurfaces", "right" : "" },
+                { "text" : "meshes",    "left" : "rbe.blocks_from_meshes",       "right" : "" }
+            ]
+        },
+        {
+            "name"  : "RBE.interfaces", 
+            "items" : [
+                { "text" : "identify",  "left" : "rbe.identify_interfaces", "right" : "" },
+                { "text" : "planarize", "left" : "rbe.planarize_interfaces", "right" : "" }
+            ]
+        },
+        {
+            "name"  : "RBE.equilibrium", 
+            "items" : [
+                { "text" : "iforces", "left" : "rbe.compute_iforces", "right" : "" }
+            ]
+        }
+    ],
+
+    "toolbargroups" : [
+        {
+            "name"     : "RBE",
+            "toolbars" : [
+                "RBE",
+                "RBE.assembly",
+                "RBE.blocks",
+                "RBE.interfaces",
+                "RBE.equilibrium"
+            ]
+        }
+    ]
+}

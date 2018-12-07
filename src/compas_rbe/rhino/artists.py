@@ -92,7 +92,20 @@ class AssemblyArtist(NetworkArtist):
                 artist.draw_vertices()
         artist.redraw()
 
+    def draw_blockfacenormals(self):
+        pass
+
     def draw_interfaces(self):
+        """Draw the interfaces between the blocks.
+
+        Notes
+        -----
+        * Interfaces are drawn as mesh faces.
+        * Interfaces are drawn on a sub-layer *Interfaces* of the base layer, if a base layer was provided.
+        * Interface names have the following pattern: ``"{assembly_name}.interface.{from block_id}-{to block_id}"``
+        * Interfaces have a direction, as suggested by the naming convention.
+
+        """
         layer = "{}::Interfaces".format(self.layer) if self.layer else None
         faces = []
         for u, v, attr in self.assembly.edges(True):
@@ -104,7 +117,30 @@ class AssemblyArtist(NetworkArtist):
             })
         compas_rhino.xdraw_faces(faces, layer=layer, clear=False, redraw=False)
 
+    def draw_iframes(self):
+        pass
+
     def draw_forces(self, scale=None, eps=None):
+        """Draw the contact forces at the interfaces.
+
+        Parameters
+        ----------
+        scale : float, optional
+            The scale at which the forces should be drawn.
+            Default is `0.1`.
+        eps : float, optional
+            A tolerance for drawing small force vectors.
+            Force vectors with a scaled length smaller than this tolerance are not drawn.
+            Default is `1e-3`.
+
+        Notes
+        -----
+        * Forces are drawn as lines with arrow heads.
+        * Forces are drawn on a sub-layer *Forces* of the base layer, if a base layer was specified.
+        * At every interface point there can be a *compression* force (blue) and a *tension* force (red).
+        * Forces are named according to the following pattern: ``"{assembly_name}.force.{from block}-{to block}.{interface point}"``
+
+        """
         layer = "{}::Forces".format(self.layer) if self.layer else None
         scale = scale or 0.1
         eps = eps or 1e-3
@@ -141,7 +177,53 @@ class AssemblyArtist(NetworkArtist):
         compas_rhino.xdraw_lines(lines, layer=layer, clear=False, redraw=False)
 
     def draw_selfweight(self, scale=None, eps=None):
-        pass
+        """Draw vectors indicating the magnitude of the selfweight of the blocks.
+
+        Parameters
+        ----------
+        scale : float, optional
+            The scale at which the selfweight vectors should be drawn.
+            Default is `0.1`.
+        eps : float, optional
+            A tolerance for drawing small vectors.
+            Selfweight vectors with a scaled length smaller than this tolerance are not drawn.
+            Default is `1e-3`.
+
+        Notes
+        -----
+        * Selfweight vectors are drawn as Rhino lines with arrow heads.
+        * The default color is *green*: `'#00ff00'` or `(0, 255, 0)`.
+        * Selfweight vectors are drawn in a sub-layer *Selfweight* of the base layer, if a base layer was specified.
+        * Selfweight vectors are named according to the following pattern: `"{assembly name}.selfweight.{block id}"`.
+
+        """
+        layer = "{}::Selfweight".format(self.layer) if self.layer else None
+        scale = scale or 0.1
+        eps = eps or 1e-3
+        lines = []
+
+        for key, attr in self.assembly.vertices(True):
+            block = self.assembly.blocks[key]
+            volume = block.volume()
+
+            if volume * scale < eps:
+                continue
+
+            vector = [0.0, 0.0, -1.0 * volume * scale]
+
+            sp = block.centroid()
+            ep = sp[:]
+            ep[2] += vector[2]
+
+            lines.append({
+                'start' : sp,
+                'end'   : ep,
+                'name'  : "{}.selfweight.{}".format(self.assembly.name, key),
+                'color' : (0, 255, 0),
+                'arrow' : 'end'
+            })
+
+        compas_rhino.xdraw_lines(lines, layer=layer, clear=False, redraw=False)
 
     # def color_interfaces(self):
     #     for u, v, attr in self.assembly.edges(True):
