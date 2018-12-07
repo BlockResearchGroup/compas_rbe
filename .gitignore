@@ -104,6 +104,7 @@ ENV/
 
 *.3dmbak
 *.rhl
+*.rui_bak
 
 temp/**
 !temp/PLACEHOLDER
