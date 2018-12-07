@@ -2,9 +2,6 @@ from __future__ import absolute_import, division, print_function
 
 from .interfaceforces_cvx import *
 
-# from .interfaceforces_cvxopt import *
-# from .interfaceforces_igl import *
-
 
 def compute_iforces_xfunc(data, backend='cvx', **kwargs):
     from compas_rbe.datastructures import Assembly

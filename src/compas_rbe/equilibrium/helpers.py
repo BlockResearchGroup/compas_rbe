@@ -5,11 +5,12 @@ from __future__ import division
 import sys
 from math import sqrt
 
+import compas
+
 try:
     from scipy.sparse import coo_matrix
 except ImportError:
-    if 'ironpython' not in sys.version.lower():
-        raise
+    compas.raise_if_not_ironpython()
 
 from compas.geometry import cross_vectors
 

@@ -8,8 +8,7 @@ import compas
 import compas_rhino
 import compas_rbe
 
-from compas_rbe.equilibrium import compute_iforces_xfunc
-
+from compas.utilities import XFunc
 
 HERE = os.path.abspath(os.path.dirname(__file__))
 
@@ -18,6 +17,8 @@ try:
 except ImportError:
     pass
 
+compute_iforces = XFunc('compas_rbe.equilibrium.compute_iforces_xfunc')
+
 
 __all__ = ['EquilibriumActions']
 
@@ -25,7 +26,21 @@ __all__ = ['EquilibriumActions']
 class EquilibriumActions(object):
 
     def compute_iforces(self):
-        pass
+        assembly = self.assembly
+
+        data = {
+            'assembly': assembly.to_data(),
+            'blocks'  : {str(key): assembly.blocks[key].to_data() for key in assembly.blocks},
+        }
+
+        result = compute_iforces(data, solver='ECOS')
+
+        assembly.data = result['assembly']
+
+        for key in assembly.blocks:
+            assembly.blocks[key].data = result['blocks'][str(key)]
+
+        assembly.draw(self.settings['layer'])
 
 
 # ==============================================================================
