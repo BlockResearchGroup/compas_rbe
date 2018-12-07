@@ -21,10 +21,7 @@ except ImportError:
         raise
 
 from compas.geometry import global_coords_numpy
-from compas.geometry.algorithms.bestfit import bestfit_plane
 from compas.geometry import project_points_plane
-from compas.geometry import normalize_vector
-from compas.geometry import cross_vectors
 
 __all__ = [
     'identify_interfaces',
@@ -320,7 +317,7 @@ def identify_interfaces_bestfit(assembly,
         block = assembly.blocks[k]
         nbrs = block_nnbrs[i][1]
 
-        frames = block.frames_planar()
+        frames = block.frames()
 
         if face_face:
 
@@ -335,8 +332,6 @@ def identify_interfaces_bestfit(assembly,
                 xyz0 = array(block.face_coordinates(f0)).reshape((-1, 3)).T
                 rst0 = solve(A.T, xyz0 - o).T.tolist()
                 p0 = Polygon(rst0)
-                print(rst0)
-                # print(p0)
 
                 for j in nbrs:
                     n = index_key[j]
@@ -369,13 +364,14 @@ def identify_interfaces_bestfit(assembly,
                             continue
 
                         p1 = Polygon(rst1)
-                        # print(p1)
 
                         if p1.area == 0.0:
                             continue
 
                         if p0.intersects(p1):
-                            # print("rst1 -- ", rst1)
+
+                            # recalculate the planar frames.
+                            p_origin, p_uvw, p_xyz, p = block.frame_planar(f0)
 
                             intersection = p0.intersection(p1)
 
@@ -388,22 +384,24 @@ def identify_interfaces_bestfit(assembly,
                             area = intersection.area
 
                             if area >= amin:
-                                # print("pass---")
 
                                 coords = [[
                                     x, y, 0.0
                                 ] for x, y, z in intersection.exterior.coords]
+
                                 coords = global_coords_numpy(o, A, coords)
+                                coords = coords.tolist()[:-1]
+
+                                coords = project_points_plane(coords, p)
 
                                 attr = {
                                     'interface_type': 'face_face',
                                     'interface_size': area,
-                                    'interface_points': coords.tolist()[:-1],
-                                    'interface_origin': origin,
-                                    'interface_uvw': uvw,
+                                    'interface_points': coords,
+                                    'interface_origin': p_origin,
+                                    'interface_uvw': p_uvw,
                                 }
 
-                                # print(attr)
                                 assembly.add_edge(k, n, attr_dict=attr)
 
 

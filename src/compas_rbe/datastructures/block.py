@@ -10,8 +10,6 @@ from compas.geometry import volume_polyhedron
 
 from compas.geometry.algorithms.bestfit import bestfit_plane
 from compas.geometry import project_points_plane
-from compas.geometry import normalize_vector
-from compas.geometry import cross_vectors
 
 from compas.datastructures import Mesh
 
@@ -105,17 +103,6 @@ class Block(Mesh):
         uvw = normalize_vector(u), normalize_vector(v), normalize_vector(w)
         return o, uvw
 
-    def frames_planar(self):
-        """Compute the local frame of each planarized face of the block.
-
-        Returns
-        -------
-        dict
-            A dictionary mapping face identifiers to face frames.
-
-        """
-        return {fkey: self.frame_planar(fkey) for fkey in self.faces()}
-
     def frame_planar(self, fkey):
         """Planarize and compute the frame of a specific face.
 
@@ -146,7 +133,7 @@ class Block(Mesh):
 
         v = cross_vectors(w, u)
         uvw = normalize_vector(u), normalize_vector(v), normalize_vector(w)
-        return o, uvw
+        return o, uvw, b_xyz, b_plane
 
     def center(self):
         """Compute the center of mass of the block.

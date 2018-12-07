@@ -33,7 +33,7 @@ identify_interfaces_bestfit(
 # planarize_interfaces(assembly.edge)
 
 # equilibrium
-# compute_iforces(assembly, solver='CPLEX', verbose=True)
+compute_iforces(assembly, solver='MOSEK', verbose=True)
 
 # result
 
