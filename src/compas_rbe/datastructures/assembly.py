@@ -239,6 +239,16 @@ class Assembly(Network):
         self.blocks[key] = block
         return key
 
+    def draw(self, layer=None):
+        from compas_rbe.rhino import AssemblyArtist
+        artist = AssemblyArtist(self, layer=layer)
+        artist.clear_layer()
+        artist.draw_blocks()
+        artist.draw_vertices(color={key: '#ff0000' for key in self.vertices_where({'is_support': True})})
+        artist.draw_edges()
+        artist.draw_interfaces()
+        artist.redraw()
+
 
 # ==============================================================================
 # Main

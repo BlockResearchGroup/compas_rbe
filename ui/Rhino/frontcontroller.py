@@ -42,6 +42,7 @@ class RBEFrontController(EquilibriumActions,
         self.assembly = None
         self.settings = {
             'current_working_directory' : None,
+            'layer' : 'RBE',
         }
 
     @property
@@ -56,7 +57,7 @@ class RBEFrontController(EquilibriumActions,
         self.settings['current_working_directory'] = path
 
     def init(self):
-        compas_rhino.clear_layers([self.settings['form.layer'], self.settings['force.layer']])
+        compas_rhino.clear_layer(self.settings['layer'])
 
     def update_settings(self):
         compas_rhino.update_settings(self.settings)

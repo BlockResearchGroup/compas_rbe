@@ -22,7 +22,11 @@
                 { "type" : "separator" },
 
                 { "text" : "V_select", "left" : "rbe.assembly_select_vertices" },
-                { "text" : "E_select", "left" : "rbe.assembly_select_edges" }
+                { "text" : "E_select", "left" : "rbe.assembly_select_edges" },
+
+                { "type" : "separator" },
+
+                { "text" : "V_move", "left" : "rbe.assembly_move_vertex" }
             ]
         },
         {
