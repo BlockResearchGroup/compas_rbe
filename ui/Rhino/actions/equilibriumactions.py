@@ -10,6 +10,8 @@ import compas_rbe
 
 from compas.utilities import XFunc
 
+from compas_rbe.rhino import AssemblyArtist
+
 HERE = os.path.abspath(os.path.dirname(__file__))
 
 try:
@@ -17,7 +19,7 @@ try:
 except ImportError:
     pass
 
-compute_iforces = XFunc('compas_rbe.equilibrium.compute_iforces_xfunc')
+compute_iforces = XFunc('compas_rbe.equilibrium.compute_iforces_xfunc', tmpdir=compas_rbe.TEMP)
 
 
 __all__ = ['EquilibriumActions']
@@ -41,6 +43,9 @@ class EquilibriumActions(object):
             assembly.blocks[key].data = result['blocks'][str(key)]
 
         assembly.draw(self.settings['layer'])
+
+        artist = AssemblyArtist(assembly, layer=self.settings['layer'])
+        artist.draw_forces()
 
 
 # ==============================================================================

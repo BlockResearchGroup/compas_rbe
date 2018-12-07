@@ -9,7 +9,7 @@
   </extend_rhino_menus>
   <menus />
   <tool_bar_groups>
-    <tool_bar_group guid="c9d98167-c8d0-4d4b-9e36-a055ec91b39f" dock_bar_guid32="00000000-0000-0000-0000-000000000000" dock_bar_guid64="baa5bed2-9fa2-4100-8a6a-2a3cd33a8d72" active_tool_bar_group="94a54fcf-9e82-4db3-8c8b-fa35340cbf71" single_file="False" hide_single_tab="False" point_floating="-5,128">
+    <tool_bar_group guid="c9d98167-c8d0-4d4b-9e36-a055ec91b39f" dock_bar_guid32="00000000-0000-0000-0000-000000000000" dock_bar_guid64="fc228158-b89d-4790-a27e-034489fea448" active_tool_bar_group="94a54fcf-9e82-4db3-8c8b-fa35340cbf71" single_file="False" hide_single_tab="False" point_floating="-5,128">
       <text>
         <locale_1033>RBE</locale_1033>
       </text>
