@@ -27,7 +27,6 @@ __commandname__ = "RBE_init"
 
 
 def RunCommand(is_interactive):
-    # print(type(is_interactive), ':', is_interactive)
     try:
 
         RBE = {
@@ -37,17 +36,7 @@ def RunCommand(is_interactive):
 
         sc.sticky['RBE'] = RBE
 
-        # for path in os.environ:
-        #     print(path)
-
-        # print(sys.executable)
-
-        # for path in sys.path:
-        #     print(path)
-
-        # print(sys.platform)
-        # print(sys.version)
-        # print(sys.version_info)
+        print('Success!')
 
     except Exception as error:
 

@@ -47,6 +47,23 @@ class AssemblyArtist(NetworkArtist):
     def assembly(self, assembly):
         self.datastructure = assembly
 
+    def clear_(self, name):
+        name = "{}.{}.*".format(self.assembly.name, name)
+        guids = compas_rhino.get_objects(name=name)
+        compas_rhino.delete_objects(guids)
+
+    def clear_blocks(self):
+        self.clear_('block')
+
+    def clear_interfaces(self):
+        self.clear_('interface')
+
+    def clear_forces(self):
+        self.clear_('force')
+
+    def clear_selfweight(self):
+        self.clear_('selfweight')
+
     def draw_blocks(self, show_faces=False, show_vertices=False):
         """Draw the blocks of the assembly.
 
