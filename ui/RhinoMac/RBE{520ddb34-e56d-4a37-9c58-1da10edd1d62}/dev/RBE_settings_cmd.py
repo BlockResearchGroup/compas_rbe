@@ -25,12 +25,8 @@ import compas_rbe
 
 from compas_rbe.rhino import UpdateSettingsForm
 
+
 __commandname__ = "RBE_settings"
-
-
-# ==============================================================================
-# The Command
-# ==============================================================================
 
 
 def RunCommand(is_interactive):
