@@ -27,32 +27,16 @@ from compas_rbe.equilibrium.helpers import make_Aiq
 
 
 __all__ = [
-    'compute_iforces',
-    'compute_iforces_xfunc'
+    'compute_iforces_cvxopt',
 ]
 
 
-def compute_iforces_xfunc(data, **kwargs):
-    from compas_rbe.datastructures import Assembly
-    from compas_rbe.datastructures import Block
-
-    assembly = Assembly.from_data(data['assembly'])
-    assembly.blocks = {int(key): Block.from_data(data['blocks'][key]) for key in data['blocks']}
-
-    compute_iforces(assembly, **kwargs)
-
-    return {
-        'assembly': assembly.to_data(),
-        'blocks': {str(key): assembly.blocks[key].to_data() for key in assembly.blocks}
-    }
-
-
-def compute_iforces(assembly,
-                    friction8=False,
-                    mu=0.6,
-                    density=1.0,
-                    verbose=True,
-                    maxiters=1000):
+def compute_iforces_cvxopt(assembly,
+                           friction8=False,
+                           mu=0.6,
+                           density=1.0,
+                           verbose=True,
+                           maxiters=1000):
     r"""Compute the forces at the interfaces between the blocks of an assembly.
 
     Solve the following optimisation problem:

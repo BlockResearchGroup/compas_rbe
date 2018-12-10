@@ -26,16 +26,16 @@ from compas_rbe.equilibrium.helpers import make_Aeq
 from compas_rbe.equilibrium.helpers import make_Aiq
 
 
-__all__ = ['compute_iforces']
+__all__ = ['compute_iforces_cvx']
 
 
-def compute_iforces(assembly,
-                    friction8=False,
-                    mu=0.6,
-                    density=1.0,
-                    verbose=True,
-                    maxiters=1000,
-                    solver=None):
+def compute_iforces_cvx(assembly,
+                        friction8=False,
+                        mu=0.6,
+                        density=1.0,
+                        verbose=True,
+                        maxiters=1000,
+                        solver=None):
     r"""Compute the forces at the interfaces between the blocks of an assembly.
 
     Solve the following optimisation problem:

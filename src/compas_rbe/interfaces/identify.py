@@ -5,27 +5,27 @@ from __future__ import division
 import sys
 from math import fabs
 
+import compas
+
 try:
     from numpy import array
 
     from scipy.linalg import solve
     from scipy.spatial import cKDTree
 except ImportError:
-    if 'ironpython' not in sys.version.lower():
-        raise
+    compas.raise_if_not_ironpython()
 
 try:
     from shapely.geometry import Polygon
 except ImportError:
-    if 'ironpython' not in sys.version.lower():
-        raise
+    compas.raise_if_not_ironpython()
 
 from compas.geometry import global_coords_numpy
 from compas.geometry import project_points_plane
 
+
 __all__ = [
     'identify_interfaces',
-    'identify_interfaces_xfunc',
     'identify_interfaces_bestfit',
 ]
 
@@ -35,26 +35,6 @@ def _find_nearest_neighbours(cloud, nmax):
     nnbrs = [tree.query(root, nmax) for root in cloud]
     nnbrs = [(d.flatten().tolist(), n.flatten().tolist()) for d, n in nnbrs]
     return nnbrs
-
-
-def identify_interfaces_xfunc(data, **kwargs):
-    from compas_rbe.datastructures import Assembly
-    from compas_rbe.datastructures import Block
-
-    assembly = Assembly.from_data(data['assembly'])
-    assembly.blocks = {
-        int(key): Block.from_data(data['blocks'][key])
-        for key in data['blocks']
-    }
-
-    identify_interfaces(assembly, **kwargs)
-
-    return {
-        'assembly': assembly.to_data(),
-        'blocks':
-        {str(key): assembly.blocks[key].to_data()
-         for key in assembly.blocks}
-    }
 
 
 def identify_interfaces(assembly,
