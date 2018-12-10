@@ -105,17 +105,38 @@ Default is <code class="docutils literal notranslate"><span class="pre">None</sp
 <tr class="row-odd"><td><p><a class="reference internal" href="compas_rbe.rhino.AssemblyArtist.__init__.html#compas_rbe.rhino.AssemblyArtist.__init__" title="compas_rbe.rhino.AssemblyArtist.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(assembly[, layer])</p></td>
 <td><p>Initialize self.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_rbe.rhino.AssemblyArtist.color_interfaces.html#compas_rbe.rhino.AssemblyArtist.color_interfaces" title="compas_rbe.rhino.AssemblyArtist.color_interfaces"><code class="xref py py-obj docutils literal notranslate"><span class="pre">color_interfaces</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_rbe.rhino.AssemblyArtist.clear_.html#compas_rbe.rhino.AssemblyArtist.clear_" title="compas_rbe.rhino.AssemblyArtist.clear_"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clear_</span></code></a>(name)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_rbe.rhino.AssemblyArtist.draw_blocks.html#compas_rbe.rhino.AssemblyArtist.draw_blocks" title="compas_rbe.rhino.AssemblyArtist.draw_blocks"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_blocks</span></code></a>([show_faces, show_vertices])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_rbe.rhino.AssemblyArtist.clear_blocks.html#compas_rbe.rhino.AssemblyArtist.clear_blocks" title="compas_rbe.rhino.AssemblyArtist.clear_blocks"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clear_blocks</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_rbe.rhino.AssemblyArtist.clear_forces.html#compas_rbe.rhino.AssemblyArtist.clear_forces" title="compas_rbe.rhino.AssemblyArtist.clear_forces"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clear_forces</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_rbe.rhino.AssemblyArtist.clear_interfaces.html#compas_rbe.rhino.AssemblyArtist.clear_interfaces" title="compas_rbe.rhino.AssemblyArtist.clear_interfaces"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clear_interfaces</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_rbe.rhino.AssemblyArtist.clear_selfweight.html#compas_rbe.rhino.AssemblyArtist.clear_selfweight" title="compas_rbe.rhino.AssemblyArtist.clear_selfweight"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clear_selfweight</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_rbe.rhino.AssemblyArtist.draw_blockfacenormals.html#compas_rbe.rhino.AssemblyArtist.draw_blockfacenormals" title="compas_rbe.rhino.AssemblyArtist.draw_blockfacenormals"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_blockfacenormals</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_rbe.rhino.AssemblyArtist.draw_blocks.html#compas_rbe.rhino.AssemblyArtist.draw_blocks" title="compas_rbe.rhino.AssemblyArtist.draw_blocks"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_blocks</span></code></a>([show_faces, show_vertices])</p></td>
 <td><p>Draw the blocks of the assembly.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_rbe.rhino.AssemblyArtist.draw_forces.html#compas_rbe.rhino.AssemblyArtist.draw_forces" title="compas_rbe.rhino.AssemblyArtist.draw_forces"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_forces</span></code></a>([scale, eps])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_rbe.rhino.AssemblyArtist.draw_forces.html#compas_rbe.rhino.AssemblyArtist.draw_forces" title="compas_rbe.rhino.AssemblyArtist.draw_forces"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_forces</span></code></a>([scale, eps])</p></td>
+<td><p>Draw the contact forces at the interfaces.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_rbe.rhino.AssemblyArtist.draw_iframes.html#compas_rbe.rhino.AssemblyArtist.draw_iframes" title="compas_rbe.rhino.AssemblyArtist.draw_iframes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_iframes</span></code></a>()</p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="compas_rbe.rhino.AssemblyArtist.draw_interfaces.html#compas_rbe.rhino.AssemblyArtist.draw_interfaces" title="compas_rbe.rhino.AssemblyArtist.draw_interfaces"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_interfaces</span></code></a>()</p></td>
-<td><p></p></td>
+<td><p>Draw the interfaces between the blocks.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_rbe.rhino.AssemblyArtist.draw_selfweight.html#compas_rbe.rhino.AssemblyArtist.draw_selfweight" title="compas_rbe.rhino.AssemblyArtist.draw_selfweight"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_selfweight</span></code></a>([scale, eps])</p></td>
+<td><p>Draw vectors indicating the magnitude of the selfweight of the blocks.</p></td>
 </tr>
 </tbody>
 </table>
@@ -157,6 +178,7 @@ Default is <code class="docutils literal notranslate"><span class="pre">None</sp
 <li class="nav-item active"><a class="nav-link reference internal" href="../compas_rbe.html">compas_rbe</a><ul class="nav active">
 <li class="nav-item"><a class="nav-link reference internal" href="../compas_rbe.datastructures.html">compas_rbe.datastructures</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="../compas_rbe.equilibrium.html">compas_rbe.equilibrium</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="../compas_rbe.interfaces.html">compas_rbe.interfaces</a></li>
 <li class="nav-item active"><a class="nav-link reference internal" href="../compas_rbe.rhino.html">compas_rbe.rhino</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="../compas_rbe.viewer.html">compas_rbe.viewer</a></li>
 </ul>
@@ -164,7 +186,6 @@ Default is <code class="docutils literal notranslate"><span class="pre">None</sp
 </ul>
 </li>
 <li class="nav-item"><a class="nav-link reference internal" href="../../publications.html">Publications</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="../../contributions.html">Contributions</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="../../license.html">License</a></li>
 </ul>
 
@@ -197,7 +218,7 @@ Default is <code class="docutils literal notranslate"><span class="pre">None</sp
 
         <footer class="compas-footer">
             
-                Last updated on Oct 06, 2018.
+                Last updated on Dec 10, 2018.
             
 
             

@@ -32,9 +32,11 @@ Assembly
    
       ~Assembly.__init__
       ~Assembly.add_block
+      ~Assembly.add_blocks_from_polysurfaces
+      ~Assembly.add_blocks_from_rhinomeshes
       ~Assembly.add_support
+      ~Assembly.draw
       ~Assembly.from_json
-      ~Assembly.from_meshes
-      ~Assembly.from_polysurfaces
+      ~Assembly.to_json
    
    

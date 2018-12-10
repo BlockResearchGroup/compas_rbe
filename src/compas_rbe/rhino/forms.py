@@ -6,19 +6,29 @@ from __future__ import division
 import os
 import sys
 
-import rhinoscriptsyntax as rs
-import scriptcontext as sc
+import compas
 
-import Rhino
-import Rhino.UI
+try:
+    import rhinoscriptsyntax as rs
+    import scriptcontext as sc
 
-import clr
-clr.AddReference("Eto")
-clr.AddReference("Rhino.UI")
+    import Rhino
+    import Rhino.UI
 
-import Eto
-import Eto.Drawing as drawing
-import Eto.Forms as forms
+    import clr
+    clr.AddReference("Eto")
+    clr.AddReference("Rhino.UI")
+
+    import Eto
+    import Eto.Drawing as drawing
+    import Eto.Forms as forms
+
+    from Eto.Forms import Dialog
+
+except ImportError:
+    compas.raise_if_ironpython()
+
+    class Dialog: pass
 
 import compas_rhino
 import compas_rbe
@@ -27,7 +37,7 @@ import compas_rbe
 __all__ = ['UpdateSettingsForm']
 
 
-class UpdateSettingsForm(forms.Dialog[bool]):
+class UpdateSettingsForm(Dialog):
     
     def __init__(self, settings):
         self._settings = None

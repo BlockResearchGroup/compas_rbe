@@ -95,7 +95,7 @@ intersphinx_mapping = {
 # -- Options for HTML output ----------------------------------------------
 
 html_theme = 'compaspkg'
-html_theme_path = ['../../../compas-dev/sphinx_compas_theme']
+html_theme_path = ['../../../compas-dev/sphinx_compas_theme/sphinx_compas_theme']
 html_theme_options = {
     "package_name"    : "compas_rbe",
     "package_title"   : project,

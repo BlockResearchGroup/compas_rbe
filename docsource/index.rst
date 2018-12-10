@@ -11,5 +11,4 @@ compas_rbe
    examples
    api
    publications
-   contributions
    license

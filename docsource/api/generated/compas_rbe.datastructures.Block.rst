@@ -34,8 +34,10 @@ Block
       ~Block.center
       ~Block.centroid
       ~Block.frame
+      ~Block.frame_planar
       ~Block.frames
       ~Block.from_polysurface
+      ~Block.from_rhinomesh
       ~Block.volume
    
    

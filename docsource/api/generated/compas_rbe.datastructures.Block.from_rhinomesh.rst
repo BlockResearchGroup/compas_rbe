@@ -1,8 +1,8 @@
 .. rst-class:: detail
 
-Assembly.from_meshes
+Block.from_rhinomesh
 ==============================================
 
 .. currentmodule:: compas_rbe.datastructures
 
-.. automethod:: Assembly.from_meshes
+.. automethod:: Block.from_rhinomesh

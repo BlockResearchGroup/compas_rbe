@@ -1,8 +1,8 @@
 .. rst-class:: detail
 
-AssemblyArtist.color_interfaces
+AssemblyArtist.clear_selfweight
 ================================================
 
 .. currentmodule:: compas_rbe.rhino
 
-.. automethod:: AssemblyArtist.color_interfaces
+.. automethod:: AssemblyArtist.clear_selfweight

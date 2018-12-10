@@ -64,8 +64,19 @@
 <em class="property">class </em><code class="descclassname">compas_rbe.datastructures.</code><code class="descname">Assembly</code></dt>
 <dd><p>Bases: <a class="reference external" href="https://compas-dev.github.io/main/api/generated/compas.datastructures.Network.html#compas.datastructures.Network" title="(in COMPAS v0.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">compas.datastructures.Network</span></code></a></p>
 <p>A data structure for discrete element assemblies.</p>
+<dl class="attribute">
+<dt id="compas_rbe.datastructures.Assembly.blocks">
+<code class="descname">blocks</code></dt>
+<dd><p>A dictionary of blocks, with each block represented by a mesh.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)">dict</a></p>
+</dd>
+</dl>
+</dd></dl>
+
 <p class="rubric">Examples</p>
-<div class="language-python notranslate"><div class="highlight"><pre><code><span></span><span class="k">pass</span>
+<div class="language-python notranslate"><div class="highlight"><pre><code><span></span>
 </code></pre></div>
 </div>
 <p class="rubric">Attributes</p>
@@ -99,17 +110,23 @@
 <tr class="row-even"><td><p><a class="reference internal" href="compas_rbe.datastructures.Assembly.add_block.html#compas_rbe.datastructures.Assembly.add_block" title="compas_rbe.datastructures.Assembly.add_block"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_block</span></code></a>(block[, attr_dict])</p></td>
 <td><p>Add a block to the assembly.</p></td>
 </tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_rbe.datastructures.Assembly.add_blocks_from_polysurfaces.html#compas_rbe.datastructures.Assembly.add_blocks_from_polysurfaces" title="compas_rbe.datastructures.Assembly.add_blocks_from_polysurfaces"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_blocks_from_polysurfaces</span></code></a>(guids)</p></td>
+<td><p>Add multiple blocks from their representation as Rhino poly surfaces.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_rbe.datastructures.Assembly.add_blocks_from_rhinomeshes.html#compas_rbe.datastructures.Assembly.add_blocks_from_rhinomeshes" title="compas_rbe.datastructures.Assembly.add_blocks_from_rhinomeshes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_blocks_from_rhinomeshes</span></code></a>(guids)</p></td>
+<td><p>Add multiple blocks from their representation as as Rhino meshes.</p></td>
+</tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="compas_rbe.datastructures.Assembly.add_support.html#compas_rbe.datastructures.Assembly.add_support" title="compas_rbe.datastructures.Assembly.add_support"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_support</span></code></a>(block[, attr_dict])</p></td>
 <td><p>Add a support to the assembly.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_rbe.datastructures.Assembly.from_json.html#compas_rbe.datastructures.Assembly.from_json" title="compas_rbe.datastructures.Assembly.from_json"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_json</span></code></a>(filepath)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_rbe.datastructures.Assembly.draw.html#compas_rbe.datastructures.Assembly.draw" title="compas_rbe.datastructures.Assembly.draw"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw</span></code></a>([layer])</p></td>
+<td><p>Convenience function for drawing the assembly in Rhino using common visualisation settings.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_rbe.datastructures.Assembly.from_json.html#compas_rbe.datastructures.Assembly.from_json" title="compas_rbe.datastructures.Assembly.from_json"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_json</span></code></a>(filepath)</p></td>
 <td><p>Construct a datastructure from structured data contained in a json file.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_rbe.datastructures.Assembly.from_meshes.html#compas_rbe.datastructures.Assembly.from_meshes" title="compas_rbe.datastructures.Assembly.from_meshes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_meshes</span></code></a>(guids)</p></td>
-<td><p>Class method for constructing an assembly from blocks represented by Rhino meshes.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_rbe.datastructures.Assembly.from_polysurfaces.html#compas_rbe.datastructures.Assembly.from_polysurfaces" title="compas_rbe.datastructures.Assembly.from_polysurfaces"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_polysurfaces</span></code></a>(guids)</p></td>
-<td><p>Class method for constructing an assembly from blocks represented by Rhino poly surfaces.</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_rbe.datastructures.Assembly.to_json.html#compas_rbe.datastructures.Assembly.to_json" title="compas_rbe.datastructures.Assembly.to_json"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_json</span></code></a>(filepath)</p></td>
+<td><p>Serialise the structured data representing the data structure to json.</p></td>
 </tr>
 </tbody>
 </table>
@@ -151,6 +168,7 @@
 <li class="nav-item active"><a class="nav-link reference internal" href="../compas_rbe.html">compas_rbe</a><ul class="nav active">
 <li class="nav-item active"><a class="nav-link reference internal" href="../compas_rbe.datastructures.html">compas_rbe.datastructures</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="../compas_rbe.equilibrium.html">compas_rbe.equilibrium</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="../compas_rbe.interfaces.html">compas_rbe.interfaces</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="../compas_rbe.rhino.html">compas_rbe.rhino</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="../compas_rbe.viewer.html">compas_rbe.viewer</a></li>
 </ul>
@@ -158,7 +176,6 @@
 </ul>
 </li>
 <li class="nav-item"><a class="nav-link reference internal" href="../../publications.html">Publications</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="../../contributions.html">Contributions</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="../../license.html">License</a></li>
 </ul>
 
@@ -191,7 +208,7 @@
 
         <footer class="compas-footer">
             
-                Last updated on Oct 06, 2018.
+                Last updated on Dec 10, 2018.
             
 
             

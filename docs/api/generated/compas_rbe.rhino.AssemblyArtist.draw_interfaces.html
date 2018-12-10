@@ -18,11 +18,11 @@
         <link rel="stylesheet" type="text/css" href="../../_static/css/compas-reference.css" />
 
         
-            <link rel="next" title="BlockArtist" href="compas_rbe.rhino.BlockArtist.html" />
+            <link rel="next" title="AssemblyArtist.draw_selfweight" href="compas_rbe.rhino.AssemblyArtist.draw_selfweight.html" />
         
         
         
-            <link rel="prev" title="AssemblyArtist.draw_forces" href="compas_rbe.rhino.AssemblyArtist.draw_forces.html" />
+            <link rel="prev" title="AssemblyArtist.draw_iframes" href="compas_rbe.rhino.AssemblyArtist.draw_iframes.html" />
         
 
         <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
@@ -62,7 +62,15 @@
 <dl class="method">
 <dt id="compas_rbe.rhino.AssemblyArtist.draw_interfaces">
 <code class="descclassname">AssemblyArtist.</code><code class="descname">draw_interfaces</code><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
-<dd></dd></dl>
+<dd><p>Draw the interfaces between the blocks.</p>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>Interfaces are drawn as mesh faces.</p></li>
+<li><p>Interfaces are drawn on a sub-layer <em>Interfaces</em> of the base layer, if a base layer was provided.</p></li>
+<li><p>Interface names have the following pattern: <code class="docutils literal notranslate"><span class="pre">&quot;{assembly_name}.interface.{from</span> <span class="pre">block_id}-{to</span> <span class="pre">block_id}&quot;</span></code></p></li>
+<li><p>Interfaces have a direction, as suggested by the naming convention.</p></li>
+</ul>
+</dd></dl>
 
 </div>
 
@@ -100,6 +108,7 @@
 <li class="nav-item active"><a class="nav-link reference internal" href="../compas_rbe.html">compas_rbe</a><ul class="nav active">
 <li class="nav-item"><a class="nav-link reference internal" href="../compas_rbe.datastructures.html">compas_rbe.datastructures</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="../compas_rbe.equilibrium.html">compas_rbe.equilibrium</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="../compas_rbe.interfaces.html">compas_rbe.interfaces</a></li>
 <li class="nav-item active"><a class="nav-link reference internal" href="../compas_rbe.rhino.html">compas_rbe.rhino</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="../compas_rbe.viewer.html">compas_rbe.viewer</a></li>
 </ul>
@@ -107,7 +116,6 @@
 </ul>
 </li>
 <li class="nav-item"><a class="nav-link reference internal" href="../../publications.html">Publications</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="../../contributions.html">Contributions</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="../../license.html">License</a></li>
 </ul>
 
@@ -138,7 +146,7 @@
 
         <footer class="compas-footer">
             
-                Last updated on Oct 06, 2018.
+                Last updated on Dec 10, 2018.
             
 
             

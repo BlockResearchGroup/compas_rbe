@@ -22,7 +22,7 @@
         
         
         
-            <link rel="prev" title="Assembly.from_polysurfaces" href="compas_rbe.datastructures.Assembly.from_polysurfaces.html" />
+            <link rel="prev" title="Assembly.to_json" href="compas_rbe.datastructures.Assembly.to_json.html" />
         
 
         <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
@@ -105,11 +105,17 @@
 <tr class="row-even"><td><p><a class="reference internal" href="compas_rbe.datastructures.Block.frame.html#compas_rbe.datastructures.Block.frame" title="compas_rbe.datastructures.Block.frame"><code class="xref py py-obj docutils literal notranslate"><span class="pre">frame</span></code></a>(fkey)</p></td>
 <td><p>Compute the frame of a specific face.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_rbe.datastructures.Block.frames.html#compas_rbe.datastructures.Block.frames" title="compas_rbe.datastructures.Block.frames"><code class="xref py py-obj docutils literal notranslate"><span class="pre">frames</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_rbe.datastructures.Block.frame_planar.html#compas_rbe.datastructures.Block.frame_planar" title="compas_rbe.datastructures.Block.frame_planar"><code class="xref py py-obj docutils literal notranslate"><span class="pre">frame_planar</span></code></a>(fkey)</p></td>
+<td><p>Planarize and compute the frame of a specific face.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_rbe.datastructures.Block.frames.html#compas_rbe.datastructures.Block.frames" title="compas_rbe.datastructures.Block.frames"><code class="xref py py-obj docutils literal notranslate"><span class="pre">frames</span></code></a>()</p></td>
 <td><p>Compute the local frame of each face of the block.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_rbe.datastructures.Block.from_polysurface.html#compas_rbe.datastructures.Block.from_polysurface" title="compas_rbe.datastructures.Block.from_polysurface"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_polysurface</span></code></a>(guid)</p></td>
-<td><p>Class method for constructing a block fro a Rhino poly-surface.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_rbe.datastructures.Block.from_polysurface.html#compas_rbe.datastructures.Block.from_polysurface" title="compas_rbe.datastructures.Block.from_polysurface"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_polysurface</span></code></a>(guid)</p></td>
+<td><p>Class method for constructing a block from a Rhino poly-surface.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_rbe.datastructures.Block.from_rhinomesh.html#compas_rbe.datastructures.Block.from_rhinomesh" title="compas_rbe.datastructures.Block.from_rhinomesh"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_rhinomesh</span></code></a>(guid)</p></td>
+<td><p>Class method for constructing a block from a Rhino mesh.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="compas_rbe.datastructures.Block.volume.html#compas_rbe.datastructures.Block.volume" title="compas_rbe.datastructures.Block.volume"><code class="xref py py-obj docutils literal notranslate"><span class="pre">volume</span></code></a>()</p></td>
 <td><p>Compute the volume of the block.</p></td>
@@ -154,6 +160,7 @@
 <li class="nav-item active"><a class="nav-link reference internal" href="../compas_rbe.html">compas_rbe</a><ul class="nav active">
 <li class="nav-item active"><a class="nav-link reference internal" href="../compas_rbe.datastructures.html">compas_rbe.datastructures</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="../compas_rbe.equilibrium.html">compas_rbe.equilibrium</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="../compas_rbe.interfaces.html">compas_rbe.interfaces</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="../compas_rbe.rhino.html">compas_rbe.rhino</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="../compas_rbe.viewer.html">compas_rbe.viewer</a></li>
 </ul>
@@ -161,7 +168,6 @@
 </ul>
 </li>
 <li class="nav-item"><a class="nav-link reference internal" href="../../publications.html">Publications</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="../../contributions.html">Contributions</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="../../license.html">License</a></li>
 </ul>
 
@@ -194,7 +200,7 @@
 
         <footer class="compas-footer">
             
-                Last updated on Oct 06, 2018.
+                Last updated on Dec 10, 2018.
             
 
             
