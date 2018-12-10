@@ -10,6 +10,7 @@ import Rhino
 
 import os
 import sys
+import traceback
 
 import compas_rhino
 import compas_rbe
@@ -59,3 +60,4 @@ def RunCommand(is_interactive):
     except Exception as error:
 
         print(error)
+        print(traceback.format_exc())

@@ -126,7 +126,7 @@ class AssemblyArtist(NetworkArtist):
         layer = "{}::Interfaces".format(self.layer) if self.layer else None
         faces = []
         for u, v, attr in self.assembly.edges(True):
-            points = attr['interface_points']
+            points = attr['interface_points'][:]
             faces.append({
                 'points': points,
                 'name'  : "{}.interface.{}-{}".format(self.assembly.name, u, v),

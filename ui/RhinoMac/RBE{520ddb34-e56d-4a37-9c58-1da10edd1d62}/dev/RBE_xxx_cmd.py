@@ -11,10 +11,6 @@ import scriptcontext as sc
 
 import Rhino
 
-import compas_rbe
-
-from compas_rbe.rhino import UpdateSettingsForm
-
 
 __commandname__ = "RBE_xxx"  # => the part before _cmd.py
 
