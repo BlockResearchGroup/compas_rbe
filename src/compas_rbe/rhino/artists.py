@@ -2,7 +2,7 @@ from __future__ import print_function
 from __future__ import absolute_import
 from __future__ import division
 
-from compas.utilities import i_to_blue
+from compas.utilities import i_to_blue, i_to_red
 
 import compas_rhino
 
@@ -266,22 +266,30 @@ class AssemblyArtist(NetworkArtist):
             if not guids:
                 continue
             guid = guids[0]
-            call = [force['c_np'] for force in attr['interface_forces']]
-            cmax = max(call)
-            cmin = 0
+            call_np = [force['c_np'] for force in attr['interface_forces']]
+            call_nn = [force['c_nn'] for force in attr['interface_forces']]
+            cmax_np, cmax_nn = max(call_np), max(call_nn)
+            cmin_np = cmin_nn = 0
             colors = []
             cvalues = []
             for i in range(len(attr['interface_points'])):
-                c = attr['interface_forces'][i]['c_np']
-                blue = i_to_blue((c - cmin) / (cmax - cmin))
-                cvalues.append((c - cmin) / (cmax - cmin))
-                colors.append(blue)
+                c_np = attr['interface_forces'][i]['c_np']
+                c_nn = attr['interface_forces'][i]['c_nn']
+
+                if c_np < 1e-3:
+                    red = i_to_red((c_nn - cmin_nn) / (cmax_nn - cmin_nn))
+                    colors.append(red)
+                else:
+                    blue = i_to_blue((c_np - cmin_np) / (cmax_np - cmin_np))
+                    cvalues.append((c_np - cmin_np) / (cmax_np - cmin_np))
+                    colors.append(blue)
 
             # making the center point color as average vertices
             if len(attr['interface_points']) > 4:
                 blue = i_to_blue(sum(cvalues) / len(cvalues))
+                # blue = i_to_blue(0)
                 colors.append(blue)
-                print(colors)
+                # print(colors)
 
             compas_rhino.set_mesh_vertex_colors(guid, colors)
 
