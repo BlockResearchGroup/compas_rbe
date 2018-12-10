@@ -30,7 +30,9 @@ def RunCommand(is_interactive):
     try:
 
         RBE = {
-            'settings' : {'layer' : 'RBE'},
+            'settings' : {
+                'layer' : 'RBE',
+            },
             'assembly' : None,
         }
 

@@ -10,17 +10,7 @@ import rhinoscriptsyntax as rs
 import scriptcontext as sc
 
 import Rhino
-import Rhino.UI
 
-import clr
-clr.AddReference("Eto")
-clr.AddReference("Rhino.UI")
-
-import Eto
-import Eto.Drawing as drawing
-import Eto.Forms as forms
-
-import compas_rhino
 import compas_rbe
 
 from compas_rbe.rhino import UpdateSettingsForm
@@ -41,8 +31,6 @@ def RunCommand(is_interactive):
         
         if dialog.ShowModal(Rhino.UI.RhinoEtoApp.MainWindow):
             RBE['settings'].update(dialog.settings)
-
-        print(RBE['settings'])
 
     except Exception as error:
 

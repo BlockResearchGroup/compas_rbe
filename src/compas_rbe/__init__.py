@@ -11,6 +11,7 @@ compas_rbe
 
     compas_rbe.datastructures
     compas_rbe.equilibrium
+    compas_rbe.interfaces
     compas_rbe.rhino
     compas_rbe.viewer
 

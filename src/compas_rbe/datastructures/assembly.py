@@ -29,7 +29,7 @@ class Assembly(Network):
     --------
     .. code-block:: python
 
-        pass
+        
 
     """
 
@@ -53,12 +53,6 @@ class Assembly(Network):
             'interface_forces' : None,
         })
 
-    # @classmethod
-    # def from_data(cls, data):
-    #     assembly = super(cls, None).from_data(data['assembly'])
-    #     asembly.blocks = {int(key): Block.from_data(data['blocks'][key]) for key in data['blocks']}
-    #     return assembly
-
     @classmethod
     def from_json(cls, filepath):
         from compas_rbe.datastructures import Block
@@ -74,10 +68,45 @@ class Assembly(Network):
 
         return assembly
 
-    @classmethod
-    def from_polysurfaces(cls, guids):
-        """Class method for constructing an assembly from blocks represented by
-        Rhino poly surfaces.
+    def to_json(self, filepath):
+        data = {
+            'assembly' : self.to_data(),
+            'blocks': {str(key): self.blocks[key].to_data() for key in self.blocks}
+        }
+        with open(filepath, 'w') as fo:
+            json.dump(data, fo)
+
+    def add_block(self, block, attr_dict=None, **kwattr):
+        """Add a block to the assembly.
+
+        Parameters
+        ----------
+        block : compas_rbe.datastructures.Block
+            The block to add.
+        attr_dict : dict, optional
+            A dictionary of block attributes.
+            Default is ``None``.
+
+        Returns
+        -------
+        hashable
+            The identifier of the block.
+
+        Notes
+        -----
+        The block is added as a vertex in the assembly data structure.
+        The XYZ coordinates of the vertex are the coordinates of the centroid of the block.
+
+        """
+        attr = attr_dict or {}
+        attr.update(kwattr)
+        x, y, z = block.centroid()
+        key = self.add_vertex(attr_dict=attr, x=x, y=y, z=z)
+        self.blocks[key] = block
+        return key
+
+    def add_blocks_from_polysurfaces(self, guids):
+        """Add multiple blocks from their representation as Rhino poly surfaces.
 
         Parameters
         ----------
@@ -86,8 +115,8 @@ class Assembly(Network):
 
         Returns
         -------
-        Assembly
-            The assembly of blocks represented by poly-surfaces.
+        list
+            The keys of the added blocks.
 
         Warning
         -------
@@ -121,8 +150,7 @@ class Assembly(Network):
 
         return assembly
 
-    @classmethod
-    def from_meshes(cls, guids):
+    def add_blocks_from_meshes(self, guids):
         """Class method for constructing an assembly from blocks represented by
         Rhino meshes.
 
@@ -168,49 +196,6 @@ class Assembly(Network):
             assembly.add_block(block, attr_dict=attr)
 
         return assembly
-
-    def to_json(self, filepath):
-        data = {
-            'assembly' : self.to_data(),
-            'blocks': {str(key): self.blocks[key].to_data() for key in self.blocks}
-        }
-        with open(filepath, 'w') as fo:
-            json.dump(data, fo)
-
-    def to_polysurfaces(self):
-        pass
-
-    def to_meshes(self):
-        pass
-
-    def add_block(self, block, attr_dict=None, **kwattr):
-        """Add a block to the assembly.
-
-        Parameters
-        ----------
-        block : compas_rbe.datastructures.Block
-            The block to add.
-        attr_dict : dict, optional
-            A dictionary of block attributes.
-            Default is ``None``.
-
-        Returns
-        -------
-        hashable
-            The identifier of the block.
-
-        Notes
-        -----
-        The block is added as a vertex in the assembly data structure.
-        The XYZ coordinates of the vertex are the coordinates of the centroid of the block.
-
-        """
-        attr = attr_dict or {}
-        attr.update(kwattr)
-        x, y, z = block.centroid()
-        key = self.add_vertex(attr_dict=attr, x=x, y=y, z=z)
-        self.blocks[key] = block
-        return key
 
     def add_support(self, block, attr_dict=None, **kwattr):
         """Add a support to the assembly.
