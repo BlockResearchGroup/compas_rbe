@@ -35,7 +35,7 @@ class Block(Mesh):
 
     @classmethod
     def from_polysurface(cls, guid):
-        """Class method for constructing a block fro a Rhino poly-surface.
+        """Class method for constructing a block from a Rhino poly-surface.
 
         Parameters
         ----------
@@ -57,6 +57,24 @@ class Block(Mesh):
         """
         from compas_rhino.helpers import mesh_from_surface
         return mesh_from_surface(cls, guid)
+
+    @classmethod
+    def from_rhinomesh(cls, guid):
+        """Class method for constructing a block from a Rhino mesh.
+
+        Parameters
+        ----------
+        guid : str
+            The GUID of the mesh.
+
+        Returns
+        -------
+        Block
+            The block corresponding to the Rhino mesh.
+
+        """
+        from compas_rhino.helpers import mesh_from_guid
+        return mesh_from_guid(cls, guid)
 
     def centroid(self):
         """Compute the centroid of the block.

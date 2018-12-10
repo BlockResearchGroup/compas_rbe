@@ -97,9 +97,7 @@ def identify_interfaces(assembly,
 
     blocks = [assembly.blocks[key] for key in assembly.vertices()]
     nmax = min(nmax, len(blocks))
-    block_cloud = [
-        assembly.vertex_coordinates(key) for key in assembly.vertices()
-    ]
+    block_cloud = [assembly.vertex_coordinates(key) for key in assembly.vertices()]
     block_nnbrs = _find_nearest_neighbours(block_cloud, nmax)
 
     # k:      key of the base block
@@ -147,7 +145,6 @@ def identify_interfaces(assembly,
                 xyz0 = array(block.face_coordinates(f0)).reshape((-1, 3)).T
                 rst0 = solve(A.T, xyz0 - o).T.tolist()
                 p0 = Polygon(rst0)
-                # print(p0)
 
                 for j in nbrs:
                     n = index_key[j]
@@ -162,13 +159,8 @@ def identify_interfaces(assembly,
                         continue
 
                     nbr = assembly.blocks[n]
-                    k_i = {
-                        key: index
-                        for index, key in enumerate(nbr.vertices())
-                    }
-                    xyz = array([
-                        nbr.vertex_coordinates(key) for key in nbr.vertices()
-                    ]).reshape((-1, 3)).T
+                    k_i = {key: index for index, key in enumerate(nbr.vertices())}
+                    xyz = array([nbr.vertex_coordinates(key) for key in nbr.vertices()]).reshape((-1, 3)).T
                     rst = solve(A.T, xyz - o).T.tolist()
                     rst = {key: rst[k_i[key]] for key in nbr.vertices()}
 
@@ -180,27 +172,17 @@ def identify_interfaces(assembly,
                             continue
 
                         p1 = Polygon(rst1)
-                        # print(p1)
 
                         if p1.area == 0.0:
                             continue
 
                         if p0.intersects(p1):
                             intersection = p0.intersection(p1)
-                            print(intersection)
-                            # try:
-                            #     intersection = p0.intersection(p1)
-                            # except Exception:
-                            #     print(p0, p1)
-                            #     continue
-                            # else:
+
                             area = intersection.area
 
                             if area >= amin:
-                                # print("pass---")
-                                coords = [[
-                                    x, y, 0.0
-                                ] for x, y, z in intersection.exterior.coords]
+                                coords = [[x, y, 0.0] for x, y, z in intersection.exterior.coords]
                                 coords = global_coords_numpy(o, A, coords)
 
                                 attr = {
@@ -211,7 +193,6 @@ def identify_interfaces(assembly,
                                     'interface_uvw': uvw,
                                 }
 
-                                # print(attr)
                                 assembly.add_edge(k, n, attr_dict=attr)
 
 

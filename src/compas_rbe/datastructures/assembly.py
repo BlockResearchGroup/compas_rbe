@@ -105,97 +105,99 @@ class Assembly(Network):
         self.blocks[key] = block
         return key
 
-    # def add_blocks_from_polysurfaces(self, guids):
-    #     """Add multiple blocks from their representation as Rhino poly surfaces.
+    def add_blocks_from_polysurfaces(self, guids):
+        """Add multiple blocks from their representation as Rhino poly surfaces.
 
-    #     Parameters
-    #     ----------
-    #     guids : list of str
-    #         A list of GUIDs identifying the poly-surfaces representing the blocks of the assembly.
+        Parameters
+        ----------
+        guids : list of str
+            A list of GUIDs identifying the poly-surfaces representing the blocks of the assembly.
 
-    #     Returns
-    #     -------
-    #     list
-    #         The keys of the added blocks.
+        Returns
+        -------
+        list
+            The keys of the added blocks.
 
-    #     Warning
-    #     -------
-    #     This method only works in Rhino.
+        Warning
+        -------
+        This method only works in Rhino.
 
-    #     Examples
-    #     --------
-    #     .. code-block:: python
+        Examples
+        --------
+        .. code-block:: python
 
-    #         pass
+            pass
     
-    #     """
-    #     import compas_rhino
-    #     from compas_rbe.datastructures import Block
+        """
+        from compas_rbe.datastructures import Block
 
-    #     names = compas_rhino.get_object_names(guids)
-    #     assembly = cls()
+        onames = compas_rhino.get_object_names(guids)
 
-    #     for i, guid in enumerate(guids):
-    #         name = names[i]
+        keys = []
 
-    #         try:
-    #             attr = ast.literal_eval(name)
-    #         except (TypeError, ValueError):
-    #             attr = {}
+        for i, (guid, oname) in enumerate(zip(guids, onames)):
+            try:
+                attr = ast.literal_eval(oname)
+            except (TypeError, ValueError):
+                attr = {}
 
-    #         name = attr.get('name', 'B{0}'.format(i))
-    #         block = Block.from_polysurface(guid)
-    #         block.attributes['name'] = name
-    #         assembly.add_block(block, attr_dict=attr)
+            name = attr.get('name', 'B{0}'.format(i))
 
-    #     return assembly
+            block = Block.from_polysurface(guid)
+            block.attributes['name'] = name
+            
+            key = self.add_block(block, attr_dict=attr)
 
-    # def add_blocks_from_meshes(self, guids):
-    #     """Class method for constructing an assembly from blocks represented by
-    #     Rhino meshes.
+            keys.append(key)
 
-    #     Parameters
-    #     ----------
-    #     guids : list of str
-    #         A list of GUIDs identifying the meshes representing the blocks of the assembly.
+        return keys
 
-    #     Returns
-    #     -------
-    #     Assembly
-    #         The assembly of blocks represented by meshes.
+    def add_blocks_from_rhinomeshes(self, guids):
+        """Add multiple blocks from their representation as as Rhino meshes.
 
-    #     Warning
-    #     -------
-    #     This method only works in Rhino.
+        Parameters
+        ----------
+        guids : list of str
+            A list of GUIDs identifying the meshes representing the blocks of the assembly.
 
-    #     Examples
-    #     --------
-    #     .. code-block:: python
+        Returns
+        -------
+        list
+            The keys of the added blocks.
 
-    #         pass
+        Warning
+        -------
+        This method only works in Rhino.
+
+        Examples
+        --------
+        .. code-block:: python
+
+            pass
     
-    #     """
-    #     import compas_rhino
-    #     from compas_rhino.helpers import mesh_from_guid
-    #     from compas_rbe.datastructures import Block
+        """
+        from compas_rbe.datastructures import Block
 
-    #     names = compas_rhino.get_object_names(guids)
-    #     assembly = cls()
+        onames = compas_rhino.get_object_names(guids)
 
-    #     for i, guid in enumerate(guids):
-    #         name = names[i]
+        keys = []
 
-    #         try:
-    #             attr = ast.literal_eval(name)
-    #         except (TypeError, ValueError):
-    #             attr = {}
+        for i, (guid, oname) in enumerate(zip(guids, onames)):
+            try:
+                attr = ast.literal_eval(oname)
+            except (TypeError, ValueError):
+                attr = {}
 
-    #         name = attr.get('name', 'B{0}'.format(i))
-    #         block = mesh_from_guid(Block, guid)
-    #         block.attributes['name'] = name
-    #         assembly.add_block(block, attr_dict=attr)
+            name = attr.get('name', 'B{0}'.format(i))
 
-    #     return assembly
+            block = Block.from_rhinomesh(guid)
+            block.attributes['name'] = name
+
+            key = self.add_block(block, attr_dict=attr)
+
+            keys.append(key)
+
+        return keys
 
     def add_support(self, block, attr_dict=None, **kwattr):
         """Add a support to the assembly.
@@ -225,6 +227,14 @@ class Assembly(Network):
         return key
 
     def draw(self, layer=None):
+        """Convenience function for drawing the assembly in Rhino using common visualisation settings.
+
+        Parameters
+        ----------
+        layer : str, optional
+            The layer in which the assembly should be drawn.
+
+        """
         from compas_rbe.rhino import AssemblyArtist
         artist = AssemblyArtist(self, layer=layer)
         artist.clear_layer()
