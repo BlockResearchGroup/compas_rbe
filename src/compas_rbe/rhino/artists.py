@@ -204,32 +204,34 @@ class AssemblyArtist(NetworkArtist):
         lines = []
 
         for a, b, attr in self.assembly.edges(True):
-            if attr['interface_forces']:
-                w = attr['interface_uvw'][2]
+            if attr['interface_forces'] is None:
+                continue
 
-                for i in range(len(attr['interface_points'])):
-                    sp   = attr['interface_points'][i]
-                    c_np = attr['interface_forces'][i]['c_np']
-                    c_nn = attr['interface_forces'][i]['c_nn']
+            w = attr['interface_uvw'][2]
 
-                    if scale * c_np > eps:
-                        # compression force
-                        lines.append({
-                            'start' : sp,
-                            'end'   : [sp[axis] + scale * c_np * w[axis] for axis in range(3)],
-                            'color' : color_compression,
-                            'name'  : "{0}.force.{1}-{2}.{3}".format(self.assembly.name, a, b, i),
-                            'arrow' : 'end'
-                        })
-                    if scale * c_nn > eps:
-                        # tension force
-                        lines.append({
-                            'start' : sp,
-                            'end'   : [sp[axis] - scale * c_nn * w[axis] for axis in range(3)],
-                            'color' : color_tension,
-                            'name'  : "{0}.force.{1}-{2}.{3}".format(self.assembly.name, a, b, i),
-                            'arrow' : 'end'
-                        })
+            for i in range(len(attr['interface_points'])):
+                sp   = attr['interface_points'][i]
+                c_np = attr['interface_forces'][i]['c_np']
+                c_nn = attr['interface_forces'][i]['c_nn']
+
+                if scale * c_np > eps:
+                    # compression force
+                    lines.append({
+                        'start' : sp,
+                        'end'   : [sp[axis] + scale * c_np * w[axis] for axis in range(3)],
+                        'color' : color_compression,
+                        'name'  : "{0}.force.{1}-{2}.{3}".format(self.assembly.name, a, b, i),
+                        'arrow' : 'end'
+                    })
+                if scale * c_nn > eps:
+                    # tension force
+                    lines.append({
+                        'start' : sp,
+                        'end'   : [sp[axis] - scale * c_nn * w[axis] for axis in range(3)],
+                        'color' : color_tension,
+                        'name'  : "{0}.force.{1}-{2}.{3}".format(self.assembly.name, a, b, i),
+                        'arrow' : 'end'
+                    })
 
         compas_rhino.xdraw_lines(lines, layer=layer, clear=False, redraw=False)
 
@@ -286,21 +288,26 @@ class AssemblyArtist(NetworkArtist):
 
     def color_interfaces(self):
         for u, v, attr in self.assembly.edges(True):
+            if attr['interface_forces'] is None:
+                continue
+
             name = "{}.interface.{}-{}".format(self.assembly.name, u, v)
             guids = compas_rhino.get_objects(name=name)
             if not guids:
                 continue
+
             guid = guids[0]
+
             call_np = [force['c_np'] for force in attr['interface_forces']]
             call_nn = [force['c_nn'] for force in attr['interface_forces']]
             cmax_np, cmax_nn = max(call_np), max(call_nn)
             cmin_np = cmin_nn = 0
+
             colors = []
             cvalues = []
             for i in range(len(attr['interface_points'])):
                 c_np = attr['interface_forces'][i]['c_np']
                 c_nn = attr['interface_forces'][i]['c_nn']
-
                 if c_np < 1e-3:
                     red = i_to_red((c_nn - cmin_nn) / (cmax_nn - cmin_nn + 0.0001))
                     colors.append(red)
@@ -312,9 +319,7 @@ class AssemblyArtist(NetworkArtist):
             # making the center point color as average vertices
             if len(attr['interface_points']) > 4:
                 blue = i_to_blue(sum(cvalues) / len(cvalues))
-                # blue = i_to_blue(0)
                 colors.append(blue)
-                # print(colors)
 
             compas_rhino.set_mesh_vertex_colors(guid, colors)
 
