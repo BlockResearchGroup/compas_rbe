@@ -277,11 +277,14 @@ class AssemblyArtist(NetworkArtist):
                 c_nn = attr['interface_forces'][i]['c_nn']
 
                 if c_np < 1e-3:
-                    red = i_to_red((c_nn - cmin_nn) / (cmax_nn - cmin_nn))
+                    red = i_to_red(
+                        (c_nn - cmin_nn) / (cmax_nn - cmin_nn + 0.0001))
                     colors.append(red)
                 else:
-                    blue = i_to_blue((c_np - cmin_np) / (cmax_np - cmin_np))
-                    cvalues.append((c_np - cmin_np) / (cmax_np - cmin_np))
+                    blue = i_to_blue(
+                        (c_np - cmin_np) / (cmax_np - cmin_np + 0.0001))
+                    cvalues.append(
+                        (c_np - cmin_np) / (cmax_np - cmin_np + 0.0001))
                     colors.append(blue)
 
             # making the center point color as average vertices
