@@ -2,9 +2,9 @@ from __future__ import print_function
 from __future__ import absolute_import
 from __future__ import division
 
-
 import os
 import sys
+from ast import literal_eval
 
 import compas
 
@@ -23,7 +23,7 @@ try:
     import Eto.Drawing as drawing
     import Eto.Forms as forms
 
-    from Eto.Forms import Dialog
+    Dialog = forms.Dialog[bool]
 
 except ImportError:
     compas.raise_if_ironpython()
@@ -38,7 +38,7 @@ __all__ = ['UpdateSettingsForm']
 
 
 class UpdateSettingsForm(Dialog):
-    
+
     def __init__(self, settings):
         self._settings = None
         self._names = None
@@ -48,6 +48,7 @@ class UpdateSettingsForm(Dialog):
         self.table = table = forms.GridView()
         table.ShowHeader = True
         table.DataStore = [[name, value] for name, value in zip(self.names, self.values)]
+        table.Height = 300
 
         c1 = forms.GridColumn()
         c1.HeaderText = 'Name'
@@ -62,16 +63,20 @@ class UpdateSettingsForm(Dialog):
         table.Columns.Add(c2)
 
         layout = forms.DynamicLayout()
-        layout.Spacing = drawing.Size(12, 12)
-        layout.BeginVertical()
+
         layout.AddRow(table)
+        layout.Add(None)
+        layout.BeginVertical()
+        layout.BeginHorizontal()
+        layout.AddRow(None, self.ok, self.cancel)
+        layout.EndHorizontal()
         layout.EndVertical()
-        layout.AddSeparateRow(None, self.ok, self.cancel, None)
 
         self.Title = 'RBE: update settings'
         self.Padding = drawing.Padding(12)
-        self.Resizable = True
+        self.Resizable = False
         self.Content = layout
+        self.ClientSize = drawing.Size(400, 600)
 
     @property
     def ok(self):
@@ -93,7 +98,7 @@ class UpdateSettingsForm(Dialog):
     def settings(self, settings):
         self._settings = settings.copy()
         self._names = names = sorted(settings.keys())
-        self._values = [settings[name] for name in names]
+        self._values = [repr(settings[name]) for name in names]
 
     @property
     def names(self):
@@ -102,11 +107,16 @@ class UpdateSettingsForm(Dialog):
     @property
     def values(self):
         return self._values
-    
+
     def on_ok(self, sender, e):
         try:
             for i, name in enumerate(self.names):
-                self._settings[name] = self.table.DataStore[i][1]
+                data = self.table.DataStore[i][1]
+                try:
+                    value = literal_eval(data)
+                except Exception:
+                    value = data
+                self._settings[name] = value
         except Exception as e:
             print(e)
             self.Close(False)

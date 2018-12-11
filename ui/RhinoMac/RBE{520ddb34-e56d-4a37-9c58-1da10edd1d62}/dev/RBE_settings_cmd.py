@@ -5,6 +5,7 @@ from __future__ import division
 
 import os
 import sys
+import traceback
 
 import rhinoscriptsyntax as rs
 import scriptcontext as sc
@@ -20,18 +21,19 @@ __commandname__ = "RBE_settings"
 
 
 def RunCommand(is_interactive):
-    if not 'RBE' in sc.sticky:
-        raise Exception('Initialise RBE first!')
-
-    RBE = sc.sticky['RBE']
-
     try:
 
+        if not 'RBE' in sc.sticky:
+            raise Exception('Initialise RBE first!')
+
+        RBE = sc.sticky['RBE']
+
         dialog = UpdateSettingsForm(RBE['settings'])
-        
+
         if dialog.ShowModal(Rhino.UI.RhinoEtoApp.MainWindow):
             RBE['settings'].update(dialog.settings)
 
     except Exception as error:
 
         print(error)
+        print(traceback.format_exc())

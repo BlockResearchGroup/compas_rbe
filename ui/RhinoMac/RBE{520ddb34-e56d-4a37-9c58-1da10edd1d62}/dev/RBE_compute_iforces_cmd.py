@@ -18,7 +18,6 @@ import compas_rbe
 from compas_rhino.utilities import XFunc
 
 from compas_rbe.datastructures import Assembly
-from compas_rbe.rhino import AssemblyArtist
 
 
 compute_iforces_ = XFunc('compas_rbe.equilibrium.compute_iforces_xfunc', tmpdir=compas_rbe.TEMP)
@@ -39,23 +38,18 @@ __commandname__ = "RBE_compute_iforces"
 
 
 def RunCommand(is_interactive):
-    if not 'RBE' in sc.sticky:
-        raise Exception('Initialise RBE first!')
-    RBE = sc.sticky['RBE']
-
     try:
+
+        if not 'RBE' in sc.sticky:
+            raise Exception('Initialise RBE first!')
+
+        RBE = sc.sticky['RBE']
 
         assembly = RBE['assembly']
 
         compute_iforces(assembly)
 
-        artist = AssemblyArtist(assembly, layer=RBE['settings']['layer'])
-        artist.clear_layer()
-        artist.draw_blocks()
-        artist.draw_interfaces()
-        artist.draw_selfweight(scale=0.25)
-        artist.draw_forces(scale=0.25)
-        artist.redraw()
+        assembly.draw(RBE['settings'])
 
     except Exception as error:
 

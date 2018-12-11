@@ -16,4 +16,5 @@ __commandname__ = "RBE_xxx"  # => the part before _cmd.py
 
 
 def RunCommand(is_interactive):
-    pass
+
+    raise Exception('this is just a dummy!')

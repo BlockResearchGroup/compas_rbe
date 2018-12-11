@@ -10,6 +10,7 @@ import Rhino
 
 import os
 import sys
+import traceback
 
 import compas_rhino
 import compas_rbe
@@ -22,21 +23,23 @@ __commandname__ = "RBE_assembly_update_vertex_attributes"
 
 
 def RunCommand(is_interactive):
-    if not 'RBE' in sc.sticky:
-        raise Exception('Initialise RBE first!')
-
-    RBE = sc.sticky['RBE']
-
     try:
+
+        if not 'RBE' in sc.sticky:
+            raise Exception('Initialise RBE first!')
+
+        RBE = sc.sticky['RBE']
+
         assembly = RBE['assembly']
-        
+
         keys = AssemblyHelper.select_vertices(assembly)
         if not keys:
             return
 
         if AssemblyHelper.update_vertex_attributes(assembly, keys):
-            assembly.draw(RBE['settings']['layer'])
+            assembly.draw(RBE['settings'])
 
     except Exception as error:
 
         print(error)
+        print(traceback.format_exc())

@@ -2,6 +2,13 @@ from __future__ import print_function
 from __future__ import absolute_import
 from __future__ import division
 
+try:
+    reload
+except NameError:
+    try:
+        from importlib import reload
+    except ImportError:
+        from imp import reload
 
 import rhinoscriptsyntax as rs
 import scriptcontext as sc
@@ -10,20 +17,16 @@ import Rhino
 
 import os
 import sys
+import traceback
 
 import compas_rhino
 import compas_rbe
 
+# not sure if this will help
+reload(compas_rbe)
+
 
 __commandname__ = "RBE_init"
-
-
-# add continuous saving as coroutine (asynchronous behaviour)
-# use same principle as alternative approach to front controller on Rhino (Windows)
-# possibly better cross-compatibility
-
-# use sticky dict for temp saves
-# init with init
 
 
 def RunCommand(is_interactive):
@@ -32,6 +35,21 @@ def RunCommand(is_interactive):
         RBE = {
             'settings' : {
                 'layer' : 'RBE',
+
+                'scale.selfweight' : 0.1,
+                'scale.force' : 0.1,
+                'color.edge' : (0, 0, 0),
+                'color.vertex' : (0, 0, 0),
+                'color.vertex:is_support' : (255, 0, 0),
+                'eps.force' : 1e-3,
+                'eps.selfweight' : 1e-3,
+
+                'show.vertices' : True,
+                'show.edges' : True,
+                'show.interfaces' : True,
+                'show.forces' : False,
+                'show.selfweight' : False,
+                'show.friction' : False,
             },
             'assembly' : None,
         }
@@ -43,3 +61,4 @@ def RunCommand(is_interactive):
     except Exception as error:
 
         print(error)
+        print(traceback.format_exc())

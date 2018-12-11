@@ -10,6 +10,7 @@ import Rhino
 
 import os
 import sys
+import traceback
 
 import compas_rbe
 
@@ -21,12 +22,12 @@ __commandname__ = "RBE_save_session"
 
 
 def RunCommand(is_interactive):
-    if not 'RBE' in sc.sticky:
-        raise Exception('Initialise RBE first!')
-
-    RBE = sc.sticky['RBE']
-
     try:
+
+        if not 'RBE' in sc.sticky:
+            raise Exception('Initialise RBE first!')
+
+        RBE = sc.sticky['RBE']
 
         session_dir = compas_rhino.select_folder('Save where?', SESSIONS)
 
@@ -52,3 +53,4 @@ def RunCommand(is_interactive):
     except Exception as error:
 
         print(error)
+        print(traceback.format_exc())

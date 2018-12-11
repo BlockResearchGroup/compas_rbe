@@ -11,7 +11,7 @@ from compas.datastructures import Network
 __all__ = ['Assembly']
 
 
-# should an assembly be composed of a network attribute 
+# should an assembly be composed of a network attribute
 # and a block collection
 # rather than inherit from network
 # and add inconsistent stuff to that interface?
@@ -29,7 +29,7 @@ class Assembly(Network):
     --------
     .. code-block:: python
 
-        
+
 
     """
 
@@ -59,7 +59,7 @@ class Assembly(Network):
 
         with open(filepath, 'r') as fo:
             data = json.load(fo)
-    
+
             # vertex keys in an assembly can be of any hashable type
             # keys in the blocks dict should be treated the same way!
 
@@ -127,7 +127,7 @@ class Assembly(Network):
         .. code-block:: python
 
             pass
-    
+
         """
         from compas_rbe.datastructures import Block
 
@@ -145,7 +145,7 @@ class Assembly(Network):
 
             block = Block.from_polysurface(guid)
             block.attributes['name'] = name
-            
+
             key = self.add_block(block, attr_dict=attr)
 
             keys.append(key)
@@ -174,7 +174,7 @@ class Assembly(Network):
         .. code-block:: python
 
             pass
-    
+
         """
         from compas_rbe.datastructures import Block
 
@@ -226,22 +226,39 @@ class Assembly(Network):
         self.blocks[key] = block
         return key
 
-    def draw(self, layer=None):
+    def draw(self, settings=None):
         """Convenience function for drawing the assembly in Rhino using common visualisation settings.
 
         Parameters
         ----------
-        layer : str, optional
-            The layer in which the assembly should be drawn.
+        settings : dict, optional
+            A dictionary with drawing options.
 
         """
         from compas_rbe.rhino import AssemblyArtist
-        artist = AssemblyArtist(self, layer=layer)
+
+        settings = settings or {}
+
+        artist = AssemblyArtist(self, layer=settings.get('layer'))
+
+        artist.defaults.update({key: settings[key] for key in settings if key.startswith('color') or key.startswith('scale') or key.startswith('eps')})
+
         artist.clear_layer()
         artist.draw_blocks()
-        artist.draw_vertices(color={key: '#ff0000' for key in self.vertices_where({'is_support': True})})
-        artist.draw_edges()
-        artist.draw_interfaces()
+
+        if settings.get('show.vertices'):
+            artist.draw_vertices(
+                color={key: settings.get('color.vertex:is_support') for key in self.vertices_where({'is_support': True})}
+            )
+        if settings.get('show.edges'):
+            artist.draw_edges()
+        if settings.get('show.interfaces'):
+            artist.draw_interfaces()
+        if settings.get('show.forces') or True:
+            artist.draw_forces()
+        if settings.get('show.selfweight'):
+            artist.draw_selfweight()
+
         artist.redraw()
 
 

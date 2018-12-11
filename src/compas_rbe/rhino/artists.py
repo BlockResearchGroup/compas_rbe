@@ -3,6 +3,7 @@ from __future__ import absolute_import
 from __future__ import division
 
 from compas.utilities import i_to_blue
+from compas.utilities import color_to_colordict
 
 import compas_rhino
 
@@ -35,14 +36,26 @@ class AssemblyArtist(NetworkArtist):
     def __init__(self, assembly, layer=None):
         super(AssemblyArtist, self).__init__(assembly, layer=layer)
         self.defaults.update({
+            'color.vertex' : (0, 0, 0),
+            'color.vertex:is_support' : (255, 0, 0),
+            'color.edge' : (0, 0, 0),
+            'color.interface' : (255, 255, 255),
+            'color.force:compression' : (0, 0, 255),
+            'color.force:tension' : (255, 0, 0),
+            'color.selfweight' : (0, 255, 0),
 
+            'scale.force' : 0.1,
+            'scale.selfweight' : 0.1,
+
+            'eps.selfweight' : 1e-3,
+            'eps.force' : 1e-3,
         })
 
     @property
     def assembly(self):
         """Assembly : the assembly data structure."""
         return self.datastructure
-    
+
     @assembly.setter
     def assembly(self, assembly):
         self.datastructure = assembly
@@ -82,7 +95,7 @@ class AssemblyArtist(NetworkArtist):
         * By default, blocks are drawn on a sublayer of the base layer, if a base layer was specified.
         * Block names have the following pattern: ``"{assembly_name}.block.{block_id}"``
         * Faces and vertices can be drawn using the corresponding flags.
-        * Block components have the following pattern: 
+        * Block components have the following pattern:
 
           * face: ``"{assembly_name}.block.{block_id}.face.{face_id}"``
           * edge: ``"{assembly_name}.block.{block_id}.edge.{edge_id}"``
@@ -92,7 +105,7 @@ class AssemblyArtist(NetworkArtist):
         Examples
         --------
         .. code-block:: python
-        
+
             pass
 
         """
@@ -112,8 +125,24 @@ class AssemblyArtist(NetworkArtist):
     def draw_blockfacenormals(self):
         pass
 
-    def draw_interfaces(self):
+    def draw_interfaces(self, keys=None, color=None):
         """Draw the interfaces between the blocks.
+
+        Parameters
+        ----------
+        keys : list
+            A list of interface identifiers (i.e. assembly edge (u, v) tuples).
+            Default is ``None``, in which case all interfaces are drawn.
+        color : str, tuple, dict
+            The color specififcation for the interfaces.
+            Colors should be specified in the form of a string (hex colors) or
+            as a tuple of RGB components.
+            To apply the same color to all interfaces, provide a single color
+            specification. Individual colors can be assigned using a dictionary
+            of key-color pairs. Missing keys will be assigned the default interface
+            color (``self.defaults['color.interface']``).
+            The default is ``None``, in which case all interfaces are assigned the
+            default interface color.
 
         Notes
         -----
@@ -125,12 +154,19 @@ class AssemblyArtist(NetworkArtist):
         """
         layer = "{}::Interfaces".format(self.layer) if self.layer else None
         faces = []
+
+        keys = keys or list(self.assembly.edges())
+        colordict = color_to_colordict(color,
+                                       keys,
+                                       default=self.defaults.get('color.interface'),
+                                       colorformat='rgb',
+                                       normalize=False)
+
         for u, v, attr in self.assembly.edges(True):
-            points = attr['interface_points'][:]
             faces.append({
-                'points': points,
+                'points': attr['interface_points'],
                 'name'  : "{}.interface.{}-{}".format(self.assembly.name, u, v),
-                'color' : (255, 255, 255)
+                'color' : colordict[(u, v)]
             })
         compas_rhino.xdraw_faces(faces, layer=layer, clear=False, redraw=False)
 
@@ -159,8 +195,11 @@ class AssemblyArtist(NetworkArtist):
 
         """
         layer = "{}::Forces".format(self.layer) if self.layer else None
-        scale = scale or 0.1
-        eps = eps or 1e-3
+        scale = scale or self.defaults['scale.force']
+        eps = eps or self.defaults['eps.force']
+        color_compression = self.defaults['color.force:compression']
+        color_tension = self.defaults['color.force:tension']
+
         lines = []
 
         for a, b, attr in self.assembly.edges(True):
@@ -177,7 +216,7 @@ class AssemblyArtist(NetworkArtist):
                         lines.append({
                             'start' : sp,
                             'end'   : [sp[axis] + scale * c_np * w[axis] for axis in range(3)],
-                            'color' : (0, 0, 255),
+                            'color' : color_compression,
                             'name'  : "{0}.force.{1}-{2}.{3}".format(self.assembly.name, a, b, i),
                             'arrow' : 'end'
                         })
@@ -186,7 +225,7 @@ class AssemblyArtist(NetworkArtist):
                         lines.append({
                             'start' : sp,
                             'end'   : [sp[axis] - scale * c_nn * w[axis] for axis in range(3)],
-                            'color' : (255, 0, 0),
+                            'color' : color_tension,
                             'name'  : "{0}.force.{1}-{2}.{3}".format(self.assembly.name, a, b, i),
                             'arrow' : 'end'
                         })
@@ -215,8 +254,10 @@ class AssemblyArtist(NetworkArtist):
 
         """
         layer = "{}::Selfweight".format(self.layer) if self.layer else None
-        scale = scale or 0.1
-        eps = eps or 1e-3
+        scale = scale or self.defaults['scale.selfweight']
+        eps = eps or self.defaults['eps.selfweight']
+        color = self.defaults['color.selfweight']
+
         lines = []
 
         for key, attr in self.assembly.vertices(True):
@@ -271,7 +312,7 @@ class BlockArtist(MeshArtist):
     @property
     def block(self):
         return self.datastructure
-    
+
     @block.setter
     def block(self, block):
         self.datastructure = block

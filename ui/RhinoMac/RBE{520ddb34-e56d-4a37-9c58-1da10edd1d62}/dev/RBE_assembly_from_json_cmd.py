@@ -10,6 +10,7 @@ import Rhino
 
 import os
 import sys
+import traceback
 
 import compas_rhino
 import compas_rbe
@@ -21,22 +22,22 @@ __commandname__ = "RBE_assembly_from_json"
 
 
 def RunCommand(is_interactive):
-    if not 'RBE' in sc.sticky:
-        raise Exception('Initialise RBE first!')
-
-    RBE = sc.sticky['RBE']
-
     try:
 
-        path = compas_rhino.select_file(folder=compas_rbe.DATA, filter='JSON files (*.json)|*.json||')
+        if not 'RBE' in sc.sticky:
+            raise Exception('Initialise RBE first!')
 
+        RBE = sc.sticky['RBE']
+
+        path = compas_rhino.select_file(folder=compas_rbe.DATA, filter='JSON files (*.json)|*.json||')
         if not path:
             return
 
         RBE['assembly'] = assembly = Assembly.from_json(path)
-        
-        assembly.draw(RBE['settings']['layer'])
+
+        assembly.draw(RBE['settings'])
 
     except Exception as error:
 
         print(error)
+        print(traceback.format_exc())

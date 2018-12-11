@@ -10,6 +10,7 @@ import Rhino
 
 import os
 import sys
+import traceback
 
 import compas_rhino
 import compas_rbe
@@ -38,19 +39,20 @@ __commandname__ = "RBE_identify_interfaces"
 
 
 def RunCommand(is_interactive):
-    if not 'RBE' in sc.sticky:
-        raise Exception('Initialise RBE first!')
-
-    RBE = sc.sticky['RBE']
-
     try:
+
+        if not 'RBE' in sc.sticky:
+            raise Exception('Initialise RBE first!')
+
+        RBE = sc.sticky['RBE']
 
         assembly = RBE['assembly']
 
         identify_interfaces(assembly)
 
-        assembly.draw(RBE['settings']['layer'])
+        assembly.draw(RBE['settings'])
 
     except Exception as error:
 
         print(error)
+        print(traceback.format_exc())
