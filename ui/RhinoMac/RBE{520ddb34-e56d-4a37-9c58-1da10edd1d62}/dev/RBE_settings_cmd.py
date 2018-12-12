@@ -33,6 +33,10 @@ def RunCommand(is_interactive):
         if dialog.ShowModal(Rhino.UI.RhinoEtoApp.MainWindow):
             RBE['settings'].update(dialog.settings)
 
+            assembly = RBE['assembly']
+            if assembly:
+                assembly.draw(RBE['settings'])
+
     except Exception as error:
 
         print(error)

@@ -63,7 +63,6 @@ class UpdateSettingsForm(Dialog):
         table.Columns.Add(c2)
 
         layout = forms.DynamicLayout()
-
         layout.AddRow(table)
         layout.Add(None)
         layout.BeginVertical()
@@ -98,7 +97,7 @@ class UpdateSettingsForm(Dialog):
     def settings(self, settings):
         self._settings = settings.copy()
         self._names = names = sorted(settings.keys())
-        self._values = [repr(settings[name]) for name in names]
+        self._values = [str(settings[name]) for name in names]
 
     @property
     def names(self):
@@ -111,11 +110,11 @@ class UpdateSettingsForm(Dialog):
     def on_ok(self, sender, e):
         try:
             for i, name in enumerate(self.names):
-                data = self.table.DataStore[i][1]
+                value = self.table.DataStore[i][1]
                 try:
-                    value = literal_eval(data)
-                except Exception:
-                    value = data
+                    value = literal_eval(value)
+                except (TypeError, ValueError, SyntaxError):
+                    pass
                 self._settings[name] = value
         except Exception as e:
             print(e)
