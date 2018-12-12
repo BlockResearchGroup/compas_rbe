@@ -24,10 +24,11 @@ import compas_rbe
 
 from compas_rhino.utilities import XFunc
 
+reload(compas_rbe.rhino.artists)
+reload(compas_rbe.rhino)
+
 from compas_rbe.datastructures import Assembly
 from compas_rbe.rhino import AssemblyArtist
-
-reload(compas_rbe)
 
 identify_interfaces_ = XFunc(
     'compas_rbe.interfaces.identify_interfaces_xfunc', tmpdir=compas_rbe.TEMP)
@@ -116,7 +117,7 @@ def RunCommand(is_interactive):
         artist.clear_layer()
         artist.draw_blocks()
         artist.draw_interfaces()
-        # artist.color_interfaces()
+        artist.color_interfaces()
         artist.draw_selfweight(scale=0.1)
         artist.draw_forces(scale=0.1)
         artist.redraw()
