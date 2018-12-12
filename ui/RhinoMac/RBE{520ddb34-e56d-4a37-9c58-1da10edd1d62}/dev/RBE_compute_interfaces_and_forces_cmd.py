@@ -2,6 +2,14 @@ from __future__ import print_function
 from __future__ import absolute_import
 from __future__ import division
 
+try:
+    reload
+except NameError:
+    try:
+        from importlib import reload
+    except ImportError:
+        from imp import reload
+
 import rhinoscriptsyntax as rs
 import scriptcontext as sc
 
@@ -9,6 +17,7 @@ import Rhino
 
 import os
 import sys
+import traceback
 
 import compas_rhino
 import compas_rbe
@@ -18,16 +27,13 @@ from compas_rhino.utilities import XFunc
 from compas_rbe.datastructures import Assembly
 from compas_rbe.rhino import AssemblyArtist
 
+reload(compas_rbe)
+
 identify_interfaces_ = XFunc(
     'compas_rbe.interfaces.identify_interfaces_xfunc', tmpdir=compas_rbe.TEMP)
-
-identify_interfaces_.python = '/Users/kaot/anaconda3/envs/rbe/bin/python'
-identify_interfaces_.paths = ['/Users/kaot/compas-dev/compas_rbe/src']
-
 compute_iforces_ = XFunc(
     'compas_rbe.equilibrium.compute_iforces_xfunc', tmpdir=compas_rbe.TEMP)
-compute_iforces_.python = '/Users/kaot/anaconda3/envs/rbe/bin/python'
-compute_iforces_.paths = ['/Users/kaot/compas-dev/compas_rbe/src']
+identify_interfaces_.paths = compute_iforces_.paths = [compas_rbe.SRC]
 
 
 def identify_interfaces(assembly, nmax=10, tmax=0.05, amin=0.01, lmin=0.01):
@@ -61,48 +67,56 @@ __commandname__ = "RBE_compute_interfces_and_forces"  # => the part before _cmd.
 
 
 def RunCommand(is_interactive):
-    RBE = {
-        'settings': {
-            'layer': 'RBE',
-        },
-        'assembly': None,
-    }
-
-    compas_rhino.clear_layer(RBE['settings']['layer'])
-    sc.sticky['RBE'] = RBE
-
-    print('Success!')
-
-    path = compas_rhino.select_file(
-        folder=compas_rbe.DATA, filter='JSON files (*.json)|*.json||')
-
-    if not path:
-        return
-
-    RBE['assembly'] = assembly = Assembly.from_json(path)
-
-    assembly.draw(RBE['settings']['layer'])
-
-    # if not 'RBE' in sc.sticky:
-    #     raise Exception('Initialise RBE first!')
-
-    # RBE = sc.sticky['RBE']
-
     try:
+        RBE = {
+            'settings': {
+                'layer': 'RBE',
+                'pythonpath': '/Users/kaot/anaconda3/envs/rbe/bin/python',
+                'scale.selfweight': 0.1,
+                'scale.force': 0.1,
+                'color.edge': (0, 0, 0),
+                'color.vertex': (0, 0, 0),
+                'color.vertex:is_support': (255, 0, 0),
+                'eps.force': 1e-3,
+                'eps.selfweight': 1e-3,
+                'show.vertices': True,
+                'show.edges': True,
+                'show.interfaces': True,
+                'show.forces': False,
+                'show.selfweight': False,
+                'show.friction': False,
+            },
+            'assembly': None,
+        }
 
-        assembly = RBE['assembly']
+        layer = RBE['settings']['layer']
+
+        compas_rhino.clear_layer(RBE['settings']['layer'])
+        sc.sticky['RBE'] = RBE
+
+        identify_interfaces_.python = compute_iforces_.python = RBE[
+            'settings']['pythonpath']
+
+        print('Success!')
+
+        path = compas_rhino.select_file(
+            folder=compas_rbe.DATA, filter='JSON files (*.json)|*.json||')
+
+        if not path:
+            return
+
+        RBE['assembly'] = assembly = Assembly.from_json(path)
 
         identify_interfaces(assembly)
-
-        assembly.draw(RBE['settings']['layer'])
-
         compute_iforces(assembly)
 
-        artist = AssemblyArtist(assembly, layer=RBE['settings']['layer'])
+        assembly.draw(RBE['settings'])
+
+        artist = AssemblyArtist(assembly, layer=layer)
         artist.clear_layer()
         artist.draw_blocks()
         artist.draw_interfaces()
-        artist.color_interfaces()
+        # artist.color_interfaces()
         artist.draw_selfweight(scale=0.1)
         artist.draw_forces(scale=0.1)
         artist.redraw()
@@ -110,3 +124,4 @@ def RunCommand(is_interactive):
     except Exception as error:
 
         print(error)
+        print(traceback.format_exc())
