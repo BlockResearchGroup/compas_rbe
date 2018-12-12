@@ -18,11 +18,11 @@
         <link rel="stylesheet" type="text/css" href="../_static/css/compas-reference.css" />
 
         
-            <link rel="next" title="Simple stacks" href="simplestack.html" />
+            <link rel="next" title="API Reference" href="../api.html" />
         
         
         
-            <link rel="prev" title="Advanced Usage" href="advanced.html" />
+            <link rel="prev" title="Basic Usage" href="basic.html" />
         
 
         <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
@@ -57,8 +57,68 @@
 
                         
 
-                        <div class="section" id="basic-usage">
-<h1>Basic Usage</h1>
+                        <div class="section" id="simple-stacks">
+<h1>Simple stacks</h1>
+<div class="figure">
+<img alt="../_images/compas_rbe.jpg" class="figure-img img-fluid" src="../_images/compas_rbe.jpg" />
+</div>
+<div class="language-python notranslate"><div class="highlight"><pre><code><span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span>
+
+<span class="kn">import</span> <span class="nn">compas</span>
+<span class="kn">import</span> <span class="nn">compas_rbe</span>
+
+<span class="kn">from</span> <span class="nn">compas_rbe.datastructures</span> <span class="kn">import</span> <span class="n">Assembly</span>
+
+<span class="kn">from</span> <span class="nn">compas_rbe.interfaces</span> <span class="kn">import</span> <span class="n">identify_interfaces</span>
+<span class="kn">from</span> <span class="nn">compas_rbe.equilibrium</span> <span class="kn">import</span> <span class="n">compute_iforces_cvx</span> <span class="k">as</span> <span class="n">compute_iforces</span>
+
+<span class="kn">from</span> <span class="nn">compas_rbe.viewer</span> <span class="kn">import</span> <span class="n">AssemblyViewer</span>
+
+
+<span class="n">stack</span> <span class="o">=</span> <span class="s1">&#39;simple_stack_rotate&#39;</span>
+
+<span class="c1"># initialize assembly and blocks from json file</span>
+
+<span class="n">assembly</span> <span class="o">=</span> <span class="n">Assembly</span><span class="o">.</span><span class="n">from_json</span><span class="p">(</span><span class="n">compas_rbe</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;{}.json&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">stack</span><span class="p">)))</span>
+
+<span class="k">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">assembly</span><span class="o">.</span><span class="n">vertices_where</span><span class="p">({</span><span class="s1">&#39;is_support&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">})))</span>
+
+<span class="c1"># identify block interfaces and update block_model</span>
+
+<span class="n">identify_interfaces</span><span class="p">(</span>
+    <span class="n">assembly</span><span class="p">,</span>
+    <span class="n">nmax</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+    <span class="n">tmax</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span>
+    <span class="n">amin</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span>
+    <span class="n">lmin</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># equilibrium</span>
+
+<span class="n">compute_iforces</span><span class="p">(</span><span class="n">assembly</span><span class="p">,</span> <span class="n">solver</span><span class="o">=</span><span class="s1">&#39;CPLEX&#39;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="c1"># result</span>
+
+<span class="n">assembly</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">compas_rbe</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;{}_result.json&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">stack</span><span class="p">)))</span>
+
+<span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">assembly</span><span class="o">.</span><span class="n">edges</span><span class="p">(</span><span class="bp">True</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">attr</span><span class="p">[</span><span class="s1">&#39;interface_forces&#39;</span><span class="p">]:</span>
+        <span class="n">w</span> <span class="o">=</span> <span class="n">attr</span><span class="p">[</span><span class="s1">&#39;interface_uvw&#39;</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span>
+
+        <span class="k">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">attr</span><span class="p">[</span><span class="s1">&#39;interface_points&#39;</span><span class="p">]))</span>
+        <span class="k">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">attr</span><span class="p">[</span><span class="s1">&#39;interface_forces&#39;</span><span class="p">]))</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">attr</span><span class="p">[</span><span class="s1">&#39;interface_points&#39;</span><span class="p">])):</span>
+            <span class="n">sp</span>   <span class="o">=</span> <span class="n">attr</span><span class="p">[</span><span class="s1">&#39;interface_points&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">c_np</span> <span class="o">=</span> <span class="n">attr</span><span class="p">[</span><span class="s1">&#39;interface_forces&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;c_np&#39;</span><span class="p">]</span>
+            <span class="n">c_nn</span> <span class="o">=</span> <span class="n">attr</span><span class="p">[</span><span class="s1">&#39;interface_forces&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;c_nn&#39;</span><span class="p">]</span>
+
+            <span class="k">print</span><span class="p">(</span><span class="n">c_np</span><span class="p">)</span>
+            <span class="k">print</span><span class="p">(</span><span class="n">c_nn</span><span class="p">)</span>
+</code></pre></div>
+</div>
 </div>
 
                         
@@ -92,8 +152,8 @@
 <li class="nav-item"><a class="nav-link reference internal" href="../gettingstarted.html">Getting Started</a></li>
 <li class="nav-item active"><a class="nav-link reference internal" href="../examples.html">Examples</a><ul class="nav active">
 <li class="nav-item"><a class="nav-link reference internal" href="advanced.html">Advanced Usage</a></li>
-<li class="nav-item active"><a class="nav-link active current reference internal" href="#">Basic Usage</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="simplestack.html">Simple stacks</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="basic.html">Basic Usage</a></li>
+<li class="nav-item active"><a class="nav-link active current reference internal" href="#">Simple stacks</a></li>
 </ul>
 </li>
 <li class="nav-item"><a class="nav-link reference internal" href="../api.html">API Reference</a></li>
@@ -117,7 +177,7 @@
                     
 
                     <ul class="nav flex-column" id="compas-localnav">
-<li class="nav-item"><a class="nav-link reference internal" href="#">Basic Usage</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#">Simple stacks</a></li>
 </ul>
 
 

@@ -53,4 +53,8 @@ def requirements():
             print(line.strip())
 
 
+def reload():
+    pass
+
+
 __all__ = ['HOME', 'DATA', 'DOCS', 'TEMP', 'get']

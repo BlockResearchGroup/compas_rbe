@@ -256,7 +256,7 @@ class Assembly(Network):
             artist.draw_interfaces()
         if settings.get('show.forces') or True:
             artist.draw_forces()
-            artist.color_interfaces()
+            # artist.color_interfaces()
         if settings.get('show.selfweight'):
             artist.draw_selfweight()
 

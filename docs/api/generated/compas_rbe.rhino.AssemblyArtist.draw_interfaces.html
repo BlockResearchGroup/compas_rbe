@@ -61,8 +61,25 @@
 <h1>AssemblyArtist.draw_interfaces</h1>
 <dl class="method">
 <dt id="compas_rbe.rhino.AssemblyArtist.draw_interfaces">
-<code class="descclassname">AssemblyArtist.</code><code class="descname">draw_interfaces</code><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<code class="descclassname">AssemblyArtist.</code><code class="descname">draw_interfaces</code><span class="sig-paren">(</span><em>keys=None</em>, <em>color=None</em><span class="sig-paren">)</span></dt>
 <dd><p>Draw the interfaces between the blocks.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>keys</strong> (<em>list</em>) – A list of interface identifiers (i.e. assembly edge (u, v) tuples).
+Default is <code class="docutils literal notranslate"><span class="pre">None</span></code>, in which case all interfaces are drawn.</p></li>
+<li><p><strong>color</strong> (<em>str, tuple, dict</em>) – The color specififcation for the interfaces.
+Colors should be specified in the form of a string (hex colors) or
+as a tuple of RGB components.
+To apply the same color to all interfaces, provide a single color
+specification. Individual colors can be assigned using a dictionary
+of key-color pairs. Missing keys will be assigned the default interface
+color (<code class="docutils literal notranslate"><span class="pre">self.defaults['color.interface']</span></code>).
+The default is <code class="docutils literal notranslate"><span class="pre">None</span></code>, in which case all interfaces are assigned the
+default interface color.</p></li>
+</ul>
+</dd>
+</dl>
 <p class="rubric">Notes</p>
 <ul class="simple">
 <li><p>Interfaces are drawn as mesh faces.</p></li>
@@ -146,7 +163,7 @@
 
         <footer class="compas-footer">
             
-                Last updated on Dec 10, 2018.
+                Last updated on Dec 12, 2018.
             
 
             

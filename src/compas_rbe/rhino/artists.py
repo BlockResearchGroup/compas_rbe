@@ -286,50 +286,89 @@ class AssemblyArtist(NetworkArtist):
 
         compas_rhino.xdraw_lines(lines, layer=layer, clear=False, redraw=False)
 
-    def color_interfaces(self):
-        for u, v, attr in self.assembly.edges(True):
-            if attr['interface_forces'] is None:
-                continue
-
-            name = "{}.interface.{}-{}".format(self.assembly.name, u, v)
-            guids = compas_rhino.get_objects(name=name)
-            if not guids:
-                continue
-
-            guid = guids[0]
-
-            call_np = [force['c_np'] for force in attr['interface_forces']]
-            call_nn = [force['c_nn'] for force in attr['interface_forces']]
-            cmax_np, cmax_nn = max(call_np), max(call_nn)
-            cmin_np = cmin_nn = 0
-
-            colors = []
-            cvalues = []
-            for i in range(len(attr['interface_points'])):
-                c_np = attr['interface_forces'][i]['c_np']
-                c_nn = attr['interface_forces'][i]['c_nn']
-                if c_np < 1e-3:
-                    red = i_to_red((c_nn - cmin_nn) / (cmax_nn - cmin_nn + 0.0001))
-                    colors.append(red)
-                else:
-                    blue = i_to_blue((c_np - cmin_np) / (cmax_np - cmin_np + 0.0001))
-                    cvalues.append((c_np - cmin_np) / (cmax_np - cmin_np + 0.0001))
-                    colors.append(blue)
-
-            # making the center point color as average vertices
-            if len(attr['interface_points']) > 4:
-                blue = i_to_blue(sum(cvalues) / len(cvalues))
-                colors.append(blue)
-
-            compas_rhino.set_mesh_vertex_colors(guid, colors)
+    # def color_interfaces(self):
+    #     """Color the interfaces with shades of blue and red according to the forces at the corners.
+    #
+    #     Notes
+    #     -----
+    #     * Currently only normal forces are taken into account.
+    #     * Gradients should go from blue to red over white.
+    #     * White marks the neutral line (the axis of rotational equilibrium).
+    #     * ...
+    #
+    #     Examples
+    #     --------
+    #     .. code-block:: python
+    #
+    #         pass
+    #
+    #     """
+    #     for u, v, attr in self.assembly.edges(True):
+    #         if attr['interface_forces'] is None:
+    #             continue
+    #
+    #         name = "{}.interface.{}-{}".format(self.assembly.name, u, v)
+    #         guids = compas_rhino.get_objects(name=name)
+    #         if not guids:
+    #             continue
+    #
+    #         guid = guids[0]
+    #
+    #         c_all = [force['c_np'] for force in attr['interface_forces']]
+    #         t_all = [force['c_nn'] for force in attr['interface_forces']]
+    #         c_max = max(c_all)
+    #         t_max = max(t_all)
+    #         c_min = 0
+    #         t_min = 0
+    #
+    #         colors = []
+    #         c_values = []
+    #
+    #         # if t_max < 1e-4 and c_max < 1e-4:
+    #         #     # no nornal forces
+    #         #     pass
+    #         #
+    #         # elif t_max < 1e-4:
+    #         #     # no tension
+    #         #     pass
+    #         #
+    #         # elif c_max < 1e-4:
+    #         #     # no compression
+    #         #     pass
+    #         #
+    #         # else:
+    #         #     # compression and tesion
+    #         #     pass
+    #
+    #         for i in range(len(attr['interface_points'])):
+    #             c = attr['interface_forces'][i]['c_np']
+    #             t = attr['interface_forces'][i]['c_nn']
+    #
+    #             if c < 1e-3:
+    #                 value = t / t_max
+    #                 colors.append(i_to_red(value))
+    #             else:
+    #                 value = c / c_max
+    #                 colors.append(i_to_blue(value))
+    #                 c_values.append(value)
+    #
+    #         # making the center point color as average vertices
+    #         if len(attr['interface_points']) > 4:
+    #             blue = i_to_blue(sum(cvalues) / len(cvalues))
+    #             colors.append(blue)
+    #
+    #         compas_rhino.set_mesh_vertex_colors(guid, colors)
 
 
 class BlockArtist(MeshArtist):
+    """An artist for painting blocks."""
 
     def __init__(self, *args, **kwargs):
         super(BlockArtist, self).__init__(*args, **kwargs)
         self.defaults.update({
-
+            'color.vertex' : (200, 200, 200),
+            'color.edge' : (200, 200, 200),
+            'color.face' : (255, 255, 255),
         })
 
     @property

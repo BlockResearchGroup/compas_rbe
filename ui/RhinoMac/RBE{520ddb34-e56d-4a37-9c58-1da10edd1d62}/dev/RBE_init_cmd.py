@@ -24,6 +24,7 @@ import compas_rbe
 
 # not sure if this will help
 reload(compas_rbe)
+# compas_rbe.relaod()
 
 
 __commandname__ = "RBE_init"
