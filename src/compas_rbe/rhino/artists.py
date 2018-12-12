@@ -210,28 +210,30 @@ class AssemblyArtist(NetworkArtist):
             w = attr['interface_uvw'][2]
 
             for i in range(len(attr['interface_points'])):
-                sp   = attr['interface_points'][i]
-                c_np = attr['interface_forces'][i]['c_np']
-                c_nn = attr['interface_forces'][i]['c_nn']
+                sp = attr['interface_points'][i]
+                c = attr['interface_forces'][i]['c_np']
+                t = attr['interface_forces'][i]['c_nn']
 
-                if scale * c_np > eps:
-                    # compression force
-                    lines.append({
-                        'start' : sp,
-                        'end'   : [sp[axis] + scale * c_np * w[axis] for axis in range(3)],
-                        'color' : color_compression,
-                        'name'  : "{0}.force.{1}-{2}.{3}".format(self.assembly.name, a, b, i),
-                        'arrow' : 'end'
-                    })
-                if scale * c_nn > eps:
-                    # tension force
-                    lines.append({
-                        'start' : sp,
-                        'end'   : [sp[axis] - scale * c_nn * w[axis] for axis in range(3)],
-                        'color' : color_tension,
-                        'name'  : "{0}.force.{1}-{2}.{3}".format(self.assembly.name, a, b, i),
-                        'arrow' : 'end'
-                    })
+                f = c - t
+
+                if f > 0.0:
+                    if scale * f < eps:
+                        continue
+                    color = color_compression
+                elif f < 0.0:
+                    if -scale * f < eps:
+                        continue
+                    color = color_tension
+                else:
+                    continue
+
+                lines.append({
+                    'start' : sp,
+                    'end'   : [sp[axis] + scale * f * w[axis] for axis in range(3)],
+                    'color' : color,
+                    'name'  : "{0}.force.{1}-{2}.{3}".format(self.assembly.name, a, b, i),
+                    'arrow' : 'end'
+                })
 
         compas_rhino.xdraw_lines(lines, layer=layer, clear=False, redraw=False)
 
@@ -286,78 +288,64 @@ class AssemblyArtist(NetworkArtist):
 
         compas_rhino.xdraw_lines(lines, layer=layer, clear=False, redraw=False)
 
-    # def color_interfaces(self):
-    #     """Color the interfaces with shades of blue and red according to the forces at the corners.
-    #
-    #     Notes
-    #     -----
-    #     * Currently only normal forces are taken into account.
-    #     * Gradients should go from blue to red over white.
-    #     * White marks the neutral line (the axis of rotational equilibrium).
-    #     * ...
-    #
-    #     Examples
-    #     --------
-    #     .. code-block:: python
-    #
-    #         pass
-    #
-    #     """
-    #     for u, v, attr in self.assembly.edges(True):
-    #         if attr['interface_forces'] is None:
-    #             continue
-    #
-    #         name = "{}.interface.{}-{}".format(self.assembly.name, u, v)
-    #         guids = compas_rhino.get_objects(name=name)
-    #         if not guids:
-    #             continue
-    #
-    #         guid = guids[0]
-    #
-    #         c_all = [force['c_np'] for force in attr['interface_forces']]
-    #         t_all = [force['c_nn'] for force in attr['interface_forces']]
-    #         c_max = max(c_all)
-    #         t_max = max(t_all)
-    #         c_min = 0
-    #         t_min = 0
-    #
-    #         colors = []
-    #         c_values = []
-    #
-    #         # if t_max < 1e-4 and c_max < 1e-4:
-    #         #     # no nornal forces
-    #         #     pass
-    #         #
-    #         # elif t_max < 1e-4:
-    #         #     # no tension
-    #         #     pass
-    #         #
-    #         # elif c_max < 1e-4:
-    #         #     # no compression
-    #         #     pass
-    #         #
-    #         # else:
-    #         #     # compression and tesion
-    #         #     pass
-    #
-    #         for i in range(len(attr['interface_points'])):
-    #             c = attr['interface_forces'][i]['c_np']
-    #             t = attr['interface_forces'][i]['c_nn']
-    #
-    #             if c < 1e-3:
-    #                 value = t / t_max
-    #                 colors.append(i_to_red(value))
-    #             else:
-    #                 value = c / c_max
-    #                 colors.append(i_to_blue(value))
-    #                 c_values.append(value)
-    #
-    #         # making the center point color as average vertices
-    #         if len(attr['interface_points']) > 4:
-    #             blue = i_to_blue(sum(cvalues) / len(cvalues))
-    #             colors.append(blue)
-    #
-    #         compas_rhino.set_mesh_vertex_colors(guid, colors)
+    def color_interfaces(self):
+        """Color the interfaces with shades of blue and red according to the forces at the corners.
+
+        Notes
+        -----
+        * Currently only normal forces are taken into account.
+        * Gradients should go from blue to red over white.
+        * White marks the neutral line (the axis of rotational equilibrium).
+        * ...
+
+        Examples
+        --------
+        .. code-block:: python
+
+            pass
+
+        """
+        # redraw the faces with a discretisation that makes sense for the neutral axis
+        # color the drawn meshes
+        for u, v, attr in self.assembly.edges(True):
+            if attr['interface_forces'] is None:
+                continue
+
+            name = "{}.interface.{}-{}".format(self.assembly.name, u, v)
+            guids = compas_rhino.get_objects(name=name)
+            if not guids:
+                continue
+
+            guid = guids[0]
+
+            forces = [f['c_np'] - f['c_nn'] for f in attr['interface_forces']]
+
+            fmin = min(forces)
+            fmax = max(forces)
+            fmax = max(abs(fmin), fmax)
+
+            colors = []
+
+            p = len(attr['interface_points'])
+
+            for i in range(p):
+                f = forces[i]
+
+                if f > 0.0:
+                    color = i_to_blue(f / fmax)
+                elif f < 0.0:
+                    color = i_to_red(-f / fmax)
+                else:
+                    color = (255, 255, 255)
+
+                colors.append(color)
+
+            # this is obviously not correct
+            # just a visual reminder
+            if p > 4:
+                colors.append((255, 255, 255))
+
+            compas_rhino.set_mesh_vertex_colors(guid, colors)
 
 
 class BlockArtist(MeshArtist):
@@ -366,8 +354,8 @@ class BlockArtist(MeshArtist):
     def __init__(self, *args, **kwargs):
         super(BlockArtist, self).__init__(*args, **kwargs)
         self.defaults.update({
-            'color.vertex' : (200, 200, 200),
-            'color.edge' : (200, 200, 200),
+            'color.vertex' : (0, 0, 0),
+            'color.edge' : (0, 0, 0),
             'color.face' : (255, 255, 255),
         })
 
