@@ -268,6 +268,8 @@ class Assembly(Network):
                 artist.draw_forces()
         if settings.get('show.selfweight'):
             artist.draw_selfweight()
+        if settings.get('show.frictions'):
+            artist.draw_frictions()
 
         artist.redraw()
 

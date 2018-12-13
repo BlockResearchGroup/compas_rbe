@@ -75,17 +75,20 @@ def RunCommand(is_interactive):
                 'pythonpath': '/Users/kaot/anaconda3/envs/rbe/bin/python',
                 'scale.selfweight': 0.1,
                 'scale.force': 0.1,
+                'scale.friction': 0.1,
                 'color.edge': (0, 0, 0),
                 'color.vertex': (0, 0, 0),
                 'color.vertex:is_support': (255, 0, 0),
                 'eps.force': 1e-3,
+                'eps.friction': 1e-3,
                 'eps.selfweight': 1e-3,
                 'show.vertices': True,
                 'show.edges': True,
                 'show.interfaces': True,
-                'show.forces': False,
-                'show.selfweight': False,
-                'show.friction': False,
+                'show.forces': True,
+                'show.forces_as_vectors': True,
+                'show.selfweight': True,
+                'show.friction': True,
             },
             'assembly': None,
         }
@@ -112,15 +115,6 @@ def RunCommand(is_interactive):
         compute_iforces(assembly)
 
         assembly.draw(RBE['settings'])
-
-        artist = AssemblyArtist(assembly, layer=layer)
-        artist.clear_layer()
-        artist.draw_blocks()
-        artist.draw_interfaces()
-        artist.color_interfaces()
-        artist.draw_selfweight(scale=0.1)
-        artist.draw_forces(scale=0.1)
-        artist.redraw()
 
     except Exception as error:
 
