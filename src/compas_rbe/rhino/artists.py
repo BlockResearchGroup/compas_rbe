@@ -180,7 +180,7 @@ class AssemblyArtist(NetworkArtist):
     def draw_iframes(self):
         pass
 
-    def draw_frictions(self, scale=None, eps=None):
+    def draw_frictions(self, scale=None, eps=None, mode=0):
         """Draw the contact frictions at the interfaces.
 
         Parameters
@@ -206,12 +206,16 @@ class AssemblyArtist(NetworkArtist):
         color_friction = self.defaults['color.force:friction']
 
         lines = []
+        resultant_lines = []
 
         for a, b, attr in self.assembly.edges(True):
             if attr['interface_forces'] is None:
                 continue
 
             u, v = attr['interface_uvw'][0], attr['interface_uvw'][1]
+
+            rf = [0, 0, 0]  # resultant force
+            rp = [0, 0, 0]  # resultant center point
 
             for i in range(len(attr['interface_points'])):
                 sp = attr['interface_points'][i]
@@ -232,11 +236,6 @@ class AssemblyArtist(NetworkArtist):
 
                 f = scale_vector(f, scale)
 
-                # print(sp)
-                # print('u -- ', u)
-                # print('v -- ', v)
-                # print('resultant -- ', f)
-
                 lines.append({
                     'start':
                     sp,
@@ -250,7 +249,34 @@ class AssemblyArtist(NetworkArtist):
                     'end'
                 })
 
-        compas_rhino.xdraw_lines(lines, layer=layer, clear=False, redraw=False)
+                rf = add_vectors(rf, f)
+                rp = [rp[axis] + sp[axis] for axis in range(3)]
+
+            if mode == 0:
+                continue
+
+            rp = [
+                rp[axis] / len(attr['interface_points']) for axis in range(3)
+            ]
+            resultant_lines.append({
+                'start':
+                rp,
+                'end': [rp[axis] + rf[axis] for axis in range(3)],
+                'color':
+                color,
+                'name':
+                "{0}.resultant-friction.{1}-{2}.{3}".format(
+                    self.assembly.name, a, b, i),
+                'arrow':
+                'end'
+            })
+
+        if mode == 0:
+            compas_rhino.xdraw_lines(
+                lines, layer=layer, clear=False, redraw=False)
+        else:
+            compas_rhino.xdraw_lines(
+                resultant_lines, layer=layer, clear=False, redraw=False)
 
     def draw_forces(self, scale=None, eps=None):
         """Draw the contact forces at the interfaces.

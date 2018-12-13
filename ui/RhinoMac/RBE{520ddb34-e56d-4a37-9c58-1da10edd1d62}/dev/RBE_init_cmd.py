@@ -53,7 +53,8 @@ def RunCommand(is_interactive):
                 'show.selfweight': True,
                 'show.frictions': True,
                 'range.friction': 5,
-                'interface.mode': 0,
+                'mode.interface': 0,
+                'mode.friction': 0,
             },
             'assembly': None,
         }
