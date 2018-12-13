@@ -51,7 +51,9 @@ def RunCommand(is_interactive):
                 'show.forces': True,
                 'show.forces_as_vectors': False,
                 'show.selfweight': True,
-                'show.friction': True,
+                'show.frictions': True,
+                'range.friction': 5,
+                'interface.mode': 0,
             },
             'assembly': None,
         }

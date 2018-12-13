@@ -2,8 +2,7 @@ from __future__ import print_function
 from __future__ import absolute_import
 from __future__ import division
 
-from compas.utilities import i_to_blue
-from compas.utilities import i_to_red
+from compas.utilities import i_to_blue, i_to_red
 from compas.utilities import color_to_colordict
 
 from compas.geometry import add_vectors, scale_vector, length_vector
@@ -52,6 +51,7 @@ class AssemblyArtist(NetworkArtist):
             'eps.selfweight': 1e-3,
             'eps.force': 1e-3,
             'eps.friction': 1e-3,
+            'range.friction': 5,
         })
 
     @property
@@ -376,8 +376,14 @@ class AssemblyArtist(NetworkArtist):
 
         compas_rhino.xdraw_lines(lines, layer=layer, clear=False, redraw=False)
 
-    def color_interfaces(self):
+    def color_interfaces(self, mode=0):
         """Color the interfaces with shades of blue and red according to the forces at the corners.
+
+        Parameters
+        ----------
+        mode : int, optional
+            Mode to switch between normal forces(0) and frictions(1)
+            Default is 0.
 
         Notes
         -----
@@ -393,47 +399,101 @@ class AssemblyArtist(NetworkArtist):
             pass
 
         """
-        # redraw the faces with a discretisation that makes sense for the neutral axis
-        # color the drawn meshes
-        for u, v, attr in self.assembly.edges(True):
-            if attr['interface_forces'] is None:
-                continue
+        if mode == 0:
+            # redraw the faces with a discretisation that makes sense for the neutral axis
+            # color the drawn meshes
+            for u, v, attr in self.assembly.edges(True):
+                if attr['interface_forces'] is None:
+                    continue
 
-            name = "{}.interface.{}-{}".format(self.assembly.name, u, v)
-            guids = compas_rhino.get_objects(name=name)
-            if not guids:
-                continue
+                name = "{}.interface.{}-{}".format(self.assembly.name, u, v)
+                guids = compas_rhino.get_objects(name=name)
+                if not guids:
+                    continue
 
-            guid = guids[0]
+                guid = guids[0]
 
-            forces = [f['c_np'] - f['c_nn'] for f in attr['interface_forces']]
+                forces = [
+                    f['c_np'] - f['c_nn'] for f in attr['interface_forces']
+                ]
 
-            fmin = min(forces)
-            fmax = max(forces)
-            fmax = max(abs(fmin), fmax)
+                fmin = min(forces)
+                fmax = max(forces)
+                fmax = max(abs(fmin), fmax)
 
-            colors = []
+                colors = []
 
-            p = len(attr['interface_points'])
+                p = len(attr['interface_points'])
 
-            for i in range(p):
-                f = forces[i]
+                for i in range(p):
+                    f = forces[i]
 
-                if f > 0.0:
-                    color = i_to_blue(f / fmax)
-                elif f < 0.0:
-                    color = i_to_red(-f / fmax)
-                else:
-                    color = (255, 255, 255)
+                    if f > 0.0:
+                        color = i_to_blue(f / fmax)
+                    elif f < 0.0:
+                        color = i_to_red(-f / fmax)
+                    else:
+                        color = (255, 255, 255)
 
-                colors.append(color)
+                    colors.append(color)
 
-            # this is obviously not correct
-            # just a visual reminder
-            if p > 4:
-                colors.append((255, 255, 255))
+                # this is obviously not correct
+                # just a visual reminder
+                if p > 4:
+                    colors.append((255, 255, 255))
 
-            compas_rhino.set_mesh_vertex_colors(guid, colors)
+                compas_rhino.set_mesh_vertex_colors(guid, colors)
+
+        elif mode == 1:
+            for u, v, attr in self.assembly.edges(True):
+                if attr['interface_forces'] is None:
+                    continue
+
+                name = "{}.interface.{}-{}".format(self.assembly.name, u, v)
+                guids = compas_rhino.get_objects(name=name)
+                if not guids:
+                    continue
+
+                guid = guids[0]
+
+                iu, iv = attr['interface_uvw'][0], attr['interface_uvw'][1]
+
+                forces = [
+                    length_vector(
+                        add_vectors(
+                            scale_vector(iu, f['c_u']),
+                            scale_vector(iv, f['c_v'])))
+                    for f in attr['interface_forces']
+                ]
+
+                fmin = min(forces)
+                fmax = max(forces)
+                fmax = max(abs(fmin), fmax)
+                fmax = max(fmax, self.defaults['range.friction'])
+
+                colors = []
+
+                p = len(attr['interface_points'])
+
+                for i in range(p):
+                    f = forces[i]
+
+                    if f > 0.0:
+                        color = i_to_red(f / fmax)
+                    else:
+                        color = (255, 255, 255)
+
+                    colors.append(color)
+
+                # this is obviously not correct
+                # just a visual reminder
+                if p > 4:
+                    colors.append((255, 255, 255))
+
+                compas_rhino.set_mesh_vertex_colors(guid, colors)
+
+        else:
+            print("please choose mode 0 or 1")
 
 
 class BlockArtist(MeshArtist):
