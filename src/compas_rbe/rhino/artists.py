@@ -5,7 +5,7 @@ from __future__ import division
 from compas.utilities import i_to_blue, i_to_red
 from compas.utilities import color_to_colordict
 
-from compas.geometry import add_vectors, scale_vector, length_vector
+from compas.geometry import add_vectors, scale_vector, length_vector, sum_vectors
 
 import compas_rhino
 
@@ -192,6 +192,9 @@ class AssemblyArtist(NetworkArtist):
             A tolerance for drawing small force vectors.
             Force vectors with a scaled length smaller than this tolerance are not drawn.
             Default is `1e-3`.
+        mode : int, optional
+            Display mode: 0 normal, 1 resultant forces
+            Default is 0
 
         Notes
         -----
@@ -214,8 +217,7 @@ class AssemblyArtist(NetworkArtist):
 
             u, v = attr['interface_uvw'][0], attr['interface_uvw'][1]
 
-            rf = [0, 0, 0]  # resultant force
-            rp = [0, 0, 0]  # resultant center point
+            forces = []
 
             for i in range(len(attr['interface_points'])):
                 sp = attr['interface_points'][i]
@@ -249,19 +251,30 @@ class AssemblyArtist(NetworkArtist):
                     'end'
                 })
 
-                rf = add_vectors(rf, f)
-                rp = [rp[axis] + sp[axis] for axis in range(3)]
+                if mode == 1:
+                    forces.append(f)
 
             if mode == 0:
                 continue
 
-            rp = [
-                rp[axis] / len(attr['interface_points']) for axis in range(3)
-            ]
+            resultant_force = sum_vectors(forces)
+
+            if len(forces) == 0:
+                continue
+
+            resultant_pt = sum_vectors([
+                scale_vector(attr['interface_points'][i], (
+                    length_vector(forces[i]) / length_vector(resultant_force)))
+                for i in range(len(attr['interface_points']))
+            ])
+
             resultant_lines.append({
                 'start':
-                rp,
-                'end': [rp[axis] + rf[axis] for axis in range(3)],
+                resultant_pt,
+                'end': [
+                    resultant_pt[axis] + resultant_force[axis]
+                    for axis in range(3)
+                ],
                 'color':
                 color,
                 'name':
@@ -278,7 +291,7 @@ class AssemblyArtist(NetworkArtist):
             compas_rhino.xdraw_lines(
                 resultant_lines, layer=layer, clear=False, redraw=False)
 
-    def draw_forces(self, scale=None, eps=None):
+    def draw_forces(self, scale=None, eps=None, mode=0):
         """Draw the contact forces at the interfaces.
 
         Parameters
@@ -290,6 +303,9 @@ class AssemblyArtist(NetworkArtist):
             A tolerance for drawing small force vectors.
             Force vectors with a scaled length smaller than this tolerance are not drawn.
             Default is `1e-3`.
+        mode : int, optional
+            Display mode: 0 normal, 1 resultant forces
+            Default is 0
 
         Notes
         -----
@@ -306,12 +322,15 @@ class AssemblyArtist(NetworkArtist):
         color_tension = self.defaults['color.force:tension']
 
         lines = []
+        resultant_lines = []
 
         for a, b, attr in self.assembly.edges(True):
             if attr['interface_forces'] is None:
                 continue
 
             w = attr['interface_uvw'][2]
+
+            forces = []
 
             for i in range(len(attr['interface_points'])):
                 sp = attr['interface_points'][i]
@@ -345,7 +364,45 @@ class AssemblyArtist(NetworkArtist):
                     'end'
                 })
 
-        compas_rhino.xdraw_lines(lines, layer=layer, clear=False, redraw=False)
+                if mode == 1:
+                    forces.append([scale * f * w[axis] for axis in range(3)])
+
+            if mode == 0:
+                continue
+
+            resultant_force = sum_vectors(forces)
+
+            if len(forces) == 0:
+                continue
+
+            resultant_pt = sum_vectors([
+                scale_vector(attr['interface_points'][i], (
+                    length_vector(forces[i]) / length_vector(resultant_force)))
+                for i in range(len(attr['interface_points']))
+            ])
+
+            resultant_lines.append({
+                'start':
+                resultant_pt,
+                'end': [
+                    resultant_pt[axis] + resultant_force[axis]
+                    for axis in range(3)
+                ],
+                'color':
+                color,
+                'name':
+                "{0}.resultant-friction.{1}-{2}.{3}".format(
+                    self.assembly.name, a, b, i),
+                'arrow':
+                'end'
+            })
+
+        if mode == 0:
+            compas_rhino.xdraw_lines(
+                lines, layer=layer, clear=False, redraw=False)
+        else:
+            compas_rhino.xdraw_lines(
+                resultant_lines, layer=layer, clear=False, redraw=False)
 
     def draw_selfweight(self, scale=None, eps=None):
         """Draw vectors indicating the magnitude of the selfweight of the blocks.

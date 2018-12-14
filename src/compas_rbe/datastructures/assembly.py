@@ -268,7 +268,10 @@ class Assembly(Network):
             else:
                 artist.color_interfaces(1)
             if settings.get('show.forces_as_vectors'):
-                artist.draw_forces()
+                if settings.get('mode.force') == 0:
+                    artist.draw_forces(mode=0)
+                else:
+                    artist.draw_forces(mode=1)
         if settings.get('show.selfweight'):
             artist.draw_selfweight()
         if settings.get('show.frictions'):

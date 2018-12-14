@@ -55,6 +55,7 @@ def RunCommand(is_interactive):
                 'range.friction': 5,
                 'mode.interface': 0,
                 'mode.friction': 0,
+                'mode.force': 0,
             },
             'assembly': None,
         }

@@ -24,8 +24,8 @@ import compas_rbe
 
 from compas_rhino.utilities import XFunc
 
-reload(compas_rbe.rhino.artists)
-reload(compas_rbe.rhino)
+# reload(compas_rbe.rhino.artists)
+# reload(compas_rbe.rhino)
 
 from compas_rbe.datastructures import Assembly
 from compas_rbe.rhino import AssemblyArtist
@@ -92,6 +92,7 @@ def RunCommand(is_interactive):
                 'range.friction': 5,
                 'mode.interface': 0,
                 'mode.friction': 0,
+                'mode.force': 0,
             },
             'assembly': None,
         }
