@@ -31,7 +31,8 @@ from compas_rbe.datastructures import Assembly
 from compas_rbe.rhino import AssemblyArtist
 
 identify_interfaces_ = XFunc(
-    'compas_rbe.interfaces.identify_interfaces_xfunc', tmpdir=compas_rbe.TEMP)
+    'compas_rbe.interfaces.identify_interfaces_offset_xfunc',
+    tmpdir=compas_rbe.TEMP)
 compute_iforces_ = XFunc(
     'compas_rbe.equilibrium.compute_iforces_xfunc', tmpdir=compas_rbe.TEMP)
 identify_interfaces_.paths = compute_iforces_.paths = [compas_rbe.SRC]

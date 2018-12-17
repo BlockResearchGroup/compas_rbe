@@ -121,6 +121,30 @@ class Block(Mesh):
         uvw = normalize_vector(u), normalize_vector(v), normalize_vector(w)
         return o, uvw
 
+    def frame_offset(self, fkey):
+        """Compute the frame with offset"""
+
+        # TODO need to be re-writen properly.
+        xyz = self.face_coordinates(fkey)
+
+        centroid = centroid_points(xyz)
+
+        new_xyz = []
+        for pt in xyz:
+            vec = [pt[i] * 0.9 + centroid[i] * 0.1 for i in range(3)]
+            new_xyz.append(vec)
+
+        o = new_xyz[0]
+        w = self.face_normal(fkey)
+        u = [new_xyz[1][i] - o[i] for i in range(3)]
+        v = cross_vectors(w, u)
+        uvw = normalize_vector(u), normalize_vector(v), normalize_vector(w)
+        return o, uvw
+
+    def frames_offset(self):
+        # TODO need to be clean up
+        return {fkey: self.frame_offset(fkey) for fkey in self.faces()}
+
     def frame_planar(self, fkey):
         """Planarize and compute the frame of a specific face.
 
