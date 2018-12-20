@@ -26,7 +26,6 @@ import compas_rbe
 reload(compas_rbe)
 # compas_rbe.relaod()
 
-
 __commandname__ = "RBE_init"
 
 
@@ -34,27 +33,34 @@ def RunCommand(is_interactive):
     try:
 
         RBE = {
-            'settings' : {
-                'layer' : 'RBE',
-
-                'scale.selfweight' : 0.1,
-                'scale.force' : 0.1,
-                'color.edge' : (0, 0, 0),
-                'color.vertex' : (0, 0, 0),
-                'color.vertex:is_support' : (255, 0, 0),
-                'eps.force' : 1e-3,
-                'eps.selfweight' : 1e-3,
-
-                'show.vertices' : False,
-                'show.edges' : False,
-                'show.interfaces' : True,
-                'show.forces' : True,
-                'show.forces_as_vectors' : False,
-                'show.selfweight' : True,
-                'show.friction' : False,
+            'settings': {
+                'layer': 'RBE',
+                'pythonpath': '/Users/kaot/anaconda3/envs/rbe/bin/python',
+                'scale.selfweight': 0.1,
+                'scale.force': 0.1,
+                'scale.friction': 0.1,
+                'color.edge': (0, 0, 0),
+                'color.vertex': (0, 0, 0),
+                'color.vertex:is_support': (255, 0, 0),
+                'eps.force': 1e-3,
+                'eps.selfweight': 1e-3,
+                'eps.friction': 1e-3,
+                'show.vertices': False,
+                'show.edges': False,
+                'show.interfaces': True,
+                'show.forces': True,
+                'show.forces_as_vectors': False,
+                'show.selfweight': True,
+                'show.frictions': True,
+                'range.friction': 5,
+                'mode.interface': 0,
+                'mode.friction': 0,
+                'mode.force': 0,
             },
-            'assembly' : None,
+            'assembly': None,
         }
+
+        compas_rhino.clear_layer(RBE['settings']['layer'])
 
         sc.sticky['RBE'] = RBE
 

@@ -5,11 +5,10 @@ from __future__ import division
 import ast
 import json
 
+import compas_rhino
 from compas.datastructures import Network
 
-
 __all__ = ['Assembly']
-
 
 # should an assembly be composed of a network attribute
 # and a block collection
@@ -38,19 +37,15 @@ class Assembly(Network):
     def __init__(self):
         super(Assembly, self).__init__()
         self.blocks = {}
-        self.attributes.update({
-            'name': 'Assembly'
-        })
-        self.default_vertex_attributes.update({
-            'is_support': False
-        })
+        self.attributes.update({'name': 'Assembly'})
+        self.default_vertex_attributes.update({'is_support': False})
         self.default_edge_attributes.update({
-            'interface_points' : None,
-            'interface_type'   : None,
-            'niterface_size'   : None,
-            'interface_uvw'    : None,
-            'interface_origin' : None,
-            'interface_forces' : None,
+            'interface_points': None,
+            'interface_type': None,
+            'niterface_size': None,
+            'interface_uvw': None,
+            'interface_origin': None,
+            'interface_forces': None,
         })
 
     @classmethod
@@ -64,14 +59,19 @@ class Assembly(Network):
             # keys in the blocks dict should be treated the same way!
 
             assembly = cls.from_data(data['assembly'])
-            assembly.blocks = {int(key): Block.from_data(data['blocks'][key]) for key in data['blocks']}
+            assembly.blocks = {
+                int(key): Block.from_data(data['blocks'][key])
+                for key in data['blocks']
+            }
 
         return assembly
 
     def to_json(self, filepath):
         data = {
-            'assembly' : self.to_data(),
-            'blocks': {str(key): self.blocks[key].to_data() for key in self.blocks}
+            'assembly': self.to_data(),
+            'blocks':
+            {str(key): self.blocks[key].to_data()
+             for key in self.blocks}
         }
         with open(filepath, 'w') as fo:
             json.dump(data, fo)
@@ -241,25 +241,44 @@ class Assembly(Network):
 
         artist = AssemblyArtist(self, layer=settings.get('layer'))
 
-        artist.defaults.update({key: settings[key] for key in settings if key.startswith('color') or key.startswith('scale') or key.startswith('eps')})
+        artist.defaults.update({
+            key: settings[key]
+            for key in settings if key.startswith('color')
+            or key.startswith('scale') or key.startswith('eps')
+        })
 
         artist.clear_layer()
         artist.draw_blocks()
 
         if settings.get('show.vertices'):
             artist.draw_vertices(
-                color={key: settings.get('color.vertex:is_support') for key in self.vertices_where({'is_support': True})}
-            )
+                color={
+                    key: settings.get('color.vertex:is_support')
+                    for key in self.vertices_where({
+                        'is_support': True
+                    })
+                })
         if settings.get('show.edges'):
             artist.draw_edges()
         if settings.get('show.interfaces'):
             artist.draw_interfaces()
         if settings.get('show.forces'):
-            artist.color_interfaces()
+            if settings.get('mode.interface') == 0:
+                artist.color_interfaces(0)
+            else:
+                artist.color_interfaces(1)
             if settings.get('show.forces_as_vectors'):
-                artist.draw_forces()
+                if settings.get('mode.force') == 0:
+                    artist.draw_forces(mode=0)
+                else:
+                    artist.draw_forces(mode=1)
         if settings.get('show.selfweight'):
             artist.draw_selfweight()
+        if settings.get('show.frictions'):
+            if settings.get('mode.friction') == 0:
+                artist.draw_frictions(mode=0)
+            else:
+                artist.draw_frictions(mode=1)
 
         artist.redraw()
 

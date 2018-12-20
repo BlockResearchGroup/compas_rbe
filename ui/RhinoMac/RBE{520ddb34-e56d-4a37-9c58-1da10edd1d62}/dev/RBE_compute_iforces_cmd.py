@@ -2,7 +2,6 @@ from __future__ import print_function
 from __future__ import absolute_import
 from __future__ import division
 
-
 import rhinoscriptsyntax as rs
 import scriptcontext as sc
 
@@ -19,15 +18,18 @@ from compas_rhino.utilities import XFunc
 
 from compas_rbe.datastructures import Assembly
 
-
-compute_iforces_ = XFunc('compas_rbe.equilibrium.compute_iforces_xfunc', tmpdir=compas_rbe.TEMP)
-compute_iforces_.python = '/Users/vanmelet/anaconda3/bin/python3'
-compute_iforces_.paths = ['/Users/vanmelet/Code/BlockResearchGroup/compas_rbe/src']
+compute_iforces_ = XFunc(
+    'compas_rbe.equilibrium.compute_iforces_xfunc', tmpdir=compas_rbe.TEMP)
+compute_iforces_.paths = [compas_rbe.SRC]
 
 
 def compute_iforces(assembly, solver='CPLEX'):
-    data = {'assembly': assembly.to_data(),
-            'blocks'  : {str(key): assembly.blocks[key].to_data() for key in assembly.blocks},}
+    data = {
+        'assembly': assembly.to_data(),
+        'blocks':
+        {str(key): assembly.blocks[key].to_data()
+         for key in assembly.blocks},
+    }
     result = compute_iforces_(data, solver=solver)
     assembly.data = result['assembly']
     for key in assembly.blocks:
@@ -44,6 +46,7 @@ def RunCommand(is_interactive):
             raise Exception('Initialise RBE first!')
 
         RBE = sc.sticky['RBE']
+        compute_iforces_.python = RBE['settings']['pythonpath']
 
         assembly = RBE['assembly']
 
