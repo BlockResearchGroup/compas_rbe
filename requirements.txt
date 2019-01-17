@@ -1,0 +1,2 @@
+COMPAS>=0.4.1
+compas_assembly>=0.1.0

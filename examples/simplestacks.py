@@ -13,7 +13,7 @@ from compas_rbe.equilibrium import compute_iforces_cvx as compute_iforces
 from compas_rbe.viewer import AssemblyViewer
 
 
-stack = 'simple_stack_rotate'
+stack = 'simple_stack/simple_stack_1'
 
 # initialize assembly and blocks from json file
 
