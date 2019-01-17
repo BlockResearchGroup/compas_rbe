@@ -1,16 +1,15 @@
 language: python
 
-matrix:
-    include:
-        - python: 2.7
-        - python: 3.6
+python:
+- "2.7"
+- "3.6"
 
 before_install:
-pip install Cython --install-option="--no-cython-compile";
-pip install -r requirements-dev.txt;
+- pip install --upgrade pip
+- pip install Cython --install-option="--no-cython-compile"
 
 install:
-- python setup.py install;
+- pip install --process-dependency-links --no-cache-dir -r requirements-dev.txt
 
 script:
 - invoke test

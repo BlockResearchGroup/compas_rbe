@@ -24,15 +24,15 @@ requirements = read('requirements.txt').split('\n')
 optional_requirements = {}
 
 setup(
-    name="compas_rbe",
-    version="0.1.0",
-    description="Rigid Block Equilibrium Analysis for the COMPAS framework",
+    name='compas_rbe',
+    version='0.1.0',
+    description='Rigid Block Equilibrium Analysis for the COMPAS framework',
     long_description=long_description,
-    long_description_content_type="text/markdown",
-    url="https://github.com/BlockResearchGroup/compas_rbe",
-    author="tom van mele",
-    author_email="van.mele@arch.ethz.ch",
-    license="MIT license",
+    long_description_content_type='text/markdown',
+    url='https://github.com/BlockResearchGroup/compas_rbe',
+    author='tom van mele',
+    author_email='van.mele@arch.ethz.ch',
+    license='MIT license',
     classifiers=[
         'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
@@ -52,7 +52,7 @@ setup(
     ],
     keywords=[],
     project_urls={},
-    packages=["compas_rbe"],
+    packages=['compas_rbe'],
     package_dir={'': 'src'},
     package_data={},
     data_files=[],
