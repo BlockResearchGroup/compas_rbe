@@ -26,8 +26,8 @@ def RunCommand(is_interactive):
         guids = compas_rhino.select_surfaces()
 
         RBE['assembly'] = assembly = Assembly()
-        assembly.add_blocks_from_polysurfaces(guids)
 
+        assembly.add_blocks_from_polysurfaces(guids)
         assembly.draw(RBE['settings'])
 
     except Exception as error:

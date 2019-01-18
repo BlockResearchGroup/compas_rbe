@@ -4,7 +4,6 @@ from __future__ import division
 
 
 import scriptcontext as sc
-
 import traceback
 
 import compas_rhino
@@ -13,7 +12,7 @@ import compas_rbe
 from compas_rbe.datastructures import Assembly
 
 
-__commandname__ = "RBE_assembly_from_blocks"
+__commandname__ = "RBE_assembly_to_json"
 
 
 def RunCommand(is_interactive):
@@ -23,11 +22,12 @@ def RunCommand(is_interactive):
 
         RBE = sc.sticky['RBE']
 
-        guids = compas_rhino.select_meshes()
+        path = compas_rhino.select_file(folder=compas_rbe.DATA, filter='JSON files (*.json)|*.json||')
+        if not path:
+            return
 
-        RBE['assembly'] = assembly = Assembly()
+        RBE['assembly'] = assembly = Assembly.from_json(path)
 
-        assembly.add_blocks_from_rhinomeshes(guids)
         assembly.draw(RBE['settings'])
 
     except Exception as error:

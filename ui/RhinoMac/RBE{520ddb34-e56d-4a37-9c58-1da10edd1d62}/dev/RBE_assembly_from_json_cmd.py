@@ -3,13 +3,7 @@ from __future__ import absolute_import
 from __future__ import division
 
 
-import rhinoscriptsyntax as rs
 import scriptcontext as sc
-
-import Rhino
-
-import os
-import sys
 import traceback
 
 import compas_rhino

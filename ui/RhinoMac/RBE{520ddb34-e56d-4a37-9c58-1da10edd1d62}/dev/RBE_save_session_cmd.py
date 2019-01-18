@@ -28,21 +28,22 @@ def RunCommand(is_interactive):
         RBE = sc.sticky['RBE']
 
         session_dir = compas_rhino.select_folder('Save where?', SESSIONS)
-
         if not session_dir:
             return
 
         session_name = rs.GetString('Session name', 'session.rbe')
-
         if not session_name:
             return
 
         session_path = os.path.join(session_dir, session_name)
 
+        assembly  = RBE['assembly']
+        blocks = {key: assembly.blocks[key].to_data() for key in assembly.vertices()}
+
         data = {
             'settings' : RBE['settings'],
-            'blocks' : RBE['blocks'],
-            'interfaces' : RBE['interfaces'],
+            'assembly' : assembly.to_data(),
+            'blocks'   : blocks,
         }
 
         with open(session_path, 'w+') as fo:

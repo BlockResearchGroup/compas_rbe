@@ -12,6 +12,7 @@ import traceback
 import compas_rhino
 
 from compas_rbe.datastructures import Assembly
+from compas_rbe.datastructures import Block
 
 
 HERE = os.path.abspath(os.path.dirname(__file__))
@@ -26,10 +27,7 @@ def RunCommand(is_interactive):
         if 'RBE' not in sc.sticky:
             raise Exception('Initialise RBE first!')
 
-        RBE = sc.sticky['RBE']
-
         path = compas_rhino.select_file(folder=SESSIONS, filter='JSON files (*.json)|*.json||')
-
         if not path:
             return
 
@@ -41,18 +39,27 @@ def RunCommand(is_interactive):
         else:
             RBE = data
 
-        blocks = RBE['blocks']
-        interfaces = RBE['interfaces']
-        assembly = RBE['assembly'] = Assembly.from_blocks_and_interfaces(blocks, interfaces)
+        if 'blocks' not in RBE:
+            raise Exception('Session data is incomplete.')
+        if 'assembly' not in RBE:
+            raise Exception('Session data is incomplete.')
+        if 'settings' not in RBE:
+            raise Exception('Session data is incomplete.')
+
+        blocks = {key: Block.from_data(data) for key, data in RBE['blocks'].items()}
+        assembly = Assembly.from_data(RBE['assembly'])
+        assembly.blocks = blocks
+
+        sc.sticky['RBE']['settings'].update(RBE['settings'])
+        sc.sticky['RBE']['assembly'] = assembly
+
+        RBE = sc.sticky['RBE']
 
         assembly.draw(RBE['settings'])
 
     except Exception as error:
         print(error)
         print(traceback.format_exc())
-
-    finally:
-        sc.sticky['RBE'] = RBE
 
 
 if __name__ == '__main__':
