@@ -10,17 +10,11 @@ from compas._os import create_symlink
 from compas._os import remove_symlink
 
 
-PLUGINS = 'Library/Application Support/McNeel/Rhinoceros/MacPlugIns/PythonPlugIns'
-
-HOME = os.environ['HOME']
-THERE = os.path.join(HOME, PLUGINS)
-
-
 __all__ = []
 
 
-def install(name, path):
-    """Install compas_rbe for RhinoMac.
+def install(plugin_name):
+    """Install a Python plugin for RhinoMac.
 
     Parameters
     ----------
@@ -32,17 +26,12 @@ def install(name, path):
         pass
 
     """
+    PLUGINS = 'Library/Application Support/McNeel/Rhinoceros/MacPlugIns/PythonPlugIns'
+    HERE = os.path.dirname(__file__)
+    THERE = os.path.join(os.environ['HOME'], PLUGINS)
 
-    plugin_name = name
-    plugin_path = os.path.join(os.path.abspath(path), plugin_name)
-
-    devpath = os.path.join(plugin_path, 'dev')
-
-    sys.path.insert(0, devpath)
-
-    from __plugin__ import id as plugin_id
-
-    symlink_path = os.path.join(THERE, "{}{}".format(plugin_name, plugin_id))
+    plugin_path = os.path.join(HERE, plugin_name)
+    symlink_path = os.path.join(THERE, plugin_name)
 
     print('Installing PlugIn {} to RhinoMac PythonPlugIns.'.format(plugin_name))
 
@@ -60,4 +49,4 @@ def install(name, path):
 
 if __name__ == "__main__":
 
-    install('RBE', '.')
+    install('RBE{520ddb34-e56d-4a37-9c58-1da10edd1d62}')

@@ -2,40 +2,26 @@ from __future__ import print_function
 from __future__ import absolute_import
 from __future__ import division
 
-try:
-    reload
-except NameError:
-    try:
-        from importlib import reload
-    except ImportError:
-        from imp import reload
-
-import rhinoscriptsyntax as rs
 import scriptcontext as sc
-
-import Rhino
-
-import os
-import sys
 import traceback
 
 import compas_rhino
-import compas_rbe
 
-# not sure if this will help
-reload(compas_rbe)
-# compas_rbe.relaod()
+import clr
+
+clr.AddReference("Eto")
+clr.AddReference("Rhino.UI")
+
 
 __commandname__ = "RBE_init"
 
 
 def RunCommand(is_interactive):
     try:
-
         RBE = {
             'settings': {
                 'layer': 'RBE',
-                'pythonpath': '/Users/kaot/anaconda3/envs/rbe/bin/python',
+                'pythonpath': '/Users/vanmelet/anaconda3/bin/python',
                 'scale.selfweight': 0.1,
                 'scale.force': 0.1,
                 'scale.friction': 0.1,
@@ -64,9 +50,13 @@ def RunCommand(is_interactive):
 
         sc.sticky['RBE'] = RBE
 
-        print('Success!')
+        print('success')
 
     except Exception as error:
-
         print(error)
         print(traceback.format_exc())
+
+
+if __name__ == '__main__':
+
+    RunCommand(True)

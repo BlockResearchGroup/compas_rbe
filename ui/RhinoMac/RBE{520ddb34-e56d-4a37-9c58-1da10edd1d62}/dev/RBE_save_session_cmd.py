@@ -6,13 +6,12 @@ from __future__ import division
 import rhinoscriptsyntax as rs
 import scriptcontext as sc
 
-import Rhino
-
 import os
-import sys
+import json
 import traceback
 
-import compas_rbe
+import compas_rhino
+
 
 HERE = os.path.abspath(os.path.dirname(__file__))
 SESSIONS = os.path.join(HERE, '../sessions')
@@ -23,8 +22,7 @@ __commandname__ = "RBE_save_session"
 
 def RunCommand(is_interactive):
     try:
-
-        if not 'RBE' in sc.sticky:
+        if 'RBE' not in sc.sticky:
             raise Exception('Initialise RBE first!')
 
         RBE = sc.sticky['RBE']
@@ -51,6 +49,10 @@ def RunCommand(is_interactive):
             json.dump(data, fo)
 
     except Exception as error:
-
         print(error)
         print(traceback.format_exc())
+
+
+if __name__ == '__main__':
+
+    RunCommand(True)

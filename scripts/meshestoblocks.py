@@ -4,7 +4,7 @@ import compas_rbe
 
 from compas_rbe.datastructures import Assembly
 
-guids = compas_rhino.select_meshes()
-assembly = Assembly.from_meshes(guids)
+guids = compas_rhino.select_surfaces()
+assembly = Assembly.from_polysurfaces(guids)
 
-assembly.to_json(compas_rbe.get('genevault.json'))
+assembly.to_json(compas_rbe.get('twoblocks.json'))

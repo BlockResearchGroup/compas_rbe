@@ -2,23 +2,17 @@ from __future__ import print_function
 from __future__ import absolute_import
 from __future__ import division
 
-import os
-import sys
 from ast import literal_eval
 
 import compas
 
 try:
-    import rhinoscriptsyntax as rs
-    import scriptcontext as sc
-
-    import Rhino
-    import Rhino.UI
-
     import clr
     clr.AddReference("Eto")
     clr.AddReference("Rhino.UI")
 
+    import Rhino
+    import Rhino.UI
     import Eto
     import Eto.Drawing as drawing
     import Eto.Forms as forms
@@ -28,22 +22,18 @@ try:
 except ImportError:
     compas.raise_if_ironpython()
 
-    class Dialog: pass
-
-import compas_rhino
-import compas_rbe
+    class Dialog:
+        pass
 
 
-__all__ = ['UpdateSettingsForm']
+__all__ = ['PropertyListForm']
 
 
-class UpdateSettingsForm(Dialog):
+class PropertyListForm(Dialog):
 
-    def __init__(self, settings):
-        self._settings = None
-        self._names = None
-        self._values = None
-        self.settings = settings
+    def __init__(self, names, values):
+        self.names = names
+        self.values = values
 
         self.table = table = forms.GridView()
         table.ShowHeader = True
@@ -71,7 +61,7 @@ class UpdateSettingsForm(Dialog):
         layout.EndHorizontal()
         layout.EndVertical()
 
-        self.Title = 'RBE: update settings'
+        self.Title = 'RBE: update a list of properties'
         self.Padding = drawing.Padding(12)
         self.Resizable = False
         self.Content = layout
@@ -89,33 +79,11 @@ class UpdateSettingsForm(Dialog):
         self.AbortButton.Click += self.on_cancel
         return self.AbortButton
 
-    @property
-    def settings(self):
-        return self._settings
-
-    @settings.setter
-    def settings(self, settings):
-        self._settings = settings.copy()
-        self._names = names = sorted(settings.keys())
-        self._values = [str(settings[name]) for name in names]
-
-    @property
-    def names(self):
-        return self._names
-
-    @property
-    def values(self):
-        return self._values
-
     def on_ok(self, sender, e):
         try:
             for i, name in enumerate(self.names):
                 value = self.table.DataStore[i][1]
-                try:
-                    value = literal_eval(value)
-                except (TypeError, ValueError, SyntaxError):
-                    pass
-                self._settings[name] = value
+                self.values[i] = value
         except Exception as e:
             print(e)
             self.Close(False)

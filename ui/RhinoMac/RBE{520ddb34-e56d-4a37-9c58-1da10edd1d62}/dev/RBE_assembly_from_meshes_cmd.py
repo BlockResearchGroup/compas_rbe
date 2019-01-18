@@ -3,13 +3,8 @@ from __future__ import absolute_import
 from __future__ import division
 
 
-import rhinoscriptsyntax as rs
 import scriptcontext as sc
 
-import Rhino
-
-import os
-import sys
 import traceback
 
 import compas_rhino
@@ -18,26 +13,28 @@ import compas_rbe
 from compas_rbe.datastructures import Assembly
 
 
-__commandname__ = "RBE_assembly_from_json"
+__commandname__ = "RBE_assembly_from_blocks"
 
 
 def RunCommand(is_interactive):
     try:
-
-        if not 'RBE' in sc.sticky:
+        if 'RBE' not in sc.sticky:
             raise Exception('Initialise RBE first!')
 
         RBE = sc.sticky['RBE']
 
-        path = compas_rhino.select_file(folder=compas_rbe.DATA, filter='JSON files (*.json)|*.json||')
-        if not path:
-            return
+        guids = compas_rhino.select_meshes()
 
-        RBE['assembly'] = assembly = Assembly.from_json(path)
+        RBE['assembly'] = assembly = Assembly()
+        assembly.add_blocks_from_rhinomeshes(guids)
 
         assembly.draw(RBE['settings'])
 
     except Exception as error:
-
         print(error)
         print(traceback.format_exc())
+
+
+if __name__ == '__main__':
+
+    RunCommand(True)

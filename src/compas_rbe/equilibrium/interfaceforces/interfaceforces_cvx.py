@@ -25,6 +25,9 @@ except ImportError:
 from compas_rbe.equilibrium.helpers import make_Aeq
 from compas_rbe.equilibrium.helpers import make_Aiq
 
+# from numpy import set_printoptions
+# set_printoptions(linewidth=1000)
+
 
 __all__ = ['compute_iforces_cvx']
 
@@ -122,6 +125,14 @@ def compute_iforces_cvx(assembly,
     b = [[0, 0, -1 * assembly.blocks[key].volume() * density, 0, 0, 0] for key in assembly.vertices()]
     b = array(b, dtype=float)
     b = b[free, :].reshape((-1, 1), order='C')
+
+    # print(A)
+    # print(b)
+
+    # print(A[:, :4])
+    # print(A[:, 4:8])
+    # print(A[:, 8:12])
+    # print(A[:, 12:16])
 
     # row-major ordering => fx, fy, fz, mx, my, mz, fx, fy, fz, mx, my, mz, ...
 

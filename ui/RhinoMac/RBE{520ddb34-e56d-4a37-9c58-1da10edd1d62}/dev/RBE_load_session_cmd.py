@@ -3,17 +3,16 @@ from __future__ import absolute_import
 from __future__ import division
 
 
-import rhinoscriptsyntax as rs
 import scriptcontext as sc
 
-import Rhino
-
 import os
-import sys
+import json
 import traceback
 
 import compas_rhino
-import compas_rbe
+
+from compas_rbe.datastructures import Assembly
+
 
 HERE = os.path.abspath(os.path.dirname(__file__))
 SESSIONS = os.path.join(HERE, '../sessions')
@@ -24,8 +23,7 @@ __commandname__ = "RBE_load_session"
 
 def RunCommand(is_interactive):
     try:
-
-        if not 'RBE' in sc.sticky:
+        if 'RBE' not in sc.sticky:
             raise Exception('Initialise RBE first!')
 
         RBE = sc.sticky['RBE']
@@ -50,10 +48,13 @@ def RunCommand(is_interactive):
         assembly.draw(RBE['settings'])
 
     except Exception as error:
-
         print(error)
         print(traceback.format_exc())
 
     finally:
-
         sc.sticky['RBE'] = RBE
+
+
+if __name__ == '__main__':
+
+    RunCommand(True)
