@@ -46,9 +46,8 @@ def RunCommand(is_interactive):
         if 'settings' not in RBE:
             raise Exception('Session data is incomplete.')
 
-        blocks = {key: Block.from_data(data) for key, data in RBE['blocks'].items()}
         assembly = Assembly.from_data(RBE['assembly'])
-        assembly.blocks = blocks
+        assembly.blocks = {key: Block.from_data(data) for key, data in RBE['blocks'].items()}
 
         sc.sticky['RBE']['settings'].update(RBE['settings'])
         sc.sticky['RBE']['assembly'] = assembly

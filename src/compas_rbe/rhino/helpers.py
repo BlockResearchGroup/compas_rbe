@@ -44,6 +44,7 @@ class AssemblyHelper(VertexSelector,
                     if values[i] != assembly.vertex[key][name]:
                         values[i] = '-'
                         break
+
         values = map(str, values)
 
         dialog = PropertyListForm(names, values)
@@ -57,9 +58,46 @@ class AssemblyHelper(VertexSelector,
                 if value != '-':
                     for key in keys:
                         try:
-                            assembly.vertex[key][name] = literal_eval(value)
-                        except (ValueError, TypeError):
-                            assembly.vertex[key][name] = value
+                            value = literal_eval(value)
+                        except (SyntaxError, ValueError, TypeError):
+                            pass
+                        assembly.set_vertex_attribute(key, name, value)
+
+            return True
+        return False
+
+    @staticmethod
+    def update_edge_attributes(assembly, keys, names=None):
+        if not names:
+            names = assembly.default_edge_attributes.keys()
+        names = sorted(names)
+
+        key = keys[0]
+        values = assembly.get_edge_attributes(key, names)
+
+        if len(keys) > 1:
+            for i, name in enumerate(names):
+                for key in keys[1:]:
+                    if values[i] != assembly.get_edge_attribute(key, name):
+                        values[i] = '-'
+                        break
+
+        dialog = PropertyListForm(names, values)
+        if dialog.ShowModal(Rhino.UI.RhinoEtoApp.MainWindow):
+            values = dialog.values
+        else:
+            values = None
+
+        if values:
+            for name, value in zip(names, values):
+                if value != '-':
+                    for key in keys:
+                        try:
+                            value = literal_eval(value)
+                        except (SyntaxError, ValueError, TypeError):
+                            pass
+                        assembly.set_edge_attribute(key, name, value)
+
             return True
         return False
 

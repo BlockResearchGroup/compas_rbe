@@ -2,14 +2,13 @@ from __future__ import print_function
 from __future__ import absolute_import
 from __future__ import division
 
-
+import rhinoscriptcontext as rs
 import scriptcontext as sc
 import traceback
+import os
 
 import compas_rhino
 import compas_rbe
-
-from compas_rbe.datastructures import Assembly
 
 
 __commandname__ = "RBE_assembly_to_json"
@@ -22,13 +21,20 @@ def RunCommand(is_interactive):
 
         RBE = sc.sticky['RBE']
 
-        path = compas_rhino.select_file(folder=compas_rbe.DATA, filter='JSON files (*.json)|*.json||')
-        if not path:
+        folder = compas_rhino.select_folder(default=compas_rbe.DATA)
+        if not folder:
             return
 
-        RBE['assembly'] = assembly = Assembly.from_json(path)
+        filename = rs.GetString('Name of the json file?')
+        if not filename:
+            return
 
-        assembly.draw(RBE['settings'])
+        name, ext = os.path.splitext(filename)
+        if ext != '.json':
+            filename = name + ext + '.json'
+
+        assembly = RBE['assembly']
+        assembly.to_json(os.path.join(folder, filename))
 
     except Exception as error:
         print(error)
