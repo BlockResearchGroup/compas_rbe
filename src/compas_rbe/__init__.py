@@ -34,7 +34,8 @@ HOME = os.path.abspath(os.path.join(HERE, '../../'))
 DATA = os.path.abspath(os.path.join(HOME, 'data'))
 DOCS = os.path.abspath(os.path.join(HOME, 'docs'))
 SRC = os.path.abspath(os.path.join(HOME, 'src'))
-TEMP = os.path.abspath(os.path.join(HOME, 'temp'))
+
+TEMP = os.path.abspath(os.path.join(HERE, '__temp'))
 
 # # specify the python location (can be in the conda environment as well)
 # PYTHON = '/Users/kaot/anaconda3/envs/rbe/bin/python'

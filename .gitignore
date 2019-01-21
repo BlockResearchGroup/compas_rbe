@@ -111,4 +111,7 @@ ENV/
 temp/**
 !temp/PLACEHOLDER
 
+__temp/**
+!src/compas_rbe/__temp/PLACEHOLDER
+
 .DS_Store
