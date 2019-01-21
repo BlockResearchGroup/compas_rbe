@@ -38,28 +38,24 @@ Rigid Block Equilibrium Analysis for the COMPAS framework
     personal account. This will simplify the development process when you will start
     making changes to the code or when you want to start contributing.
 
-4.  Clone `compas_assembly` and `compas_rbe` to your computer
-
-    Make a base folder for `COMPAS` packages. For example
+4.  Make a base folder for `COMPAS` packages on your computer
 
     ```bash
     $ mkdir ~/Code/COMPAS-packages 
     $ cd ~/Code/COMPAS-packages
     ```
 
-    Clone `compas_assembly`
+5.  Clone `compas_assembly` and `compas_rbe`
 
     ```bash
     $ git clone https://github.com/<your-username>/compas_assembly.git
     ```    
 
-    Clone `compas_rbe`
-
     ```bash
     $ git clone https://github.com/<your-username>/compas_rbe.git
     ```    
 
-5.  Install `compas_assembly` and `compas_rbe` from local source
+6.  Install `compas_assembly` and `compas_rbe` from source
 
     ```bash
     $ cd ~/Code/COMPAS-packages/compas_assembly
@@ -71,7 +67,7 @@ Rigid Block Equilibrium Analysis for the COMPAS framework
     $ pip install -r requirements-dev.txt
     ```
 
-6.  Check installation
+7.  Check installation
 
     Start an interactive Python session in the Terminal.
 
@@ -82,20 +78,15 @@ Rigid Block Equilibrium Analysis for the COMPAS framework
     >>> import compas_rbe
     ```
 
-7.  Install `compas`, `compas_rhino`, `compas_assembly`, `compas_rbe` for RhinoMac
+8.  Install `compas`, `compas_rhino`, `compas_assembly`, `compas_rbe` for RhinoMac
 
     ```bash
     $ python -m compas_rhinomac.install -p compas compas_rhino compas_assembly compas_rbe
     ```
 
-8.  Install the `RBE` plugin for RhinoMac
+9.  Install the `RBE` plugin for RhinoMac
 
     ```bash
     $ cd ~/Code/COMPAS-packages/compas_rbe/ui/RhinoMac
     $ python -m compas_rhino.install_plugin RBE{520ddb34-e56d-4a37-9c58-1da10edd1d62}
     ```
-
-
-## Known Issues
-
-
