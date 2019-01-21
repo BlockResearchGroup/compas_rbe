@@ -20,7 +20,23 @@ Rigid Block Equilibrium Analysis for the COMPAS framework
     $ conda install -n rbe COMPAS
     ```
 
-2.  Activate the environment
+2.  Install `cvxopy`
+
+    The instructions are here: https://www.cvxpy.org/install/
+
+    What worked for me is
+
+    ```bash
+    $ conda install -n rbe -c omnia cvxopt
+    ```
+
+3.  Install other solvers (optional)
+
+    * `cvxopt`: `conda install -n rbe -c anaconda cvxopt`
+    * `MOSEK`: `conda install -n rbe -c mosek mosek`
+    * `CPLEX`: https://www.ibm.com/analytics/cplex-optimizer
+
+4.  Activate the environment
 
     ```bash
     $ source activate rbe
@@ -55,16 +71,16 @@ Rigid Block Equilibrium Analysis for the COMPAS framework
     $ git clone https://github.com/<your-username>/compas_rbe.git
     ```    
 
-6.  Install `compas_assembly` and `compas_rbe` from source
+6.  Install `compas_assembly` and `compas_rbe`
 
     ```bash
     $ cd ~/Code/COMPAS-packages/compas_assembly
-    $ pip install -r requirements-dev.txt
+    $ pip install -e .
     ```
 
     ```bash
     $ cd ~/Code/COMPAS-packages/compas_rbe
-    $ pip install -r requirements-dev.txt
+    $ pip install -e .
     ```
 
 7.  Check installation
