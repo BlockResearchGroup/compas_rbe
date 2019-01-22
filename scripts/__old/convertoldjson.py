@@ -40,7 +40,6 @@ def convert(source, destination):
 
 if __name__ == "__main__":
 
-    import compas
     import compas_rbe
 
     convert(compas_rbe.get('simple_stack.json'), compas_rbe.get('simplestack.json'))

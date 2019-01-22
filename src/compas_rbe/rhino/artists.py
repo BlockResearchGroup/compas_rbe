@@ -5,17 +5,21 @@ from __future__ import division
 from compas.utilities import i_to_blue, i_to_red
 from compas.utilities import color_to_colordict
 
-from compas.geometry import add_vectors, scale_vector, length_vector, sum_vectors
+from compas.geometry import add_vectors
+from compas.geometry import scale_vector
+from compas.geometry import length_vector
+from compas.geometry import sum_vectors
 
 import compas_rhino
 
-from compas_rhino.artists import MeshArtist
-from compas_rhino.artists import NetworkArtist
+from compas_assembly.rhino import BlockArtist as BlockArtist_
+from compas_assembly.rhino import AssemblyArtist as AssemblyArtist_
+
 
 __all__ = ['AssemblyArtist', 'BlockArtist']
 
 
-class AssemblyArtist(NetworkArtist):
+class AssemblyArtist(AssemblyArtist_):
     """An artist for visualisation of assemblies inn Rhino.
 
     Parameters
@@ -54,131 +58,11 @@ class AssemblyArtist(NetworkArtist):
             'range.friction': 5,
         })
 
-    @property
-    def assembly(self):
-        """Assembly : the assembly data structure."""
-        return self.datastructure
-
-    @assembly.setter
-    def assembly(self, assembly):
-        self.datastructure = assembly
-
-    def clear_(self, name):
-        name = "{}.{}.*".format(self.assembly.name, name)
-        guids = compas_rhino.get_objects(name=name)
-        compas_rhino.delete_objects(guids)
-
-    def clear_blocks(self):
-        self.clear_('block')
-
-    def clear_interfaces(self):
-        self.clear_('interface')
+    def clear_frictions(self):
+        self.clear_('friction')
 
     def clear_forces(self):
         self.clear_('force')
-
-    def clear_selfweight(self):
-        self.clear_('selfweight')
-
-    def draw_blocks(self, show_faces=False, show_vertices=False):
-        """Draw the blocks of the assembly.
-
-        Parameters
-        ----------
-        show_faces : bool, optional
-            Draw the faces of the block.
-            Default is ``False``.
-        show_vertices : bool, optional
-            Draw the vertices of the block.
-            Default is ``False``.
-
-        Notes
-        -----
-        * By default, blocks are drawn as wireframes.
-        * By default, blocks are drawn on a sublayer of the base layer, if a base layer was specified.
-        * Block names have the following pattern: ``"{assembly_name}.block.{block_id}"``
-        * Faces and vertices can be drawn using the corresponding flags.
-        * Block components have the following pattern:
-
-          * face: ``"{assembly_name}.block.{block_id}.face.{face_id}"``
-          * edge: ``"{assembly_name}.block.{block_id}.edge.{edge_id}"``
-          * vertex: ``"{assembly_name}.block.{block_id}.vertex.{vertex_id}"``
-
-
-        Examples
-        --------
-        .. code-block:: python
-
-            pass
-
-        """
-        layer = "{}::Blocks".format(self.layer) if self.layer else None
-        artist = BlockArtist(None, layer=layer)
-        for key, attr in self.assembly.vertices(True):
-            block = self.assembly.blocks[key]
-            block.name = "{}.block.{}".format(self.assembly.name, key)
-            artist.block = block
-            artist.draw_edges()
-            if show_faces:
-                artist.draw_faces()
-            if show_vertices:
-                artist.draw_vertices()
-        artist.redraw()
-
-    def draw_blockfacenormals(self):
-        pass
-
-    def draw_interfaces(self, keys=None, color=None):
-        """Draw the interfaces between the blocks.
-
-        Parameters
-        ----------
-        keys : list
-            A list of interface identifiers (i.e. assembly edge (u, v) tuples).
-            Default is ``None``, in which case all interfaces are drawn.
-        color : str, tuple, dict
-            The color specififcation for the interfaces.
-            Colors should be specified in the form of a string (hex colors) or
-            as a tuple of RGB components.
-            To apply the same color to all interfaces, provide a single color
-            specification. Individual colors can be assigned using a dictionary
-            of key-color pairs. Missing keys will be assigned the default interface
-            color (``self.defaults['color.interface']``).
-            The default is ``None``, in which case all interfaces are assigned the
-            default interface color.
-
-        Notes
-        -----
-        * Interfaces are drawn as mesh faces.
-        * Interfaces are drawn on a sub-layer *Interfaces* of the base layer, if a base layer was provided.
-        * Interface names have the following pattern: ``"{assembly_name}.interface.{from block_id}-{to block_id}"``
-        * Interfaces have a direction, as suggested by the naming convention.
-
-        """
-        layer = "{}::Interfaces".format(self.layer) if self.layer else None
-        faces = []
-
-        keys = keys or list(self.assembly.edges())
-        colordict = color_to_colordict(
-            color,
-            keys,
-            default=self.defaults.get('color.interface'),
-            colorformat='rgb',
-            normalize=False)
-
-        for u, v, attr in self.assembly.edges(True):
-            faces.append({
-                'points':
-                attr['interface_points'],
-                'name':
-                "{}.interface.{}-{}".format(self.assembly.name, u, v),
-                'color':
-                colordict[(u, v)]
-            })
-        compas_rhino.xdraw_faces(faces, layer=layer, clear=False, redraw=False)
-
-    def draw_iframes(self):
-        pass
 
     def draw_frictions(self, scale=None, eps=None, mode=0):
         """Draw the contact frictions at the interfaces.
@@ -202,7 +86,6 @@ class AssemblyArtist(NetworkArtist):
         * Forces are drawn on a sub-layer *Frictions* of the base layer, if a base layer was specified.
         * Forces are named according to the following pattern: ``"{assembly_name}.friction.{from block}-{to block}.{interface point}"``
         """
-
         layer = "{}::Frictions".format(self.layer) if self.layer else None
         scale = scale or self.defaults['scale.friction']
         eps = eps or self.defaults['eps.friction']
@@ -239,16 +122,11 @@ class AssemblyArtist(NetworkArtist):
                 f = scale_vector(f, scale)
 
                 lines.append({
-                    'start':
-                    sp,
-                    'end': [sp[axis] + f[axis] for axis in range(3)],
-                    'color':
-                    color,
-                    'name':
-                    "{0}.friction.{1}-{2}.{3}".format(self.assembly.name, a, b,
-                                                      i),
-                    'arrow':
-                    'end'
+                    'start' : sp,
+                    'end'   : [sp[axis] + f[axis] for axis in range(3)],
+                    'color' : color,
+                    'name'  : "{0}.friction.{1}-{2}.{3}".format(self.assembly.name, a, b, i),
+                    'arrow' : 'end'
                 })
 
                 if mode == 1:
@@ -269,19 +147,11 @@ class AssemblyArtist(NetworkArtist):
             ])
 
             resultant_lines.append({
-                'start':
-                resultant_pt,
-                'end': [
-                    resultant_pt[axis] + resultant_force[axis]
-                    for axis in range(3)
-                ],
-                'color':
-                color,
-                'name':
-                "{0}.resultant-friction.{1}-{2}.{3}".format(
-                    self.assembly.name, a, b, i),
-                'arrow':
-                'end'
+                'start' : resultant_pt,
+                'end'   : [resultant_pt[axis] + resultant_force[axis] for axis in range(3)],
+                'color' : color,
+                'name'  : "{0}.resultant-friction.{1}-{2}.{3}".format(self.assembly.name, a, b, i),
+                'arrow' : 'end'
             })
 
         if mode == 0:
@@ -351,17 +221,11 @@ class AssemblyArtist(NetworkArtist):
                     continue
 
                 lines.append({
-                    'start':
-                    sp,
-                    'end':
-                    [sp[axis] + scale * f * w[axis] for axis in range(3)],
-                    'color':
-                    color,
-                    'name':
-                    "{0}.force.{1}-{2}.{3}".format(self.assembly.name, a, b,
-                                                   i),
-                    'arrow':
-                    'end'
+                    'start' : sp,
+                    'end'   : [sp[axis] + scale * f * w[axis] for axis in range(3)],
+                    'color' : color,
+                    'name'  : "{0}.force.{1}-{2}.{3}".format(self.assembly.name, a, b, i),
+                    'arrow' : 'end'
                 })
 
                 if mode == 1:
@@ -382,19 +246,11 @@ class AssemblyArtist(NetworkArtist):
             ])
 
             resultant_lines.append({
-                'start':
-                resultant_pt,
-                'end': [
-                    resultant_pt[axis] + resultant_force[axis]
-                    for axis in range(3)
-                ],
-                'color':
-                color,
-                'name':
-                "{0}.resultant-friction.{1}-{2}.{3}".format(
-                    self.assembly.name, a, b, i),
-                'arrow':
-                'end'
+                'start' : resultant_pt,
+                'end'   : [resultant_pt[axis] + resultant_force[axis] for axis in range(3)],
+                'color' : color,
+                'name'  : "{0}.resultant-friction.{1}-{2}.{3}".format(self.assembly.name, a, b, i),
+                'arrow' :'end'
             })
 
         if mode == 0:
@@ -403,61 +259,6 @@ class AssemblyArtist(NetworkArtist):
         else:
             compas_rhino.xdraw_lines(
                 resultant_lines, layer=layer, clear=False, redraw=False)
-
-    def draw_selfweight(self, scale=None, eps=None):
-        """Draw vectors indicating the magnitude of the selfweight of the blocks.
-
-        Parameters
-        ----------
-        scale : float, optional
-            The scale at which the selfweight vectors should be drawn.
-            Default is `0.1`.
-        eps : float, optional
-            A tolerance for drawing small vectors.
-            Selfweight vectors with a scaled length smaller than this tolerance are not drawn.
-            Default is `1e-3`.
-
-        Notes
-        -----
-        * Selfweight vectors are drawn as Rhino lines with arrow heads.
-        * The default color is *green*: `'#00ff00'` or `(0, 255, 0)`.
-        * Selfweight vectors are drawn in a sub-layer *Selfweight* of the base layer, if a base layer was specified.
-        * Selfweight vectors are named according to the following pattern: `"{assembly name}.selfweight.{block id}"`.
-
-        """
-        layer = "{}::Selfweight".format(self.layer) if self.layer else None
-        scale = scale or self.defaults['scale.selfweight']
-        eps = eps or self.defaults['eps.selfweight']
-        color = self.defaults['color.selfweight']
-
-        lines = []
-
-        for key, attr in self.assembly.vertices(True):
-            block = self.assembly.blocks[key]
-            volume = block.volume()
-
-            if volume * scale < eps:
-                continue
-
-            vector = [0.0, 0.0, -1.0 * volume * scale]
-
-            sp = block.centroid()
-            ep = sp[:]
-            ep[2] += vector[2]
-
-            lines.append({
-                'start':
-                sp,
-                'end':
-                ep,
-                'name':
-                "{}.selfweight.{}".format(self.assembly.name, key),
-                'color': (0, 255, 0),
-                'arrow':
-                'end'
-            })
-
-        compas_rhino.xdraw_lines(lines, layer=layer, clear=False, redraw=False)
 
     def color_interfaces(self, mode=0):
         """Color the interfaces with shades of blue and red according to the forces at the corners.
@@ -496,9 +297,7 @@ class AssemblyArtist(NetworkArtist):
 
                 guid = guids[0]
 
-                forces = [
-                    f['c_np'] - f['c_nn'] for f in attr['interface_forces']
-                ]
+                forces = [f['c_np'] - f['c_nn'] for f in attr['interface_forces']]
 
                 fmin = min(forces)
                 fmax = max(forces)
@@ -541,13 +340,8 @@ class AssemblyArtist(NetworkArtist):
 
                 iu, iv = attr['interface_uvw'][0], attr['interface_uvw'][1]
 
-                forces = [
-                    length_vector(
-                        add_vectors(
-                            scale_vector(iu, f['c_u']),
-                            scale_vector(iv, f['c_v'])))
-                    for f in attr['interface_forces']
-                ]
+                forces = [length_vector(add_vectors(scale_vector(iu, f['c_u']), scale_vector(iv, f['c_v'])))
+                          for f in attr['interface_forces']]
 
                 fmin = min(forces)
                 fmax = max(forces)
@@ -579,24 +373,11 @@ class AssemblyArtist(NetworkArtist):
             print("please choose mode 0 or 1")
 
 
-class BlockArtist(MeshArtist):
-    """An artist for painting blocks."""
+class BlockArtist(BlockArtist_):
+    """An artist for painting RBE blocks."""
 
     def __init__(self, *args, **kwargs):
         super(BlockArtist, self).__init__(*args, **kwargs)
-        self.defaults.update({
-            'color.vertex': (0, 0, 0),
-            'color.edge': (0, 0, 0),
-            'color.face': (255, 255, 255),
-        })
-
-    @property
-    def block(self):
-        return self.datastructure
-
-    @block.setter
-    def block(self, block):
-        self.datastructure = block
 
 
 # ==============================================================================

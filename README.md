@@ -20,14 +20,14 @@ Rigid Block Equilibrium Analysis for the COMPAS framework
     $ conda install -n rbe COMPAS
     ```
 
-2.  Install `cvxopy`
+2.  Install `cvxpy`
 
     The instructions are here: https://www.cvxpy.org/install/
 
     What worked for me is
 
     ```bash
-    $ conda install -n rbe -c omnia cvxopt
+    $ conda install -n rbe -c omnia cvxpy
     ```
 
 3.  Install other solvers (optional)
@@ -106,3 +106,10 @@ Rigid Block Equilibrium Analysis for the COMPAS framework
     $ cd ~/Code/COMPAS-packages/compas_rbe/ui/RhinoMac
     $ python -m compas_rhino.install_plugin RBE{520ddb34-e56d-4a37-9c58-1da10edd1d62}
     ```
+
+
+## First Steps
+
+
+## Known Issues
+

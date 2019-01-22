@@ -52,6 +52,7 @@ def make_Aeq(assembly, return_vcount=True):
         # process the u block
         center = assembly.blocks[u].center()
 
+        # B1
         block_rows, block_cols, block_data = _make_Aeq_block(interface, center, False)
 
         # shift rows and cols
@@ -62,12 +63,17 @@ def make_Aeq(assembly, return_vcount=True):
         # process the v block
         center = assembly.blocks[v].center()
 
+        # B2
         block_rows, block_cols, block_data = _make_Aeq_block(interface, center, True)
 
         # shift rows and cols
         rows += [row + 6 * j for row in block_rows]
         cols += [col + 4 * vcount for col in block_cols]
         data += block_data
+
+        # B1 and B2 have the same size
+        # B1 and B2 occupy different rows in the same set of columns
+        # B1 and B2 are both multiplied with the same interface forces
 
         vcount += n
 
