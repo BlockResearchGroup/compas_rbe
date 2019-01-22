@@ -75,12 +75,12 @@ Rigid Block Equilibrium Analysis for the COMPAS framework
 
     ```bash
     $ cd ~/Code/COMPAS-packages/compas_assembly
-    $ pip install -e .
+    $ pip install -r requirements-dev.txt
     ```
 
     ```bash
     $ cd ~/Code/COMPAS-packages/compas_rbe
-    $ pip install -e .
+    $ pip install -r requirements-dev.txt
     ```
 
 7.  Check installation
