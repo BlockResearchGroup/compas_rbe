@@ -126,13 +126,13 @@ def compute_iforces_cvx(assembly,
     b = array(b, dtype=float)
     b = b[free, :].reshape((-1, 1), order='C')
 
-    print(A)
-    print(b)
+    # print(A)
+    # print(b)
 
-    print(A[:, :4])
-    print(A[:, 4:8])
-    print(A[:, 8:12])
-    print(A[:, 12:16])
+    # print(A[:, :4])
+    # print(A[:, 4:8])
+    # print(A[:, 8:12])
+    # print(A[:, 12:16])
 
     # row-major ordering => fx, fy, fz, mx, my, mz, fx, fy, fz, mx, my, mz, ...
 
@@ -143,7 +143,7 @@ def compute_iforces_cvx(assembly,
     G = make_Aiq(vcount, False)
     G = G.toarray()
 
-    print(G.shape)
+    # print(G.shape)
 
     h = zeros((G.shape[0], 1))
 

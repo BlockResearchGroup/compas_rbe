@@ -12,14 +12,14 @@ from compas.geometry import sum_vectors
 
 import compas_rhino
 
-from compas_assembly.rhino import BlockArtist as BlockArtist_
-from compas_assembly.rhino import AssemblyArtist as AssemblyArtist_
+from compas_assembly.rhino import BlockArtist
+from compas_assembly.rhino import AssemblyArtist
 
 
 __all__ = ['AssemblyArtist', 'BlockArtist']
 
 
-class AssemblyArtist(AssemblyArtist_):
+class AssemblyArtist(AssemblyArtist):
     """An artist for visualisation of assemblies inn Rhino.
 
     Parameters
@@ -250,7 +250,7 @@ class AssemblyArtist(AssemblyArtist_):
                 'end'   : [resultant_pt[axis] + resultant_force[axis] for axis in range(3)],
                 'color' : color,
                 'name'  : "{0}.resultant-friction.{1}-{2}.{3}".format(self.assembly.name, a, b, i),
-                'arrow' :'end'
+                'arrow' : 'end'
             })
 
         if mode == 0:
@@ -373,7 +373,7 @@ class AssemblyArtist(AssemblyArtist_):
             print("please choose mode 0 or 1")
 
 
-class BlockArtist(BlockArtist_):
+class BlockArtist(BlockArtist):
     """An artist for painting RBE blocks."""
 
     def __init__(self, *args, **kwargs):
