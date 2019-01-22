@@ -11,7 +11,6 @@ compas_rbe
 
     compas_rbe.datastructures
     compas_rbe.equilibrium
-    compas_rbe.interfaces
     compas_rbe.rhino
     compas_rbe.viewer
 
@@ -20,13 +19,14 @@ compas_rbe
 from __future__ import print_function
 
 import os
-import sys
+
 
 __author__ = 'Tom Van Mele'
 __copyright__ = 'Copyright 2017 - Block Research Group, ETH Zurich'
 __license__ = 'MIT License'
 __email__ = 'vanmelet@ethz.ch'
 __version__ = '0.1.0'
+
 
 HERE = os.path.dirname(__file__)
 
@@ -36,9 +36,6 @@ DOCS = os.path.abspath(os.path.join(HOME, 'docs'))
 SRC = os.path.abspath(os.path.join(HOME, 'src'))
 
 TEMP = os.path.abspath(os.path.join(HERE, '__temp'))
-
-# # specify the python location (can be in the conda environment as well)
-# PYTHON = '/Users/kaot/anaconda3/envs/rbe/bin/python'
 
 
 def _find_resource(filename):

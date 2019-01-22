@@ -20,19 +20,15 @@ Rigid Block Equilibrium Analysis for the COMPAS framework
     $ conda install -n rbe COMPAS
     ```
 
-2.  Install `cvxpy`
-
-    The instructions are here: https://www.cvxpy.org/install/
-
-    What worked for me is
+2.  Install `cvxpy` and `cvxopt`
 
     ```bash
     $ conda install -n rbe -c omnia cvxpy
+    $ conda install -n rbe -c anaconda cvxopt
     ```
 
 3.  Install other solvers (optional)
 
-    * `cvxopt`: `conda install -n rbe -c anaconda cvxopt`
     * `MOSEK`: `conda install -n rbe -c mosek mosek`
     * `CPLEX`: https://www.ibm.com/analytics/cplex-optimizer
 
@@ -54,7 +50,7 @@ Rigid Block Equilibrium Analysis for the COMPAS framework
     personal account. This will simplify the development process when you will start
     making changes to the code or when you want to start contributing.
 
-4.  Make a base folder for `COMPAS` packages on your computer
+4.  Make a base folder for `COMPAS` packages on your computer. For example
 
     ```bash
     $ mkdir ~/Code/COMPAS-packages 
@@ -97,7 +93,7 @@ Rigid Block Equilibrium Analysis for the COMPAS framework
 8.  Install `compas`, `compas_rhino`, `compas_assembly`, `compas_rbe` for RhinoMac
 
     ```bash
-    $ python -m compas_rhinomac.install -p compas compas_rhino compas_assembly compas_rbe
+    $ python -m compas_rhinomac.install compas compas_rhino compas_assembly compas_rbe
     ```
 
 9.  Install the `RBE` plugin for RhinoMac
@@ -110,6 +106,27 @@ Rigid Block Equilibrium Analysis for the COMPAS framework
 
 ## First Steps
 
+Try one of the examples included in the `examples` folder.
+
 
 ## Known Issues
 
+> Installing the plugin didn't work, but the installer said the process
+  was completed successfully.
+
+Try deleting the plugin manually and install it again.
+You can find the installed plugin here:
+
+```
+~/Library/Application Support/McNeel/Rhinoceros/MacPlugIns/PythonPlugIns/RBE{...}
+```
+
+> The installation of `cvxpy` and/or `cvxopt` was aborted because `conda` was denied
+  permission to install some of their dependencies.
+
+If Anaconda was installed anywhere else than in your home directory, yuo may need
+to run the `conda` commands using `sudo`.
+
+```bash
+$ sudo conda install -c omnia cvxpy
+```

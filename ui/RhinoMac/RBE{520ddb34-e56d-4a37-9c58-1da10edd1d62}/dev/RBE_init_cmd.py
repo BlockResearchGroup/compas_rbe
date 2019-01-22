@@ -2,8 +2,12 @@ from __future__ import print_function
 from __future__ import absolute_import
 from __future__ import division
 
+import os
+
 import scriptcontext as sc
 import traceback
+
+from compas.rpc import Proxy
 
 import compas_rhino
 
@@ -18,10 +22,13 @@ __commandname__ = "RBE_init"
 
 def RunCommand(is_interactive):
     try:
+        Proxy()
+
         RBE = {
             'settings': {
                 'layer': 'RBE',
-                'pythonpath': '/Users/vanmelet/anaconda3/bin/python',
+                'python': os.path.join(os.environ['HOME'], 'anaconda3/bin/python'),
+                'solver': 'ECOS',
                 'scale.selfweight': 0.1,
                 'scale.force': 0.1,
                 'scale.friction': 0.1,
@@ -31,7 +38,7 @@ def RunCommand(is_interactive):
                 'eps.force': 1e-3,
                 'eps.selfweight': 1e-3,
                 'eps.friction': 1e-3,
-                'show.vertices': False,
+                'show.vertices': True,
                 'show.edges': False,
                 'show.interfaces': True,
                 'show.forces': True,

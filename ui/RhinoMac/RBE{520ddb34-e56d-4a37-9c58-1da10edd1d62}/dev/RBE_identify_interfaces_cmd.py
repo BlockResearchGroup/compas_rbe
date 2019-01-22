@@ -5,13 +5,11 @@ from __future__ import division
 import scriptcontext as sc
 import traceback
 
-import compas_rbe
-
-from compas_rhino.utilities import XFunc
+from compas.rpc import Proxy
 
 
-xidentify_interfaces = XFunc('compas_rbe.interfaces.identify_interfaces_xfunc', tmpdir=compas_rbe.TEMP)
-xidentify_interfaces.paths = [compas_rbe.SRC]
+proxy = Proxy('compas_assembly.interfaces')
+xidentify_interfaces = proxy.identify_interfaces_xfunc
 
 
 def identify_interfaces(assembly, nmax=10, tmax=0.05, amin=0.01, lmin=0.01):
@@ -37,8 +35,6 @@ def RunCommand(is_interactive):
 
         RBE = sc.sticky['RBE']
         assembly = RBE['assembly']
-
-        xidentify_interfaces.python = RBE['settings']['pythonpath']
 
         identify_interfaces(assembly)
 

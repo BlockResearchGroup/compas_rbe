@@ -2,8 +2,8 @@ from __future__ import print_function
 from __future__ import absolute_import
 from __future__ import division
 
-from compas.utilities import i_to_blue, i_to_red
-from compas.utilities import color_to_colordict
+from compas.utilities import i_to_blue
+from compas.utilities import i_to_red
 
 from compas.geometry import add_vectors
 from compas.geometry import scale_vector
@@ -84,7 +84,9 @@ class AssemblyArtist(AssemblyArtist):
         -----
         * Forces are drawn as lines with arrow heads.
         * Forces are drawn on a sub-layer *Frictions* of the base layer, if a base layer was specified.
-        * Forces are named according to the following pattern: ``"{assembly_name}.friction.{from block}-{to block}.{interface point}"``
+        * Forces are named according to the following pattern:
+          ``"{assembly_name}.friction.{from block}-{to block}.{interface point}"``
+
         """
         layer = "{}::Frictions".format(self.layer) if self.layer else None
         scale = scale or self.defaults['scale.friction']
@@ -182,7 +184,8 @@ class AssemblyArtist(AssemblyArtist):
         * Forces are drawn as lines with arrow heads.
         * Forces are drawn on a sub-layer *Forces* of the base layer, if a base layer was specified.
         * At every interface point there can be a *compression* force (blue) and a *tension* force (red).
-        * Forces are named according to the following pattern: ``"{assembly_name}.force.{from block}-{to block}.{interface point}"``
+        * Forces are named according to the following pattern:
+          ``"{assembly_name}.force.{from block}-{to block}.{interface point}"``
 
         """
         layer = "{}::Forces".format(self.layer) if self.layer else None
