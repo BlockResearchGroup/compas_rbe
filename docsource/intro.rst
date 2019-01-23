@@ -38,7 +38,7 @@ For vertex *i* belonging to interface *k* we have
 
 .. math::
 
-    \mathbf{x}[i:i+4, :] =
+    \mathbf{x}[i:i+4] =
     \begin{bmatrix}
         c^{n+}_{i} \\
         c^{n-}_{i} \\
@@ -56,8 +56,8 @@ with
 .. note::
 
     The vertices are grouped per interface.
-    For example, if an interface *k* has 4 vertices, then the force magnitudes along the
-    frame directions are
+    For example, if interface *k* has 4 vertices, then the force magnitudes along the
+    frame directions per vertex of the interface are
 
     .. math::
 
@@ -68,6 +68,17 @@ with
             & \mathbf{v}_{i + 3} & = \mathbf{v}_{k, 3} & = \mathbf{x}[i+12:i+16]
         \end{aligned}
 
+
+Quadratic energy
+----------------
+
+
+Equality constraints
+--------------------
+
+
+Inequality constraints
+----------------------
 
 :math:`\mathbf{G}` is the *6n-by-4n* coefficient matrix of the 6 inequality constraints
 per vertex of all n interface vertices, as a function of the 4 unknown force components per vertex
@@ -85,4 +96,4 @@ per vertex of all n interface vertices, as a function of the 4 unknown force com
         -\mu, &  0, &  0, & -1
     \end{bmatrix}
 
-Finally, :math:`\mathbf{h}` is a *6n-by-1* vector of zeros.
+:math:`\mathbf{h}` is a *6n-by-1* vector of zeros.

@@ -85,7 +85,7 @@ magnitudes per vertex of all <em>n</em> interface vertices of the assembly, alon
 of the frame axes of the respective interfaces.
 For vertex <em>i</em> belonging to interface <em>k</em> we have</p>
 <div class="math notranslate nohighlight">
-\[\begin{split}\mathbf{x}[i:i+4, :] =
+\[\begin{split}\mathbf{x}[i:i+4] =
 \begin{bmatrix}
     c^{n+}_{i} \\
     c^{n-}_{i} \\
@@ -102,8 +102,8 @@ For vertex <em>i</em> belonging to interface <em>k</em> we have</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The vertices are grouped per interface.
-For example, if an interface <em>k</em> has 4 vertices, then the force magnitudes along the
-frame directions are</p>
+For example, if interface <em>k</em> has 4 vertices, then the force magnitudes along the
+frame directions per vertex of the interface are</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{aligned}
     &amp; \mathbf{v}_{i + 0} &amp; = \mathbf{v}_{k, 0} &amp; = \mathbf{x}[i:i+4]    \\
@@ -112,6 +112,14 @@ frame directions are</p>
     &amp; \mathbf{v}_{i + 3} &amp; = \mathbf{v}_{k, 3} &amp; = \mathbf{x}[i+12:i+16]
 \end{aligned}\end{split}\]</div>
 </div>
+<div class="section" id="quadratic-energy">
+<h3>Quadratic energy</h3>
+</div>
+<div class="section" id="equality-constraints">
+<h3>Equality constraints</h3>
+</div>
+<div class="section" id="inequality-constraints">
+<h3>Inequality constraints</h3>
 <p><span class="math notranslate nohighlight">\(\mathbf{G}\)</span> is the <em>6n-by-4n</em> coefficient matrix of the 6 inequality constraints
 per vertex of all n interface vertices, as a function of the 4 unknown force components per vertex</p>
 <div class="math notranslate nohighlight">
@@ -125,7 +133,8 @@ per vertex of all n interface vertices, as a function of the 4 unknown force com
     -\mu, &amp;  0, &amp;  0, &amp;  1 \\
     -\mu, &amp;  0, &amp;  0, &amp; -1
 \end{bmatrix}\end{split}\]</div>
-<p>Finally, <span class="math notranslate nohighlight">\(\mathbf{h}\)</span> is a <em>6n-by-1</em> vector of zeros.</p>
+<p><span class="math notranslate nohighlight">\(\mathbf{h}\)</span> is a <em>6n-by-1</em> vector of zeros.</p>
+</div>
 </div>
 </div>
 
@@ -181,7 +190,12 @@ per vertex of all n interface vertices, as a function of the 4 unknown force com
 
                     <ul class="nav flex-column" id="compas-localnav">
 <li class="nav-item"><a class="nav-link reference internal" href="#">Introduction</a><ul class="nav">
-<li class="nav-item"><a class="nav-link reference internal" href="#rigid-block-equilibrium-analysis">Rigid Block Equilibrium Analysis</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#rigid-block-equilibrium-analysis">Rigid Block Equilibrium Analysis</a><ul class="nav">
+<li class="nav-item"><a class="nav-link reference internal" href="#quadratic-energy">Quadratic energy</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#equality-constraints">Equality constraints</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#inequality-constraints">Inequality constraints</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
