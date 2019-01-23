@@ -6,7 +6,7 @@ compas_rbe
    :maxdepth: 3
    :titlesonly:
 
-   intro
+   Introduction <intro>
    gettingstarted
    examples
    api

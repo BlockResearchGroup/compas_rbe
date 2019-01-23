@@ -57,23 +57,36 @@
 
                         
 
-                        <div class="section" id="introduction">
-<h1>Introduction</h1>
-<div class="figure">
+                        <div class="section" id="rigid-block-equilibrium-analysis">
+<h1>Rigid Block Equilibrium Analysis</h1>
+<div class="figure" id="id1">
 <img alt="_images/compas_rbe.jpg" class="figure-img img-fluid" src="_images/compas_rbe.jpg" />
+<p class="caption"><span class="caption-text">Rigid-block model of …</span></p>
 </div>
-<div class="section" id="rigid-block-equilibrium-analysis">
-<h2>Rigid Block Equilibrium Analysis</h2>
+<div class="section" id="introduction">
+<h2>Introduction</h2>
 <p><a class="reference internal" href="api/compas_rbe.html#module-compas_rbe" title="compas_rbe"><code class="xref py py-mod docutils literal notranslate"><span class="pre">compas_rbe</span></code></a> provides functionality for computing the set of contact forces
 at the interfaces between the rigid blocks of a <em>discrete element assembly</em>
 that establish equilibrium with the smallest amount of tension forces possible,
 i.e. it favours solutions with only compression forces and friction.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>For more information on discrete element assemblies, see the docs of <code class="xref py py-mod docutils literal notranslate"><span class="pre">compas_assembly</span></code>.</p>
 </div>
-<p>It solves the following quadratic optimisation problem,
-with linear equality and inequality constraints</p>
+<div class="section" id="assembly-data-structure">
+<h2>Assembly data structure</h2>
+<p>Assemblies of rigid blocks are represented with an <code class="docutils literal notranslate"><span class="pre">Assembly</span></code> data structure.
+A basic <code class="docutils literal notranslate"><span class="pre">Assembly</span></code> data structure is defined in <code class="xref py py-mod docutils literal notranslate"><span class="pre">compas_assembly</span></code> and extended
+here for the specific needs of the equilibrium analysis calculations.</p>
+<p>An <code class="docutils literal notranslate"><span class="pre">Assembly</span></code> data structure is essentially a network of vertices connected by edges.
+Each node corresponds to one rigid block in the assembly.
+Each edge corresponds to an interface between two blocks.</p>
+<p>The blocks are represented by <code class="docutils literal notranslate"><span class="pre">Block</span></code> data structures. A <code class="docutils literal notranslate"><span class="pre">Block</span></code> is essentially
+a closed <code class="docutils literal notranslate"><span class="pre">Mesh</span></code> with some additional functionality. The base <code class="docutils literal notranslate"><span class="pre">Block</span></code> is also
+defined in <code class="xref py py-mod docutils literal notranslate"><span class="pre">compas_assembly</span></code> and extended here.</p>
+<p>For more information about <code class="docutils literal notranslate"><span class="pre">Assembly</span></code> and <code class="docutils literal notranslate"><span class="pre">Block</span></code>, see …</p>
+</div>
+<div class="section" id="quadratic-program">
+<h2>Quadratic Program</h2>
+<p><a class="reference internal" href="api/compas_rbe.html#module-compas_rbe" title="compas_rbe"><code class="xref py py-mod docutils literal notranslate"><span class="pre">compas_rbe</span></code></a> finds a feasible equilibrium state by solving the following
+quadratic optimisation problem with linear equality and inequality constraints</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{aligned}
     &amp; \underset{x}{\text{minimise}} &amp; \quad 0.5 \, \mathbf{x}^{T} \mathbf{P} \mathbf{x} + \mathbf{q}^{T} \mathbf{x} \\
@@ -106,22 +119,71 @@ For example, if interface <em>k</em> has 4 vertices, then the force magnitudes a
 frame directions per vertex of the interface are</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{aligned}
-    &amp; \mathbf{v}_{i + 0} &amp; = \mathbf{v}_{k, 0} &amp; = \mathbf{x}[i:i+4]    \\
-    &amp; \mathbf{v}_{i + 1} &amp; = \mathbf{v}_{k, 1} &amp; = \mathbf{x}[i+4:i+8]  \\
-    &amp; \mathbf{v}_{i + 2} &amp; = \mathbf{v}_{k, 2} &amp; = \mathbf{x}[i+8:i+12] \\
-    &amp; \mathbf{v}_{i + 3} &amp; = \mathbf{v}_{k, 3} &amp; = \mathbf{x}[i+12:i+16]
+    &amp; \mathbf{v}_{i + 0} &amp; = \mathbf{v}_{k, 0} \quad &amp; = \mathbf{x}[i:i+4] \\
+    &amp; \mathbf{v}_{i + 1} &amp; = \mathbf{v}_{k, 1} \quad &amp; = \mathbf{x}[i+4:i+8] \\
+    &amp; \mathbf{v}_{i + 2} &amp; = \mathbf{v}_{k, 2} \quad &amp; = \mathbf{x}[i+8:i+12] \\
+    &amp; \mathbf{v}_{i + 3} &amp; = \mathbf{v}_{k, 3} \quad &amp; = \mathbf{x}[i+12:i+16]
 \end{aligned}\end{split}\]</div>
 </div>
-<div class="section" id="quadratic-energy">
-<h3>Quadratic energy</h3>
+<div class="section" id="energy">
+<h3>Energy</h3>
+<p>The quadratic energy of the optimisation problem is formulated as</p>
+<div class="math notranslate nohighlight">
+\[0.5 \, \mathbf{x}^{T} \mathbf{P} \mathbf{x} + \mathbf{q}^{T} \mathbf{x}\]</div>
+<p>This is essentially the sum of all squared, unknown contact force components at the
+vertices of the interfaces, with each type of force component weighted by a penalty factor.</p>
+<p><span class="math notranslate nohighlight">\(\mathbf{P}\)</span> is the <em>4n-by-4n</em> weighting matrix with the following factors
+repeated along its diagonal</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+    &amp; c^{n+} &amp; \Rightarrow \quad &amp; 1.0 \\
+    &amp; c^{n-} &amp; \Rightarrow \quad &amp; 1e^{+5} \\
+    &amp; c^{u}  &amp; \Rightarrow \quad &amp; 1.0 \\
+    &amp; c^{v}  &amp; \Rightarrow \quad &amp; 1.0
+\end{aligned}\end{split}\]</div>
+<p>The forces along the negative normal directions of the interface frames are
+thus heavily penalised. The goal is to find an equilibrium state that requires
+as little adhesion between the blocks as possible, and relies only on compression
+and friction.</p>
 </div>
 <div class="section" id="equality-constraints">
 <h3>Equality constraints</h3>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="api/generated/compas_rbe.equilibrium.make_Aeq.html#compas_rbe.equilibrium.make_Aeq" title="compas_rbe.equilibrium.make_Aeq"><code class="xref py py-func docutils literal notranslate"><span class="pre">compas_rbe.equilibrium.make_Aeq()</span></code></a></p>
+</div>
+<p>The equality constraints represent the necessary conditions for the assembly to be
+in static equilibrium. They express the equilibrium of forces at the vertices of
+the interfaces between the blocks.</p>
+<p><span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is the <em>6n-by-4n</em> coefficient matrix of the 6 equilibrium equations
+per vertex of the <em>n</em> interface vertices, as a function of the 4 unknown force
+components per vertex.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\mathbf{A}[i:i+6, j:j+4]
+=
+\begin{bmatrix}
+     -1,  &amp;  0, &amp;  0, &amp;  0 \\
+      0,  &amp; -1, &amp;  0, &amp;  0 \\
+    -\mu, &amp;  0, &amp;  1, &amp;  0 \\
+    -\mu, &amp;  0, &amp; -1, &amp;  0 \\
+    -\mu, &amp;  0, &amp;  0, &amp;  1 \\
+    -\mu, &amp;  0, &amp;  0, &amp; -1
+\end{bmatrix}\end{split}\]</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Vertex <em>i</em> of the interface vertices belongs to a particular interface <em>k</em>
+which is the contact surface between exactly two blocks <em>m</em> and <em>n</em>.</p>
+</div>
 </div>
 <div class="section" id="inequality-constraints">
 <h3>Inequality constraints</h3>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="api/generated/compas_rbe.equilibrium.make_Aiq.html#compas_rbe.equilibrium.make_Aiq" title="compas_rbe.equilibrium.make_Aiq"><code class="xref py py-func docutils literal notranslate"><span class="pre">compas_rbe.equilibrium.make_Aiq()</span></code></a></p>
+</div>
 <p><span class="math notranslate nohighlight">\(\mathbf{G}\)</span> is the <em>6n-by-4n</em> coefficient matrix of the 6 inequality constraints
-per vertex of all n interface vertices, as a function of the 4 unknown force components per vertex</p>
+per vertex of the <em>n</em> interface vertices, as a function of the 4 unknown force
+components per vertex.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\mathbf{G}[i:i+6, j:j+4]
 =
@@ -189,9 +251,11 @@ per vertex of all n interface vertices, as a function of the 4 unknown force com
                     
 
                     <ul class="nav flex-column" id="compas-localnav">
-<li class="nav-item"><a class="nav-link reference internal" href="#">Introduction</a><ul class="nav">
-<li class="nav-item"><a class="nav-link reference internal" href="#rigid-block-equilibrium-analysis">Rigid Block Equilibrium Analysis</a><ul class="nav">
-<li class="nav-item"><a class="nav-link reference internal" href="#quadratic-energy">Quadratic energy</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#">Rigid Block Equilibrium Analysis</a><ul class="nav">
+<li class="nav-item"><a class="nav-link reference internal" href="#introduction">Introduction</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#assembly-data-structure">Assembly data structure</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#quadratic-program">Quadratic Program</a><ul class="nav">
+<li class="nav-item"><a class="nav-link reference internal" href="#energy">Energy</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="#equality-constraints">Equality constraints</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="#inequality-constraints">Inequality constraints</a></li>
 </ul>
@@ -208,7 +272,7 @@ per vertex of all n interface vertices, as a function of the 4 unknown force com
 
         <footer class="compas-footer">
             
-                Last updated on Jan 23, 2019.
+                Last updated on Jan 24, 2019.
             
 
             

@@ -22,7 +22,7 @@
         
         
         
-            <link rel="prev" title="Introduction" href="intro.html" />
+            <link rel="prev" title="Rigid Block Equilibrium Analysis" href="intro.html" />
         
 
         <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
@@ -59,64 +59,84 @@
 
                         <div class="section" id="getting-started">
 <h1>Getting Started</h1>
-<div class="section" id="setup">
-<h2>Setup</h2>
-<ol class="arabic">
-<li><p>Create a virtual environment and install COMPAS</p>
+<div class="section" id="create-a-virtual-environment-and-install-compas">
+<h2>Create a virtual environment and install COMPAS</h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://conda.io/projects/conda/en/latest/user-guide/getting-started.html#managing-environments">https://conda.io/projects/conda/en/latest/user-guide/getting-started.html#managing-environments</a></p></li>
+</ul>
 <div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>$ conda config --add channels conda-forge
 $ conda create -n rbe <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.6 COMPAS
 </code></pre></div>
 </div>
-<p>or</p>
-<div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>$ conda config --add channels conda-forge
-$ conda create -n rbe <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.6
-$ conda install -n rbe COMPAS
-</code></pre></div>
 </div>
-</li>
-<li><p>Install <code class="docutils literal notranslate"><span class="pre">cvxpy</span></code> and <code class="docutils literal notranslate"><span class="pre">cvxopt</span></code></p>
-<div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>$ conda install -n rbe -c omnia cvxpy
-$ conda install -n rbe -c anaconda cvxopt
-</code></pre></div>
-</div>
-</li>
-<li><p>Install other solvers (optional)</p>
+<div class="section" id="activate-the-environment">
+<h2>Activate the environment</h2>
 <ul class="simple">
-<li><p><cite>MOSEK</cite>: <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">-n</span> <span class="pre">rbe</span> <span class="pre">-c</span> <span class="pre">mosek</span> <span class="pre">mosek</span></code></p></li>
-<li><p><cite>CPLEX</cite>: <a class="reference external" href="https://www.ibm.com/analytics/cplex-optimizer">https://www.ibm.com/analytics/cplex-optimizer</a></p></li>
+<li><p><a class="reference external" href="https://conda.io/projects/conda/en/latest/user-guide/getting-started.html#managing-environments">https://conda.io/projects/conda/en/latest/user-guide/getting-started.html#managing-environments</a></p></li>
 </ul>
-</li>
-<li><p>Activate the environment</p>
+<p><strong>On Mac</strong></p>
 <div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>$ <span class="nb">source</span> activate rbe
 </code></pre></div>
 </div>
-<p>or, on Windows</p>
+<p><strong>On Windows</strong></p>
 <div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>$ activate rbe
 </code></pre></div>
 </div>
-</li>
-</ol>
-<ol class="arabic" start="3">
-<li><p>Fork <code class="docutils literal notranslate"><span class="pre">compas_assembly</span></code> and <code class="docutils literal notranslate"><span class="pre">compas_rbe</span></code></p>
+</div>
+<div class="section" id="install-solvers">
+<h2>Install solvers</h2>
+<ul class="simple">
+<li><p><a class="reference external" href="http://cvxopt.org/install/index.html">http://cvxopt.org/install/index.html</a></p></li>
+<li><p><a class="reference external" href="https://www.cvxpy.org/install/">https://www.cvxpy.org/install/</a></p></li>
+</ul>
+<p><strong>On Mac</strong></p>
+<div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>$ conda install -n rbe -c cvxopt
+$ conda install -n rbe -c omnia cvxpy
+</code></pre></div>
+</div>
+<p><strong>On Windows</strong></p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/cvxgrp/cvxpy/issues/88">https://github.com/cvxgrp/cvxpy/issues/88</a></p></li>
+</ul>
+<div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>$ pip install cvxopt
+$ pip install ecos
+$ pip install cvxpy
+</code></pre></div>
+</div>
+</div>
+<div class="section" id="fork-packages">
+<h2>Fork packages</h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/BlockResearchGroup/compas_assembly">COMPAS assembly</a></p></li>
+<li><p><a class="reference external" href="https://github.com/BlockResearchGroup/compas_rbe">COMPAS rbe</a></p></li>
+</ul>
 <p>Go to <a class="reference external" href="https://github.com/BlockResearchGroup">https://github.com/BlockResearchGroup</a> and <em>fork</em> the repositories to your
 personal account. This will simplify the development process when you will start
 making changes to the code or when you want to start contributing.</p>
-</li>
-<li><p>Make a base folder for <cite>COMPAS</cite> packages on your computer. For example</p>
+</div>
+<div class="section" id="make-a-base-folder">
+<h2>Make a base folder</h2>
+<p>For example</p>
 <div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>$ mkdir ~/Code/COMPAS-packages
 $ <span class="nb">cd</span> ~/Code/COMPAS-packages
 </code></pre></div>
 </div>
-</li>
-<li><p>Clone <code class="docutils literal notranslate"><span class="pre">compas_assembly</span></code> and <code class="docutils literal notranslate"><span class="pre">compas_rbe</span></code></p>
+</div>
+<div class="section" id="clone-forked-packages">
+<h2>Clone forked packages</h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com">https://github.com</a>/&lt;your-username&gt;/compas_assembly</p></li>
+<li><p><a class="reference external" href="https://github.com">https://github.com</a>/&lt;your-username&gt;/compas_rbe</p></li>
+</ul>
 <div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>$ git clone https://github.com/&lt;your-username&gt;/compas_assembly.git
 </code></pre></div>
 </div>
 <div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>$ git clone https://github.com/&lt;your-username&gt;/compas_rbe.git
 </code></pre></div>
 </div>
-</li>
-<li><p>Install <code class="docutils literal notranslate"><span class="pre">compas_assembly</span></code> and <code class="docutils literal notranslate"><span class="pre">compas_rbe</span></code></p>
+</div>
+<div class="section" id="install-cloned-packages">
+<h2>Install cloned packages</h2>
 <div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>$ <span class="nb">cd</span> ~/Code/COMPAS-packages/compas_assembly
 $ pip install -r requirements-dev.txt
 </code></pre></div>
@@ -125,8 +145,9 @@ $ pip install -r requirements-dev.txt
 $ pip install -r requirements-dev.txt
 </code></pre></div>
 </div>
-</li>
-<li><p>Check installation</p>
+</div>
+<div class="section" id="check-installation">
+<h2>Check installation</h2>
 <p>Start an interactive Python session in the Terminal.</p>
 <div class="nohighlight notranslate"><div class="highlight"><pre><code><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">compas</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">compas_rhino</span>
@@ -134,44 +155,25 @@ $ pip install -r requirements-dev.txt
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">compas_rbe</span>
 </code></pre></div>
 </div>
-</li>
-<li><p>Install <code class="docutils literal notranslate"><span class="pre">compas</span></code>, <code class="docutils literal notranslate"><span class="pre">compas_rhino</span></code>, <code class="docutils literal notranslate"><span class="pre">compas_assembly</span></code>, <code class="docutils literal notranslate"><span class="pre">compas_rbe</span></code> for RhinoMac</p>
+</div>
+<div class="section" id="install-packages-for-rhino">
+<h2>Install packages for Rhino</h2>
+<p><strong>On Mac</strong></p>
 <div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>$ python -m compas_rhinomac.install compas compas_rhino compas_assembly compas_rbe
 </code></pre></div>
 </div>
-</li>
-<li><p>Install the <cite>RBE</cite> plugin for RhinoMac</p>
+<p><strong>On Windows</strong></p>
+<p><em>Not available yet.</em></p>
+</div>
+<div class="section" id="install-rhino-plugin">
+<h2>Install Rhino plugin</h2>
+<p><strong>On Mac</strong></p>
 <div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>$ <span class="nb">cd</span> ~/Code/COMPAS-packages/compas_rbe/ui/RhinoMac
 $ python -m compas_rhino.install_plugin RBE<span class="o">{</span>520ddb34-e56d-4a37-9c58-1da10edd1d62<span class="o">}</span>
 </code></pre></div>
 </div>
-</li>
-</ol>
-</div>
-<div class="section" id="first-steps">
-<h2>First Steps</h2>
-<p>Try one of the examples included in the <cite>examples</cite> folder.</p>
-</div>
-<div class="section" id="known-issues">
-<h2>Known Issues</h2>
-<div class="section" id="installing-the-plugin-didn-t-work">
-<h3>Installing the plugin didn’t work.</h3>
-<p><em>…but the installer said the process was completed successfully?</em></p>
-<p>Try deleting the plugin manually and installing it again.
-You can find the installed plugin here:</p>
-<div class="nohighlight notranslate"><div class="highlight"><pre><code><span></span>~/Library/Application Support/McNeel/Rhinoceros/MacPlugIns/PythonPlugIns/RBE{...}
-</code></pre></div>
-</div>
-</div>
-<div class="section" id="the-installation-of-cvxpy-and-or-cvxopt-was-aborted">
-<h3>The installation of <code class="docutils literal notranslate"><span class="pre">cvxpy</span></code> and/or <code class="docutils literal notranslate"><span class="pre">cvxopt</span></code> was aborted.</h3>
-<p><em>…because ``conda`` was denied permission to install some of their dependencies?</em></p>
-<p>If Anaconda was installed anywhere else than in your home directory, you may need
-to run the <cite>conda</cite> commands using <cite>sudo</cite>.</p>
-<div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>$ sudo conda install -c omnia cvxpy
-</code></pre></div>
-</div>
-</div>
+<p><strong>On Windows</strong></p>
+<p><em>Not available yet.</em></p>
 </div>
 </div>
 
@@ -227,13 +229,16 @@ to run the <cite>conda</cite> commands using <cite>sudo</cite>.</p>
 
                     <ul class="nav flex-column" id="compas-localnav">
 <li class="nav-item"><a class="nav-link reference internal" href="#">Getting Started</a><ul class="nav">
-<li class="nav-item"><a class="nav-link reference internal" href="#setup">Setup</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="#first-steps">First Steps</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="#known-issues">Known Issues</a><ul class="nav">
-<li class="nav-item"><a class="nav-link reference internal" href="#installing-the-plugin-didn-t-work">Installing the plugin didn’t work.</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="#the-installation-of-cvxpy-and-or-cvxopt-was-aborted">The installation of <code class="docutils literal notranslate"><span class="pre">cvxpy</span></code> and/or <code class="docutils literal notranslate"><span class="pre">cvxopt</span></code> was aborted.</a></li>
-</ul>
-</li>
+<li class="nav-item"><a class="nav-link reference internal" href="#create-a-virtual-environment-and-install-compas">Create a virtual environment and install COMPAS</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#activate-the-environment">Activate the environment</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#install-solvers">Install solvers</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#fork-packages">Fork packages</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#make-a-base-folder">Make a base folder</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#clone-forked-packages">Clone forked packages</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#install-cloned-packages">Install cloned packages</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#check-installation">Check installation</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#install-packages-for-rhino">Install packages for Rhino</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#install-rhino-plugin">Install Rhino plugin</a></li>
 </ul>
 </li>
 </ul>
@@ -246,7 +251,7 @@ to run the <cite>conda</cite> commands using <cite>sudo</cite>.</p>
 
         <footer class="compas-footer">
             
-                Last updated on Jan 23, 2019.
+                Last updated on Jan 24, 2019.
             
 
             
