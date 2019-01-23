@@ -42,9 +42,10 @@ def compute_iforces_cvx(assembly,
 
         \begin{aligned}
 
-            & \underset{x}{\text{minimise}} & \quad 0.5 \, \mathbf{x}^{T} \mathbf{P} \mathbf{x} + \mathbf{q}^{T} \mathbf{x} \\
-            & \text{such that}              & \quad \mathbf{A} \mathbf{x} = \mathbf{b} \\
-            &                               & \quad \mathbf{G} \mathbf{x} = \mathbf{h} \\
+            & \underset{x}{\text{minimise}} & \quad 0.5 \,
+                                              \mathbf{x}^{T} \mathbf{P} \mathbf{x} + \mathbf{q}^{T} \mathbf{x} \\
+            & \text{such that} & \quad \mathbf{A} \mathbf{x} = \mathbf{b} \\
+            &                  & \quad \mathbf{G} \mathbf{x} <= \mathbf{h} \\
 
         \end{aligned}
 

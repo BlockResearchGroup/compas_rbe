@@ -5,11 +5,17 @@ from __future__ import division
 import scriptcontext as sc
 import traceback
 
-from compas.rpc import Proxy
+import compas_rbe
+
+# from compas.rpc import Proxy
+from compas_rhino.utilities import XFunc
 
 
-proxy = Proxy('compas_rbe.equilibrium')
-xcompute_iforces = proxy.compute_iforces_xfunc
+# proxy = Proxy('compas_rbe.equilibrium')
+# xcompute_iforces = proxy.compute_iforces_xfunc
+
+
+xcompute_iforces = XFunc('compas_rbe.equilibrium.compute_iforces_xfunc', tmpdir=compas_rbe.TEMP)
 
 
 def compute_iforces(assembly, solver):
@@ -35,6 +41,7 @@ def RunCommand(is_interactive):
 
         assembly = RBE['assembly']
 
+        xcompute_iforces.python = RBE['settings']['python']
         compute_iforces(assembly, RBE['settings']['solver'])
 
         assembly.draw(RBE['settings'])

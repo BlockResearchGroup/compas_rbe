@@ -28,9 +28,9 @@ __all__ = ['AssemblyHelper', 'BlockHelper']
 
 
 class AssemblyHelper(VertexSelector,
-                     EdgeSelector,
-                     VertexModifier,
-                     EdgeModifier):
+                        EdgeSelector,
+                        VertexModifier,
+                        EdgeModifier):
 
     @staticmethod
     def update_vertex_attributes(assembly, keys, names=None):
@@ -103,11 +103,11 @@ class AssemblyHelper(VertexSelector,
 
 
 class BlockHelper(VertexSelector,
-                  EdgeSelector,
-                  FaceSelector,
-                  VertexModifier,
-                  EdgeModifier,
-                  FaceModifier):
+                     EdgeSelector,
+                     FaceSelector,
+                     VertexModifier,
+                     EdgeModifier,
+                     FaceModifier):
 
     pass
 

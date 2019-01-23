@@ -7,18 +7,47 @@ AssemblyHelper
 
 .. autoclass:: AssemblyHelper
 
-   
-   
-   
+    
+    
 
+    .. rubric:: Methods
 
-   
-   
-   .. rubric:: Methods
+    .. autosummary::
+        :toctree:
 
-   .. autosummary::
-      :toctree:
+    
+        ~AssemblyHelper.update_edge_attributes
+        ~AssemblyHelper.update_vertex_attributes
 
-   
-   
-   
+    .. rubric:: Inherited Methods
+
+    .. autosummary::
+        :toctree:
+
+    
+        ~AssemblyHelper.move_edge
+        ~AssemblyHelper.move_vertex
+        ~AssemblyHelper.move_vertices
+        ~AssemblyHelper.select_edge
+        ~AssemblyHelper.select_edges
+        ~AssemblyHelper.select_vertex
+        ~AssemblyHelper.select_vertices
+
+    
+    
+
+    
+    
+
+    .. rubric:: Attributes
+
+    .. autosummary::
+    
+
+    .. rubric:: Inherited Attributes
+
+    .. autosummary::
+    
+
+    
+    

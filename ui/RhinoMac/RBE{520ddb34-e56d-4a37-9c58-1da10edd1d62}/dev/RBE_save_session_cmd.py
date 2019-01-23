@@ -38,12 +38,12 @@ def RunCommand(is_interactive):
         session_path = os.path.join(session_dir, session_name)
 
         assembly  = RBE['assembly']
-        blocks = {key: assembly.blocks[key].to_data() for key in assembly.vertices()}
+        Blocks = {key: assembly.blocks[key].to_data() for key in assembly.vertices()}
 
         data = {
             'settings' : RBE['settings'],
             'assembly' : assembly.to_data(),
-            'blocks'   : blocks,
+            'blocks'   : Blocks,
         }
 
         with open(session_path, 'w+') as fo:

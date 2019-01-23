@@ -7,7 +7,7 @@ import os
 import scriptcontext as sc
 import traceback
 
-from compas.rpc import Proxy
+# from compas.rpc import Proxy
 
 import compas_rhino
 
@@ -22,7 +22,7 @@ __commandname__ = "RBE_init"
 
 def RunCommand(is_interactive):
     try:
-        Proxy()
+        # Proxy()
 
         RBE = {
             'settings': {

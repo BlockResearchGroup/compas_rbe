@@ -26,6 +26,21 @@ def make_Aeq(assembly, return_vcount=True):
     Parameters
     ----------
     assembly : compas_rbe.datastructures.Assembly
+        The assembly for which the equality constraint matrix has to be constructed.
+    return_vcount : bool, optional
+        Include the total number of interface vertices in the return value.
+        Default is `True`.
+
+    Returns
+    =======
+    Aeq : coo_matrix
+        A sparse representation of the coefficient matrix of the equality constraints.
+
+    Examples
+    ========
+    .. code-block:: python
+
+
 
     """
     rows = []
@@ -154,7 +169,107 @@ def _make_Aeq_block(interface, center, reverse):
 
 
 def make_Aiq(total_vcount, friction8=False, mu=0.6):
-    """Construct the matrix of inequality constraints."""
+    r"""Construct the matrix of inequality constraints of a quadratic program.
+
+    Parameters
+    ==========
+    total_vcount : int
+        The total number of interface vertices.
+    friction8 : bool, optional
+        Use an 8-sided friction cone.
+        Default is `False`.
+    mu : float, optional
+        The friction coefficient of the interface surfaces.
+
+    Returns
+    =======
+    Aiq : coo_matrix
+        A sparse representation of the coefficient matrix of the inequality constraints.
+
+    Examples
+    ========
+    .. code-block:: python
+
+        G = make_Aiq(vcount, False)
+        G = G.toarray()
+
+        objective = cvxpy.Minimize(0.5 * cvxpy.quad_form(x, P))
+
+        constraints = [
+            A * x == b,
+            G * x <= h
+        ]
+
+        problem = cvxpy.Problem(objective, constraints)
+
+    Notes
+    =====
+    In the optimisation problem
+
+    .. math::
+
+        \begin{aligned}
+            & \underset{x}{\text{minimise}} & \quad 0.5 \, \mathbf{x}^{T} \mathbf{P} \mathbf{x} + \mathbf{q}^{T} \mathbf{x} \\
+            & \text{such that} & \quad \mathbf{A} \mathbf{x}  = \mathbf{b} \\
+            &                  & \quad \mathbf{G} \mathbf{x} \leq \mathbf{h} \\
+        \end{aligned}
+
+    :math:`\mathbf{x}` is the *4n-by-1* vector of 4 unknown contact force components
+    per vertex of all *n* interface vertices
+
+    .. math::
+
+        \mathbf{x}[i:i+4] = [c^{n+}_{i}, c^{n-}_{i}, c^{u}_{i}, c^{v}_{i}]
+
+    with
+
+    * :math:`c^{n+}_{i}` the component in the direction of the interface frame normal (a "compression" contact)
+    * :math:`c^{n-}_{i}` the component in the opposite direction of the interface frame normal (a "tension" contact)
+    * :math:`c^{u}_{i}` the component in the direction of the interface frame *u* direction (a "friction" contact)
+    * :math:`c^{v}_{i}` the component in the direction of the interface frame *v* direction (a "friction" contact)
+
+    :math:`\mathbf{G}` is the *6n-by-4n* coefficient matrix of the 6 inequality constraints
+    per vertex of all n interface vertices, as a function of the 4 unknown force components per vertex
+
+    .. math::
+
+        \mathbf{G}[i:i+6, j:j+4]
+        =
+        \begin{bmatrix}
+             -1,  &  0, &  0, &  0 \\
+              0,  & -1, &  0, &  0 \\
+            -\mu, &  0, &  1, &  0 \\
+            -\mu, &  0, & -1, &  0 \\
+            -\mu, &  0, &  0, &  1 \\
+            -\mu, &  0, &  0, & -1
+        \end{bmatrix}
+
+    Finally, :math:`\mathbf{h}` is a *6n-by-1* vector of zeros.
+
+    Per verter per interface, this results in the following inequality constraints
+
+    * :math:`-c^{n+}_{i} <= 0`
+    * :math:`-c^{n-}_{i} <= 0`
+    * :math:`-\mu c^{n+}_{i} + c^{u}_{i} <= 0`
+    * :math:`-\mu c^{n+}_{i} - c^{u}_{i} <= 0`
+    * :math:`-\mu c^{n+}_{i} + c^{v}_{i} <= 0`
+    * :math:`-\mu c^{n+}_{i} - c^{v}_{i} <= 0`
+
+    which basically express that, per interface vertex,
+    the force components in both the positive and the negative direction of the
+    interface normal have to be positive;
+    and that the absolute values of both friction force components should be smaller
+    than the friction force in the positive normal direction scaled by a factor :math:`\mu`.
+
+    ..
+        Note that the latter two constraints are enforced by requiring both the value
+        and the opposite/negative value of the friction components to be smaller than
+        :math:`\mu c^{n+}_{i}`, which is postive.
+
+    References
+    ==========
+
+    """
 
     rows = []
     cols = []
@@ -177,8 +292,8 @@ def make_Aiq(total_vcount, friction8=False, mu=0.6):
         # friction4
 
         rows += [i + 2, i + 2, i + 3, i + 3, i + 4, i + 4, i + 5, i + 5]
-        cols += [j, j + 2, j, j + 2, j, j + 3, j, j + 3]
-        data += [-mu, 1, -mu, -1, -mu, 1, -mu, -1]
+        cols += [j    , j + 2, j    , j + 2, j    , j + 3, j    , j + 3]
+        data += [-mu  , 1    , -mu  , -1   , -mu  , 1    , -mu  ,    -1]
 
         if not friction8:
             i += 6
