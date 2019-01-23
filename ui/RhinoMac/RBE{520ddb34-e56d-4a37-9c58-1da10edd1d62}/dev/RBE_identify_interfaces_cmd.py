@@ -7,11 +7,7 @@ import traceback
 
 import compas_rbe
 
-# from compas.rpc import Proxy
 from compas_rhino.utilities import XFunc
-
-# proxy = Proxy('compas_assembly.interfaces')
-# xidentify_interfaces = proxy.identify_interfaces_xfunc
 
 
 xidentify_interfaces = XFunc('compas_assembly.interfaces.identify_interfaces_xfunc', tmpdir=compas_rbe.TEMP)
@@ -40,7 +36,6 @@ def RunCommand(is_interactive):
         assembly = RBE['assembly']
 
         xidentify_interfaces.python = RBE['settings']['python']
-
         identify_interfaces(assembly)
 
         assembly.draw(RBE['settings'])

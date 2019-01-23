@@ -7,8 +7,6 @@ import os
 import scriptcontext as sc
 import traceback
 
-# from compas.rpc import Proxy
-
 import compas_rhino
 
 import clr
@@ -22,8 +20,6 @@ __commandname__ = "RBE_init"
 
 def RunCommand(is_interactive):
     try:
-        # Proxy()
-
         RBE = {
             'settings': {
                 'layer': 'RBE',

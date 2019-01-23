@@ -7,12 +7,7 @@ import traceback
 
 import compas_rbe
 
-# from compas.rpc import Proxy
 from compas_rhino.utilities import XFunc
-
-
-# proxy = Proxy('compas_rbe.equilibrium')
-# xcompute_iforces = proxy.compute_iforces_xfunc
 
 
 xcompute_iforces = XFunc('compas_rbe.equilibrium.compute_iforces_xfunc', tmpdir=compas_rbe.TEMP)

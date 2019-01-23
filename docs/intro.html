@@ -62,11 +62,70 @@
 <div class="figure">
 <img alt="_images/compas_rbe.jpg" class="figure-img img-fluid" src="_images/compas_rbe.jpg" />
 </div>
-<div class="section" id="discrete-element-assemblies">
-<h2>Discrete-Element Assemblies</h2>
-</div>
 <div class="section" id="rigid-block-equilibrium-analysis">
 <h2>Rigid Block Equilibrium Analysis</h2>
+<p><a class="reference internal" href="api/compas_rbe.html#module-compas_rbe" title="compas_rbe"><code class="xref py py-mod docutils literal notranslate"><span class="pre">compas_rbe</span></code></a> provides functionality for computing the set of contact forces
+at the interfaces between the rigid blocks of a <em>discrete element assembly</em>
+that establish equilibrium with the smallest amount of tension forces possible,
+i.e. it favours solutions with only compression forces and friction.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For more information on discrete element assemblies, see the docs of <code class="xref py py-mod docutils literal notranslate"><span class="pre">compas_assembly</span></code>.</p>
+</div>
+<p>It solves the following quadratic optimisation problem,
+with linear equality and inequality constraints</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+    &amp; \underset{x}{\text{minimise}} &amp; \quad 0.5 \, \mathbf{x}^{T} \mathbf{P} \mathbf{x} + \mathbf{q}^{T} \mathbf{x} \\
+    &amp; \text{such that} &amp; \quad \mathbf{A} \mathbf{x}  = \mathbf{b} \\
+    &amp;                  &amp; \quad \mathbf{G} \mathbf{x} \leq \mathbf{h} \\
+\end{aligned}\end{split}\]</div>
+<p><span class="math notranslate nohighlight">\(\mathbf{x}\)</span> is the <em>4n-by-1</em> vector of the 4 unknown contact force component
+magnitudes per vertex of all <em>n</em> interface vertices of the assembly, along the directions
+of the frame axes of the respective interfaces.
+For vertex <em>i</em> belonging to interface <em>k</em> we have</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\mathbf{x}[i:i+4, :] =
+\begin{bmatrix}
+    c^{n+}_{i} \\
+    c^{n-}_{i} \\
+    c^{u}_{i} \\
+    c^{v}_{i}
+\end{bmatrix}\end{split}\]</div>
+<p>with</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(c^{n+}_{i}\)</span> the component in the direction of the frame normal of interface <em>k</em> (a “compression” contact)</p></li>
+<li><p><span class="math notranslate nohighlight">\(c^{n-}_{i}\)</span> the component in the opposite direction of the frame normal of interface <em>k</em> (a “tension” contact)</p></li>
+<li><p><span class="math notranslate nohighlight">\(c^{u}_{i}\)</span> the component in the direction of the frame <em>u</em> direction of interface <em>k</em> (a “friction” contact)</p></li>
+<li><p><span class="math notranslate nohighlight">\(c^{v}_{i}\)</span> the component in the direction of the frame <em>v</em> direction of interface <em>k</em> (a “friction” contact)</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The vertices are grouped per interface.
+For example, if an interface <em>k</em> has 4 vertices, then the force magnitudes along the
+frame directions are</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+    &amp; \mathbf{v}_{i + 0} &amp; = \mathbf{v}_{k, 0} &amp; = \mathbf{x}[i:i+4]    \\
+    &amp; \mathbf{v}_{i + 1} &amp; = \mathbf{v}_{k, 1} &amp; = \mathbf{x}[i+4:i+8]  \\
+    &amp; \mathbf{v}_{i + 2} &amp; = \mathbf{v}_{k, 2} &amp; = \mathbf{x}[i+8:i+12] \\
+    &amp; \mathbf{v}_{i + 3} &amp; = \mathbf{v}_{k, 3} &amp; = \mathbf{x}[i+12:i+16]
+\end{aligned}\end{split}\]</div>
+</div>
+<p><span class="math notranslate nohighlight">\(\mathbf{G}\)</span> is the <em>6n-by-4n</em> coefficient matrix of the 6 inequality constraints
+per vertex of all n interface vertices, as a function of the 4 unknown force components per vertex</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\mathbf{G}[i:i+6, j:j+4]
+=
+\begin{bmatrix}
+     -1,  &amp;  0, &amp;  0, &amp;  0 \\
+      0,  &amp; -1, &amp;  0, &amp;  0 \\
+    -\mu, &amp;  0, &amp;  1, &amp;  0 \\
+    -\mu, &amp;  0, &amp; -1, &amp;  0 \\
+    -\mu, &amp;  0, &amp;  0, &amp;  1 \\
+    -\mu, &amp;  0, &amp;  0, &amp; -1
+\end{bmatrix}\end{split}\]</div>
+<p>Finally, <span class="math notranslate nohighlight">\(\mathbf{h}\)</span> is a <em>6n-by-1</em> vector of zeros.</p>
 </div>
 </div>
 
@@ -122,7 +181,6 @@
 
                     <ul class="nav flex-column" id="compas-localnav">
 <li class="nav-item"><a class="nav-link reference internal" href="#">Introduction</a><ul class="nav">
-<li class="nav-item"><a class="nav-link reference internal" href="#discrete-element-assemblies">Discrete-Element Assemblies</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="#rigid-block-equilibrium-analysis">Rigid Block Equilibrium Analysis</a></li>
 </ul>
 </li>
