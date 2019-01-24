@@ -59,18 +59,32 @@
 
                         <div class="section" id="getting-started">
 <h1>Getting Started</h1>
+<div class="section" id="requirements">
+<h2>Requirements</h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.anaconda.com/download">Anaconda</a></p></li>
+<li><p><a class="reference external" href="https://github.com">Github</a> account</p></li>
+<li><p><a class="reference external" href="https://git-scm.com/downloads">Git</a></p></li>
+</ul>
+</div>
+<div class="section" id="installation">
+<h2>Installation</h2>
+<p>In this tutorial, we will create a new virtual environment with <code class="docutils literal notranslate"><span class="pre">conda</span></code> to install
+<code class="docutils literal notranslate"><span class="pre">compas_rbe</span></code>. We will name the environment <code class="docutils literal notranslate"><span class="pre">rbe</span></code>, but you can use any
+name you like.</p>
+<p>If you wish to install <code class="docutils literal notranslate"><span class="pre">compas_rbe</span></code> in an already existing environment, just
+skip the first step and simply activate the environment of your choice.</p>
 <div class="section" id="create-a-virtual-environment-and-install-compas">
-<h2>Create a virtual environment and install COMPAS</h2>
+<h3>1. Create a virtual environment and install COMPAS</h3>
 <ul class="simple">
 <li><p><a class="reference external" href="https://conda.io/projects/conda/en/latest/user-guide/getting-started.html#managing-environments">https://conda.io/projects/conda/en/latest/user-guide/getting-started.html#managing-environments</a></p></li>
 </ul>
-<div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>$ conda config --add channels conda-forge
-$ conda create -n rbe <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.6 COMPAS
+<div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>$ conda create -n rbe -c conda-forge <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.6 COMPAS
 </code></pre></div>
 </div>
 </div>
 <div class="section" id="activate-the-environment">
-<h2>Activate the environment</h2>
+<h3>2. Activate the environment</h3>
 <ul class="simple">
 <li><p><a class="reference external" href="https://conda.io/projects/conda/en/latest/user-guide/getting-started.html#managing-environments">https://conda.io/projects/conda/en/latest/user-guide/getting-started.html#managing-environments</a></p></li>
 </ul>
@@ -83,14 +97,17 @@ $ conda create -n rbe <span class="nv">python</span><span class="o">=</span><spa
 </code></pre></div>
 </div>
 </div>
-<div class="section" id="install-solvers">
-<h2>Install solvers</h2>
+<div class="section" id="install-dependencies">
+<h3>3. Install dependencies</h3>
+<p>To install <code class="docutils literal notranslate"><span class="pre">compas_assembly</span></code>, follow the instructions here
+<a class="reference external" href="https://blockresearchgroup.github.io/compas_assembly/gettingstarted.html">https://blockresearchgroup.github.io/compas_assembly/gettingstarted.html</a></p>
+<p>The instructions below are for installing the solvers.</p>
 <ul class="simple">
 <li><p><a class="reference external" href="http://cvxopt.org/install/index.html">http://cvxopt.org/install/index.html</a></p></li>
 <li><p><a class="reference external" href="https://www.cvxpy.org/install/">https://www.cvxpy.org/install/</a></p></li>
 </ul>
 <p><strong>On Mac</strong></p>
-<div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>$ conda install -n rbe -c cvxopt
+<div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>$ conda install -n rbe -c conda-forge cvxopt
 $ conda install -n rbe -c omnia cvxpy
 </code></pre></div>
 </div>
@@ -104,60 +121,44 @@ $ pip install cvxpy
 </code></pre></div>
 </div>
 </div>
-<div class="section" id="fork-packages">
-<h2>Fork packages</h2>
+<div class="section" id="fork-package">
+<h3>4. Fork package</h3>
 <ul class="simple">
-<li><p><a class="reference external" href="https://github.com/BlockResearchGroup/compas_assembly">COMPAS assembly</a></p></li>
 <li><p><a class="reference external" href="https://github.com/BlockResearchGroup/compas_rbe">COMPAS rbe</a></p></li>
 </ul>
-<p>Go to <a class="reference external" href="https://github.com/BlockResearchGroup">https://github.com/BlockResearchGroup</a> and <em>fork</em> the repositories to your
+<p>Go to <a class="reference external" href="https://github.com/BlockResearchGroup/compas_rbe">https://github.com/BlockResearchGroup/compas_rbe</a> and <em>fork</em> the repository to your
 personal account. This will simplify the development process when you will start
 making changes to the code or when you want to start contributing.</p>
 </div>
-<div class="section" id="make-a-base-folder">
-<h2>Make a base folder</h2>
-<p>For example</p>
-<div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>$ mkdir ~/Code/COMPAS-packages
-$ <span class="nb">cd</span> ~/Code/COMPAS-packages
-</code></pre></div>
-</div>
-</div>
-<div class="section" id="clone-forked-packages">
-<h2>Clone forked packages</h2>
+<div class="section" id="clone-forked-package">
+<h3>5. Clone forked package</h3>
 <ul class="simple">
-<li><p><a class="reference external" href="https://github.com">https://github.com</a>/&lt;your-username&gt;/compas_assembly</p></li>
 <li><p><a class="reference external" href="https://github.com">https://github.com</a>/&lt;your-username&gt;/compas_rbe</p></li>
 </ul>
-<div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>$ git clone https://github.com/&lt;your-username&gt;/compas_assembly.git
+<p>Clone the forked package to a location on your computer.</p>
+<div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>$ mkdir ~/Code/COMPAS-packages
+$ <span class="nb">cd</span> ~/Code/COMPAS-packages
+$ git clone https://github.com/&lt;your-username&gt;/compas_rbe.git
 </code></pre></div>
 </div>
-<div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>$ git clone https://github.com/&lt;your-username&gt;/compas_rbe.git
-</code></pre></div>
 </div>
-</div>
-<div class="section" id="install-cloned-packages">
-<h2>Install cloned packages</h2>
-<div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>$ <span class="nb">cd</span> ~/Code/COMPAS-packages/compas_assembly
-$ pip install -r requirements-dev.txt
-</code></pre></div>
-</div>
-<div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>$ <span class="nb">cd</span> ~/Code/COMPAS-packages/compas_rbe
+<div class="section" id="install-cloned-package">
+<h3>6. Install cloned package</h3>
+<div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>$ <span class="nb">cd</span> compas_rbe
 $ pip install -r requirements-dev.txt
 </code></pre></div>
 </div>
 </div>
 <div class="section" id="check-installation">
-<h2>Check installation</h2>
-<p>Start an interactive Python session in the Terminal.</p>
+<h3>7. Check installation</h3>
+<p>Start an interactive Python session and import the installed packages.</p>
 <div class="nohighlight notranslate"><div class="highlight"><pre><code><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">compas</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">compas_rhino</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">compas_assembly</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">compas_rbe</span>
 </code></pre></div>
 </div>
 </div>
 <div class="section" id="install-packages-for-rhino">
-<h2>Install packages for Rhino</h2>
+<h3>8. Install packages for Rhino</h3>
 <p><strong>On Mac</strong></p>
 <div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>$ python -m compas_rhinomac.install compas compas_rhino compas_assembly compas_rbe
 </code></pre></div>
@@ -166,14 +167,15 @@ $ pip install -r requirements-dev.txt
 <p><em>Not available yet.</em></p>
 </div>
 <div class="section" id="install-rhino-plugin">
-<h2>Install Rhino plugin</h2>
+<h3>9. Install Rhino plugin</h3>
 <p><strong>On Mac</strong></p>
-<div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>$ <span class="nb">cd</span> ~/Code/COMPAS-packages/compas_rbe/ui/RhinoMac
+<div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>$ <span class="nb">cd</span> ui/RhinoMac
 $ python -m compas_rhino.install_plugin RBE<span class="o">{</span>520ddb34-e56d-4a37-9c58-1da10edd1d62<span class="o">}</span>
 </code></pre></div>
 </div>
 <p><strong>On Windows</strong></p>
 <p><em>Not available yet.</em></p>
+</div>
 </div>
 </div>
 
@@ -229,16 +231,19 @@ $ python -m compas_rhino.install_plugin RBE<span class="o">{</span>520ddb34-e56d
 
                     <ul class="nav flex-column" id="compas-localnav">
 <li class="nav-item"><a class="nav-link reference internal" href="#">Getting Started</a><ul class="nav">
-<li class="nav-item"><a class="nav-link reference internal" href="#create-a-virtual-environment-and-install-compas">Create a virtual environment and install COMPAS</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="#activate-the-environment">Activate the environment</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="#install-solvers">Install solvers</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="#fork-packages">Fork packages</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="#make-a-base-folder">Make a base folder</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="#clone-forked-packages">Clone forked packages</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="#install-cloned-packages">Install cloned packages</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="#check-installation">Check installation</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="#install-packages-for-rhino">Install packages for Rhino</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="#install-rhino-plugin">Install Rhino plugin</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#requirements">Requirements</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#installation">Installation</a><ul class="nav">
+<li class="nav-item"><a class="nav-link reference internal" href="#create-a-virtual-environment-and-install-compas">1. Create a virtual environment and install COMPAS</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#activate-the-environment">2. Activate the environment</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#install-dependencies">3. Install dependencies</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#fork-package">4. Fork package</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#clone-forked-package">5. Clone forked package</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#install-cloned-package">6. Install cloned package</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#check-installation">7. Check installation</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#install-packages-for-rhino">8. Install packages for Rhino</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#install-rhino-plugin">9. Install Rhino plugin</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>

@@ -5,19 +5,37 @@ Getting Started
 .. highlight:: bash
 
 
-Create a virtual environment and install COMPAS
------------------------------------------------
+Requirements
+============
+
+* `Anaconda <https://www.anaconda.com/download>`_
+* `Github <https://github.com>`_ account
+* `Git <https://git-scm.com/downloads>`_
+
+
+Installation
+============
+
+In this tutorial, we will create a new virtual environment with ``conda`` to install
+``compas_rbe``. We will name the environment ``rbe``, but you can use any
+name you like.
+
+If you wish to install ``compas_rbe`` in an already existing environment, just
+skip the first step and simply activate the environment of your choice.
+
+
+1. Create a virtual environment and install COMPAS
+--------------------------------------------------
 
 * https://conda.io/projects/conda/en/latest/user-guide/getting-started.html#managing-environments
 
 ::
 
-    $ conda config --add channels conda-forge
-    $ conda create -n rbe python=3.6 COMPAS
+    $ conda create -n rbe -c conda-forge python=3.6 COMPAS
 
 
-Activate the environment
-------------------------
+2. Activate the environment
+---------------------------
 
 * https://conda.io/projects/conda/en/latest/user-guide/getting-started.html#managing-environments
 
@@ -28,6 +46,7 @@ Activate the environment
 
     $ source activate rbe
 
+
 **On Windows**
 
 ::
@@ -35,8 +54,13 @@ Activate the environment
     $ activate rbe
 
 
-Install solvers
----------------
+3. Install dependencies
+-----------------------
+
+To install ``compas_assembly``, follow the instructions here
+https://blockresearchgroup.github.io/compas_assembly/gettingstarted.html
+
+The instructions below are for installing the solvers.
 
 * http://cvxopt.org/install/index.html
 * https://www.cvxpy.org/install/
@@ -46,7 +70,7 @@ Install solvers
 
 ::
 
-    $ conda install -n rbe -c cvxopt
+    $ conda install -n rbe -c conda-forge cvxopt
     $ conda install -n rbe -c omnia cvxpy
 
 
@@ -61,71 +85,51 @@ Install solvers
     $ pip install cvxpy
 
 
-Fork packages
--------------
+4. Fork package
+----------------
 
-* `COMPAS assembly <https://github.com/BlockResearchGroup/compas_assembly>`_
 * `COMPAS rbe <https://github.com/BlockResearchGroup/compas_rbe>`_
 
 
-Go to https://github.com/BlockResearchGroup and *fork* the repositories to your
+Go to https://github.com/BlockResearchGroup/compas_rbe and *fork* the repository to your
 personal account. This will simplify the development process when you will start
 making changes to the code or when you want to start contributing.
 
 
-Make a base folder
-------------------
+5. Clone forked package
+-----------------------
 
-For example
+* https://github.com/<your-username>/compas_rbe
+
+Clone the forked package to a location on your computer.
 
 ::
 
     $ mkdir ~/Code/COMPAS-packages
     $ cd ~/Code/COMPAS-packages
-
-
-Clone forked packages
----------------------
-
-* https://github.com/<your-username>/compas_assembly
-* https://github.com/<your-username>/compas_rbe
-
-::
-
-    $ git clone https://github.com/<your-username>/compas_assembly.git
-
-::
-
     $ git clone https://github.com/<your-username>/compas_rbe.git
 
 
-Install cloned packages
------------------------
+6. Install cloned package
+-------------------------
 
 ::
 
-    $ cd ~/Code/COMPAS-packages/compas_assembly
-    $ pip install -r requirements-dev.txt
-
-::
-
-    $ cd ~/Code/COMPAS-packages/compas_rbe
+    $ cd compas_rbe
     $ pip install -r requirements-dev.txt
 
 
-Check installation
-------------------
+7. Check installation
+---------------------
 
-Start an interactive Python session in the Terminal.
+Start an interactive Python session and import the installed packages.
 
 >>> import compas
->>> import compas_rhino
->>> import compas_assembly
 >>> import compas_rbe
 
 
-Install packages for Rhino
---------------------------
+8. Install packages for Rhino
+-----------------------------
 
 **On Mac**
 
@@ -139,14 +143,14 @@ Install packages for Rhino
 *Not available yet.*
 
 
-Install Rhino plugin
---------------------
+9. Install Rhino plugin
+-----------------------
 
 **On Mac**
 
 ::
 
-    $ cd ~/Code/COMPAS-packages/compas_rbe/ui/RhinoMac
+    $ cd ui/RhinoMac
     $ python -m compas_rhino.install_plugin RBE{520ddb34-e56d-4a37-9c58-1da10edd1d62}
 
 
