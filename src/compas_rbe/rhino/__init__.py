@@ -6,23 +6,16 @@ compas_rbe.rhino
 .. currentmodule:: compas_rbe.rhino
 
 
-Artists
+Classes
 =======
 
 .. autosummary::
     :toctree: generated/
+    :nosignatures:
 
     AssemblyArtist
-    BlockArtist
-
-
-Helpers
-=======
-
-.. autosummary::
-    :toctree: generated/
-
     AssemblyHelper
+    BlockArtist
     BlockHelper
 
 """
@@ -33,6 +26,6 @@ from __future__ import print_function
 
 from .helpers import *
 from .artists import *
-from .forms import *
+
 
 __all__ = [name for name in dir() if not name.startswith('_')]

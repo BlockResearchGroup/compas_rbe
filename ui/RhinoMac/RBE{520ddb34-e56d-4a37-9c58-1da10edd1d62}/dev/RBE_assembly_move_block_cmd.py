@@ -2,18 +2,13 @@ from __future__ import print_function
 from __future__ import absolute_import
 from __future__ import division
 
-
 import scriptcontext as sc
-
 import traceback
 
-import compas_rhino
-import compas_rbe
-
-from compas_rbe.datastructures import Assembly
+from compas_rbe.rhino import AssemblyHelper
 
 
-__commandname__ = "RBE_assembly_from_polysurfaces"
+__commandname__ = "RBE_assembly_move_block"
 
 
 def RunCommand(is_interactive):
@@ -23,12 +18,14 @@ def RunCommand(is_interactive):
 
         RBE = sc.sticky['RBE']
 
-        guids = compas_rhino.select_surfaces()
+        assembly = RBE['assembly']
 
-        RBE['assembly'] = assembly = Assembly()
+        keys = AssemblyHelper.select_vertices(assembly)
+        if not keys:
+            return
 
-        assembly.add_blocks_from_polysurfaces(guids)
-        assembly.draw(RBE['settings'])
+        if AssemblyHelper.update_vertex_attributes(assembly, keys):
+            assembly.draw(RBE['settings'])
 
     except Exception as error:
         print(error)

@@ -10,7 +10,7 @@ import compas_rbe
 from compas_rhino.utilities import XFunc
 
 
-xidentify_interfaces = XFunc('compas_assembly.interfaces.identify_interfaces_xfunc', tmpdir=compas_rbe.TEMP)
+identify_interfaces_xfunc = XFunc('compas_assembly.datastructures.identify_interfaces_xfunc', tmpdir=compas_rbe.TEMP)
 
 
 def identify_interfaces(assembly, nmax=10, tmax=0.05, amin=0.01, lmin=0.01):
@@ -18,7 +18,7 @@ def identify_interfaces(assembly, nmax=10, tmax=0.05, amin=0.01, lmin=0.01):
         'assembly': assembly.to_data(),
         'blocks': {str(key): assembly.blocks[key].to_data() for key in assembly.blocks}
     }
-    result = xidentify_interfaces(data, nmax=nmax, tmax=tmax, amin=amin, lmin=lmin)
+    result = identify_interfaces_xfunc(data, nmax=nmax, tmax=tmax, amin=amin, lmin=lmin)
     assembly.data = result['assembly']
     for key in assembly.blocks:
         assembly.blocks[key].data = result['blocks'][str(key)]
@@ -35,7 +35,7 @@ def RunCommand(is_interactive):
         RBE = sc.sticky['RBE']
         assembly = RBE['assembly']
 
-        xidentify_interfaces.python = RBE['settings']['python']
+        identify_interfaces_xfunc.python = RBE['settings']['python']
         identify_interfaces(assembly)
 
         assembly.draw(RBE['settings'])

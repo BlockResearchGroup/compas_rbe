@@ -149,7 +149,7 @@ def compute_iforces_cvx(assembly,
 
     a1 = 1.0   # weights on the compression forces
     a2 = 1e+5  # weights on the tension forces
-    a3 = 1.0   # weights on the friction forces (same as compression weights in Whiting)
+    a3 = 1e+2  # weights on the friction forces (same as compression weights in Whiting)
 
     p = array([a1, a2, a3, a3] * vcount)
     P = diagflat(p)

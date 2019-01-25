@@ -7,7 +7,7 @@ import traceback
 import scriptcontext as sc
 import Rhino
 
-from compas_rbe.rhino import SettingsForm
+from compas_rhino.etoforms import SettingsForm
 
 
 __commandname__ = "RBE_settings"

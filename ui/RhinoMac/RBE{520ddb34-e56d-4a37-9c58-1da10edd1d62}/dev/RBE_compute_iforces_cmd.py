@@ -10,7 +10,7 @@ import compas_rbe
 from compas_rhino.utilities import XFunc
 
 
-xcompute_iforces = XFunc('compas_rbe.equilibrium.compute_iforces_xfunc', tmpdir=compas_rbe.TEMP)
+compute_iforces_xfunc = XFunc('compas_rbe.equilibrium.compute_iforces_xfunc', tmpdir=compas_rbe.TEMP)
 
 
 def compute_iforces(assembly, solver):
@@ -18,7 +18,7 @@ def compute_iforces(assembly, solver):
         'assembly': assembly.to_data(),
         'blocks': {str(key): assembly.blocks[key].to_data() for key in assembly.blocks},
     }
-    result = xcompute_iforces(data, solver=solver)
+    result = compute_iforces_xfunc(data, solver=solver)
     assembly.data = result['assembly']
     for key in assembly.blocks:
         assembly.blocks[key].data = result['blocks'][str(key)]
@@ -36,7 +36,7 @@ def RunCommand(is_interactive):
 
         assembly = RBE['assembly']
 
-        xcompute_iforces.python = RBE['settings']['python']
+        compute_iforces_xfunc.python = RBE['settings']['python']
         compute_iforces(assembly, RBE['settings']['solver'])
 
         assembly.draw(RBE['settings'])

@@ -13,7 +13,7 @@ import compas_rbe
 from compas_rbe.datastructures import Assembly
 
 
-__commandname__ = "RBE_assembly_from_blocks"
+__commandname__ = "RBE_assembly_from_meshes"
 
 
 def RunCommand(is_interactive):

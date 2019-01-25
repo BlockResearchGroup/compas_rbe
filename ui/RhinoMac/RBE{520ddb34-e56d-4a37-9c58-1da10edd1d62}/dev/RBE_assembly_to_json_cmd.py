@@ -2,7 +2,7 @@ from __future__ import print_function
 from __future__ import absolute_import
 from __future__ import division
 
-import rhinoscriptcontext as rs
+import rhinoscriptsyntax as rs
 import scriptcontext as sc
 import traceback
 import os
@@ -22,10 +22,12 @@ def RunCommand(is_interactive):
         RBE = sc.sticky['RBE']
 
         folder = compas_rhino.select_folder(default=compas_rbe.DATA)
+        print(folder)
         if not folder:
             return
 
         filename = rs.GetString('Name of the json file?')
+        print(filename)
         if not filename:
             return
 
