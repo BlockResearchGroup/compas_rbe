@@ -19,7 +19,7 @@ try:
 except ImportError:
     pass
 
-compute_iforces = XFunc('compas_rbe.equilibrium.compute_iforces_xfunc', tmpdir=compas_rbe.TEMP)
+compute_interface_forces = XFunc('compas_rbe.equilibrium.compute_interface_forces_xfunc', tmpdir=compas_rbe.TEMP)
 
 
 __all__ = ['EquilibriumActions']
@@ -27,7 +27,7 @@ __all__ = ['EquilibriumActions']
 
 class EquilibriumActions(object):
 
-    def compute_iforces(self):
+    def compute_interface_forces(self):
         assembly = self.assembly
 
         data = {
@@ -35,7 +35,7 @@ class EquilibriumActions(object):
             'blocks'  : {str(key): assembly.blocks[key].to_data() for key in assembly.blocks},
         }
 
-        result = compute_iforces(data, solver='ECOS')
+        result = compute_interface_forces(data, solver='ECOS')
 
         assembly.data = result['assembly']
 

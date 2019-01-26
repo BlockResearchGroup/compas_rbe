@@ -22,11 +22,11 @@ from compas_rbe.equilibrium.helpers import make_Aiq
 
 
 __all__ = [
-    'compute_iforces_cvxopt',
+    'compute_interface_forces_cvxopt',
 ]
 
 
-def compute_iforces_cvxopt(assembly,
+def compute_interface_forces_cvxopt(assembly,
                            friction8=False,
                            mu=0.6,
                            density=1.0,

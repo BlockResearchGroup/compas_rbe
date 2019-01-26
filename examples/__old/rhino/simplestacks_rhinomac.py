@@ -13,16 +13,16 @@ from compas_rbe.rhino import AssemblyArtist
 
 # replace this by RPC server
 identify_interfaces_ = XFunc('compas_rbe.interfaces.identify_interfaces_xfunc', tmpdir=compas_rbe.TEMP)
-compute_iforces_ = XFunc('compas_rbe.equilibrium.compute_iforces_xfunc', tmpdir=compas_rbe.TEMP)
+compute_interface_forces_ = XFunc('compas_rbe.equilibrium.compute_interface_forces_xfunc', tmpdir=compas_rbe.TEMP)
 
 # replace this by automated search for python executables
 # based on .(bash_)profile
 identify_interfaces_.python = '/Users/vanmelet/anaconda3/bin/python3'
-compute_iforces_.python = '/Users/vanmelet/anaconda3/bin/python3'
+compute_interface_forces_.python = '/Users/vanmelet/anaconda3/bin/python3'
 
 # replace 
 identify_interfaces_.paths = ['/Users/vanmelet/Code/BlockResearchGroup/compas_rbe/src']
-compute_iforces_.paths = ['/Users/vanmelet/Code/BlockResearchGroup/compas_rbe/src']
+compute_interface_forces_.paths = ['/Users/vanmelet/Code/BlockResearchGroup/compas_rbe/src']
 
 
 # wrapper
@@ -36,10 +36,10 @@ def identify_interfaces(assembly, nmax=10, tmax=0.05, amin=0.01, lmin=0.01):
 
 
 #wrapper
-def compute_iforces(assembly, solver='CPLEX'):
+def compute_interface_forces(assembly, solver='CPLEX'):
     data = {'assembly': assembly.to_data(),
             'blocks'  : {str(key): assembly.blocks[key].to_data() for key in assembly.blocks},}
-    result = compute_iforces_(data, solver=solver)
+    result = compute_interface_forces_(data, solver=solver)
     assembly.data = result['assembly']
     for key in assembly.blocks:
         assembly.blocks[key].data = result['blocks'][str(key)]
@@ -52,7 +52,7 @@ assembly = Assembly.from_json(compas_rbe.get('simple_stack_1.json'))
 identify_interfaces(assembly)
 
 # equilibrium
-compute_iforces(assembly)
+compute_interface_forces(assembly)
 
 # result
 artist = AssemblyArtist(assembly, layer='RBE')

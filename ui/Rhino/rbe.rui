@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <RhinoUI major_ver="2" minor_ver="0" guid="5bf474f2-6d6a-4c61-b0f0-9a2b423f1fe1" localize="False" default_language_id="1033">
   <extend_rhino_menus>
     <menu guid="2d8284b6-9b37-4b0e-965b-30b438365e80">
@@ -300,7 +300,7 @@
     </macro_item>
     <macro_item guid="2cb782cc-15a2-4050-badd-f3d8530b6612">
       <text>
-        <locale_1033>rbe.compute_iforces</locale_1033>
+        <locale_1033>rbe.compute_interface_forces</locale_1033>
       </text>
       <tooltip>
         <locale_1033>None</locale_1033>
@@ -314,7 +314,7 @@
       <menu_text>
         <locale_1033>compute iforces</locale_1033>
       </menu_text>
-      <script>-_RunPythonScript (rbe.compute_iforces())</script>
+      <script>-_RunPythonScript (rbe.compute_interface_forces())</script>
     </macro_item>
     <macro_item guid="72aac9a6-6355-4fae-926e-ed7597167e42">
       <text>

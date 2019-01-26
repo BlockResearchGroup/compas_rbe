@@ -24,16 +24,16 @@ from numpy import set_printoptions
 set_printoptions(linewidth=1000)
 
 
-__all__ = ['compute_iforces_cvx']
+__all__ = ['compute_interface_forces_cvx']
 
 
-def compute_iforces_cvx(assembly,
-                        friction8=False,
-                        mu=0.6,
-                        density=1.0,
-                        verbose=True,
-                        maxiters=1000,
-                        solver=None):
+def compute_interface_forces_cvx(assembly,
+                                 friction8=False,
+                                 mu=0.6,
+                                 density=1.0,
+                                 verbose=False,
+                                 maxiters=1000,
+                                 solver=None):
     r"""Compute the forces at the interfaces between the blocks of an assembly.
 
     Solve the following optimisation problem:
@@ -69,7 +69,7 @@ def compute_iforces_cvx(assembly,
         Default is ``100``.
     solver : {'OSQP', 'ECOS', 'CVXOPT', 'MOSEK', 'CPLEX'}, optional
         The solver to be used internally.
-        Default is ``None``.
+        Default is ``'ECOS'``.
 
     Returns
     -------
@@ -101,6 +101,8 @@ def compute_iforces_cvx(assembly,
         pass
 
     """
+    if not solver:
+        solver = 'ECOS'
 
     n = assembly.number_of_vertices()
 
@@ -179,11 +181,6 @@ def compute_iforces_cvx(assembly,
 
     # solver_specific_opts
 
-    if solver == 'OSQP':
-        solver = cvxpy.OSQP
-        # max_iter (100)
-        # ...
-
     if solver == 'ECOS':
         solver = cvxpy.ECOS
         # max_iters (100)
@@ -193,8 +190,11 @@ def compute_iforces_cvx(assembly,
         # abstol_inacc (5e-5)
         # reltol_inacc (5e-5)
         # feastol_inacc (1e-4)
-
-    if solver == 'CVXOPT':
+    elif solver == 'OSQP':
+        solver = cvxpy.OSQP
+        # max_iter (100)
+        # ...
+    elif solver == 'CVXOPT':
         solver = cvxpy.CVXOPT
         # max_iters (100)
         # abstol (1e-7)
@@ -202,12 +202,12 @@ def compute_iforces_cvx(assembly,
         # feastol (1e-7)
         # refinement (1)
         # kktsolver ('chol', 'robust')
-
-    if solver == 'MOSEK':
+    elif solver == 'MOSEK':
         solver = cvxpy.MOSEK
-
-    if solver == 'CPLEX':
+    elif solver == 'CPLEX':
         solver = cvxpy.CPLEX
+    else:
+        raise Exception('Solver not supported: {}'.format(solver))
 
     if compas.PY3:
         x = cvxpy.Variable((P.shape[0], 1))

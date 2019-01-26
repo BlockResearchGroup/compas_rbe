@@ -9,7 +9,7 @@ from compas_rbe.datastructures import Assembly
 
 from compas_rbe.interfaces import identify_interfaces_bestfit
 from compas_rbe.interfaces import planarize_interfaces
-from compas_rbe.equilibrium import compute_iforces
+from compas_rbe.equilibrium import compute_interface_forces
 
 from compas_rbe.viewer import AssemblyViewer
 
@@ -33,7 +33,7 @@ identify_interfaces_bestfit(
 # planarize_interfaces(assembly.edge)
 
 # equilibrium
-compute_iforces(assembly, solver='MOSEK', verbose=True)
+compute_interface_forces(assembly, solver='MOSEK', verbose=True)
 
 # result
 

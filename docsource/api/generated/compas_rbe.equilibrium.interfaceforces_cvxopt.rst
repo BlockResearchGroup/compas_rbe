@@ -11,7 +11,7 @@ compas_rbe.equilibrium.interfaceforces_cvxopt
 
    .. autosummary::
    
-      compute_iforces_cvxopt
+      compute_interface_forces_cvxopt
    
    
 

@@ -6,7 +6,7 @@ from .interfaceforces_cvx import *
 from .interfaceforces_cvxopt import *
 
 
-def compute_iforces_xfunc(data, backend='cvx', **kwargs):
+def compute_interface_forces_xfunc(data, backend='cvx', **kwargs):
     from compas_rbe.datastructures import Assembly
     from compas_rbe.datastructures import Block
 
@@ -14,10 +14,10 @@ def compute_iforces_xfunc(data, backend='cvx', **kwargs):
     assembly.blocks = {int(key): Block.from_data(data['blocks'][key]) for key in data['blocks']}
 
     if backend == 'cvx':
-        compute_iforces_cvx(assembly, **kwargs)
+        compute_interface_forces_cvx(assembly, **kwargs)
 
     if backend == 'cvxopt':
-        compute_iforces_cvxopt(assembly, **kwargs)
+        compute_interface_forces_cvxopt(assembly, **kwargs)
 
     return {
         'assembly': assembly.to_data(),

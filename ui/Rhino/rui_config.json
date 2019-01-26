@@ -46,7 +46,7 @@
         {
             "name"  : "RBE.equilibrium", 
             "items" : [
-                { "text" : "iforces", "left" : "rbe.compute_iforces", "right" : "" }
+                { "text" : "iforces", "left" : "rbe.compute_interface_forces", "right" : "" }
             ]
         }
     ],

@@ -11,10 +11,10 @@ from compas_rbe.datastructures import Block
 from compas.datastructures import mesh_transform
 from compas.geometry import Translation
 
-from compas_rbe.interfaces import identify_interfaces
-from compas_rbe.equilibrium import compute_iforces_cvx as compute_iforces
+from compas_assembly.datastructures import identify_interfaces
+from compas_rbe.equilibrium import compute_interface_forces_cvx
 
-from compas_rbe.viewer import AssemblyViewer
+from compas_assembly.viewer import AssemblyViewer
 
 
 assembly = Assembly()
@@ -32,7 +32,7 @@ T2 = Translation([0, 0, +0.5 * l])
 mesh_transform(b1, T1)
 mesh_transform(b2, T2)
 
-assembly.add_block(b1)
+assembly.add_block(b1, is_support=True)
 assembly.add_block(b2)
 
 
@@ -48,7 +48,7 @@ identify_interfaces(
 
 # equilibrium
 
-compute_iforces(assembly, solver='CPLEX', verbose=True)
+compute_interface_forces_cvx(assembly, solver='CPLEX', verbose=True)
 
 # result
 

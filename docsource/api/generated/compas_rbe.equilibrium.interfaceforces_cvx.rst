@@ -11,7 +11,7 @@ compas_rbe.equilibrium.interfaceforces_cvx
 
    .. autosummary::
    
-      compute_iforces_cvx
+      compute_interface_forces_cvx
    
    
 
