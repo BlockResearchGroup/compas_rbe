@@ -5,12 +5,11 @@ from __future__ import division
 import compas
 import compas_rbe
 
-from compas_rbe.datastructures import Assembly
+from compas_assembly.datastructures import Assembly
+from compas_assembly.datastructures import assembly_interfaces
+from compas_assembly.viewer import AssemblyViewer
 
-from compas_rbe.interfaces import identify_interfaces
-from compas_rbe.equilibrium import compute_interfaceforces
-
-from compas_rbe.viewer import AssemblyViewer
+from compas_rbe.equilibrium import compute_interface_forces_cvx
 
 
 # initialize assembly and blocks from json file
@@ -19,7 +18,7 @@ assembly = Assembly.from_json(compas_rbe.get('genevault.json'))
 
 # identify block interfaces and update block_model
 
-identify_interfaces(
+assembly_interfaces(
     assembly,
     nmax=10,
     tmax=0.05,
@@ -29,7 +28,7 @@ identify_interfaces(
 
 # equilibrium
 
-# compute_interfaceforces(assembly, verbose=True)
+# compute_interface_forces_cvx(assembly, verbose=True)
 
 # result
 

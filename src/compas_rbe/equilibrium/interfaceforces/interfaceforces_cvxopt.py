@@ -27,11 +27,11 @@ __all__ = [
 
 
 def compute_interface_forces_cvxopt(assembly,
-                           friction8=False,
-                           mu=0.6,
-                           density=1.0,
-                           verbose=True,
-                           maxiters=1000):
+                                    friction8=False,
+                                    mu=0.6,
+                                    density=1.0,
+                                    verbose=True,
+                                    maxiters=1000):
     r"""Compute the forces at the interfaces between the blocks of an assembly.
 
     Solve the following optimisation problem:

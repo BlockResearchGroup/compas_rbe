@@ -110,7 +110,7 @@ def compute_interface_forces_cvx(assembly,
 
     fixed = [key for key in assembly.vertices_where({'is_support': True})]
     fixed = [key_index[key] for key in fixed]
-    free  = [index for index in range(n) if index not in fixed]
+    free  = list(set(range(n)) - set(fixed))
 
     # ==========================================================================
     # equality constraints

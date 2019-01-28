@@ -39,7 +39,7 @@
         {
             "name"  : "RBE.interfaces", 
             "items" : [
-                { "text" : "identify",  "left" : "rbe.identify_interfaces", "right" : "" },
+                { "text" : "identify",  "left" : "rbe.assembly_interfaces", "right" : "" },
                 { "text" : "planarize", "left" : "rbe.planarize_interfaces", "right" : "" }
             ]
         },

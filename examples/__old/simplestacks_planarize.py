@@ -5,13 +5,13 @@ from __future__ import division
 import compas
 import compas_rbe
 
-from compas_rbe.datastructures import Assembly
+from compas_assembly.datastructures import Assembly
+from compas_assembly.interfaces import assembly_interfaces_bestfit
+from compas_assembly.interfaces import planarize_interfaces
+from compas_assembly.viewer import AssemblyViewer
 
-from compas_rbe.interfaces import identify_interfaces_bestfit
-from compas_rbe.interfaces import planarize_interfaces
 from compas_rbe.equilibrium import compute_interface_forces
 
-from compas_rbe.viewer import AssemblyViewer
 
 # initialize assembly and blocks from json file
 
@@ -21,7 +21,7 @@ assembly = Assembly.from_json(compas_rbe.get('simple_stack_curvedsrf2.json'))
 
 # identify block interfaces and update block_model
 
-identify_interfaces_bestfit(
+assembly_interfaces_bestfit(
     assembly,
     nmax=10,
     tmax=0.5,

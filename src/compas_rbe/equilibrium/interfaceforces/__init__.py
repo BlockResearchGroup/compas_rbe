@@ -7,8 +7,8 @@ from .interfaceforces_cvxopt import *
 
 
 def compute_interface_forces_xfunc(data, backend='cvx', **kwargs):
-    from compas_rbe.datastructures import Assembly
-    from compas_rbe.datastructures import Block
+    from compas_assembly.datastructures import Assembly
+    from compas_assembly.datastructures import Block
 
     assembly = Assembly.from_data(data['assembly'])
     assembly.blocks = {int(key): Block.from_data(data['blocks'][key]) for key in data['blocks']}

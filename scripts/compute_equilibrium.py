@@ -12,7 +12,7 @@ from compas.datastructures import network_transformed
 from compas.geometry import Rotation
 
 from compas_assembly.datastructures import Assembly
-from compas_assembly.datastructures import identify_interfaces
+from compas_assembly.datastructures import assembly_interfaces
 
 from compas_rbe.equilibrium import compute_interface_forces_cvx
 
@@ -23,7 +23,7 @@ keys = list(assembly.vertices_where({'is_support': True}))
 print(keys)
 
 if keys:
-    identify_interfaces(assembly)
+    assembly_interfaces(assembly)
 
     R = Rotation.from_axis_and_angle([1.0, 0, 0], -pi / 2)
     network = network_transformed(assembly, R)
@@ -35,4 +35,4 @@ if keys:
 
     compute_interface_forces_cvx(assembly, solver='CVXOPT', verbose=True)
 
-    assembly.to_json(compas_assembly.get('wall_result.json'))
+    assembly.to_json(compas_assembly.get('assembly_result.json'))

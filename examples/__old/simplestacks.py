@@ -3,18 +3,16 @@ from __future__ import absolute_import
 from __future__ import division
 
 import compas
-import compas_rbe
-
-from compas_rbe.datastructures import Assembly
-from compas_rbe.datastructures import Block
 
 from compas.datastructures import mesh_transform
 from compas.geometry import Translation
 
-from compas_assembly.datastructures import identify_interfaces
-from compas_rbe.equilibrium import compute_interface_forces_cvx
-
+from compas_assembly.datastructures import Assembly
+from compas_assembly.datastructures import Block
+from compas_assembly.datastructures import assembly_interfaces
 from compas_assembly.viewer import AssemblyViewer
+
+from compas_rbe.equilibrium import compute_interface_forces_cvx
 
 
 assembly = Assembly()
@@ -38,7 +36,7 @@ assembly.add_block(b2)
 
 # identify block interfaces and update block_model
 
-identify_interfaces(
+assembly_interfaces(
     assembly,
     nmax=10,
     tmax=0.05,

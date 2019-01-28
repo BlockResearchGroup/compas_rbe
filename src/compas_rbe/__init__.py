@@ -9,9 +9,7 @@ compas_rbe
 .. toctree::
     :maxdepth: 1
 
-    compas_rbe.datastructures
     compas_rbe.equilibrium
-    compas_rbe.rhino
 
 """
 
@@ -44,16 +42,6 @@ def _find_resource(filename):
 
 def get(filename):
     return _find_resource(filename)
-
-
-def requirements():
-    with open(os.path.join(HERE, '../requirements.txt')) as f:
-        for line in f:
-            print(line.strip())
-
-
-def reload():
-    pass
 
 
 __all__ = ['HOME', 'DATA', 'DOCS', 'SRC', 'TEMP', 'get']

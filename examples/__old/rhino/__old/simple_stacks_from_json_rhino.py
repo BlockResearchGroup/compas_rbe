@@ -20,20 +20,20 @@ from compas_rbe.rhino import AssemblyArtist
 # external functions
 # ==============================================================================
 
-identify_interfaces = XFunc('compas_rbe.interfaces.identify_interfaces_xfunc')
-identify_interfaces.tmpdir = compas_rbe.TEMP
+assembly_interfaces = XFunc('compas_rbe.interfaces.assembly_interfaces_xfunc')
+assembly_interfaces.tmpdir = compas_rbe.TEMP
 
 compute_interface_forces = XFunc('compas_rbe.equilibrium.compute_interfaceforces_xfunc')
 compute_interface_forces.tmpdir = compas_rbe.TEMP
 
 # # for rhinomac
 
-# identify_interfaces.paths  = [compas_rbe.SRC]
+# assembly_interfaces.paths  = [compas_rbe.SRC]
 # compute_interface_forces.paths  = [compas_rbe.SRC]
 
 # mypython = "/Users/vanmelet/anaconda3/bin/python"
 
-# identify_interfaces.python = mypython
+# assembly_interfaces.python = mypython
 # compute_interface_forces.python = mypython
 
 
@@ -85,7 +85,7 @@ data = {
     'blocks'  : {str(key): assembly.blocks[key].to_data() for key in assembly.blocks},
 }
 
-result = identify_interfaces(
+result = assembly_interfaces(
     data,
     nmax=5,
     tmax=0.05,

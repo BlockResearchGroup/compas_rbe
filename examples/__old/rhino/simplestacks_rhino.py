@@ -13,7 +13,7 @@ from compas_rbe.rhino import AssemblyArtist
 from compas_rbe.rhino import AssemblyHelper
 
 
-identify_interfaces = XFunc('compas_rbe.interfaces.identify_interfaces_xfunc', tmpdir=compas_rbe.TEMP)
+assembly_interfaces = XFunc('compas_rbe.interfaces.assembly_interfaces_xfunc', tmpdir=compas_rbe.TEMP)
 compute_interface_forces = XFunc('compas_rbe.equilibrium.compute_interface_forces_xfunc', tmpdir=compas_rbe.TEMP)
 
 
@@ -28,7 +28,7 @@ data = {
     'blocks'  : {str(key): assembly.blocks[key].to_data() for key in assembly.blocks},
 }
 
-result = identify_interfaces(data, nmax=10, tmax=0.05, amin=0.01, lmin=0.01)
+result = assembly_interfaces(data, nmax=10, tmax=0.05, amin=0.01, lmin=0.01)
 
 assembly.data = result['assembly']
 

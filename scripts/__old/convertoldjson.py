@@ -42,4 +42,4 @@ if __name__ == "__main__":
 
     import compas_rbe
 
-    convert(compas_rbe.get('simple_stack.json'), compas_rbe.get('simplestack.json'))
+    convert(compas_rbe.get('simple_assembly.json'), compas_rbe.get('simpleassembly.json'))

@@ -18,7 +18,7 @@ except ImportError:
     pass
 
 
-identify_interfaces = XFunc('compas_rbe.interfaces.identify_interfaces_xfunc', tmpdir=compas_rbe.TEMP)
+assembly_interfaces = XFunc('compas_rbe.interfaces.assembly_interfaces_xfunc', tmpdir=compas_rbe.TEMP)
 
 
 __all__ = ['InterfaceActions']
@@ -26,7 +26,7 @@ __all__ = ['InterfaceActions']
 
 class InterfaceActions(object):
 
-    def identify_interfaces(self):
+    def assembly_interfaces(self):
         assembly = self.assembly
 
         data = {
@@ -34,7 +34,7 @@ class InterfaceActions(object):
             'blocks'  : {str(key): assembly.blocks[key].to_data() for key in assembly.blocks},
         }
 
-        result = identify_interfaces(
+        result = assembly_interfaces(
             data,
             nmax=10,
             tmax=0.05,

@@ -318,7 +318,7 @@
     </macro_item>
     <macro_item guid="72aac9a6-6355-4fae-926e-ed7597167e42">
       <text>
-        <locale_1033>rbe.identify_interfaces</locale_1033>
+        <locale_1033>rbe.assembly_interfaces</locale_1033>
       </text>
       <tooltip>
         <locale_1033>None</locale_1033>
@@ -332,7 +332,7 @@
       <menu_text>
         <locale_1033>identify interfaces</locale_1033>
       </menu_text>
-      <script>-_RunPythonScript (rbe.identify_interfaces())</script>
+      <script>-_RunPythonScript (rbe.assembly_interfaces())</script>
     </macro_item>
     <macro_item guid="d8544341-6a36-4d65-be8c-40a66438dd7e">
       <text>
