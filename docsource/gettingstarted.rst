@@ -27,8 +27,6 @@ skip the first step and simply activate the environment of your choice.
 1. Create a virtual environment and install COMPAS
 --------------------------------------------------
 
-* https://conda.io/projects/conda/en/latest/user-guide/getting-started.html#managing-environments
-
 ::
 
     $ conda create -n rbe -c conda-forge python=3.6 COMPAS
@@ -36,9 +34,6 @@ skip the first step and simply activate the environment of your choice.
 
 2. Activate the environment
 ---------------------------
-
-* https://conda.io/projects/conda/en/latest/user-guide/getting-started.html#managing-environments
-
 
 **On Mac**
 
@@ -56,11 +51,6 @@ skip the first step and simply activate the environment of your choice.
 
 3. Install dependencies
 -----------------------
-
-To install ``compas_assembly``, follow the instructions here
-https://blockresearchgroup.github.io/compas_assembly/gettingstarted.html
-
-The instructions below are for installing the solvers.
 
 * http://cvxopt.org/install/index.html
 * https://www.cvxpy.org/install/
@@ -88,9 +78,6 @@ The instructions below are for installing the solvers.
 4. Fork package
 ----------------
 
-* `COMPAS rbe <https://github.com/BlockResearchGroup/compas_rbe>`_
-
-
 Go to https://github.com/BlockResearchGroup/compas_rbe and *fork* the repository to your
 personal account. This will simplify the development process when you will start
 making changes to the code or when you want to start contributing.
@@ -98,8 +85,6 @@ making changes to the code or when you want to start contributing.
 
 5. Clone forked package
 -----------------------
-
-* https://github.com/<your-username>/compas_rbe
 
 Clone the forked package to a location on your computer.
 
@@ -135,26 +120,12 @@ Start an interactive Python session and import the installed packages.
 
 ::
 
-    $ python -m compas_rhinomac.install compas compas_rhino compas_assembly compas_rbe
+    $ python -m compas_rhinomac.install -p compas compas_rbe
 
 
 **On Windows**
-
-*Not available yet.*
-
-
-9. Install Rhino plugin
------------------------
-
-**On Mac**
 
 ::
 
-    $ cd ui/RhinoMac
-    $ python -m compas_rhino.install_plugin RBE{520ddb34-e56d-4a37-9c58-1da10edd1d62}
-
-
-**On Windows**
-
-*Not available yet.*
+    $ python -m compas_rhino.install -p compas compas_rbe
 

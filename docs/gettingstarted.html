@@ -18,7 +18,7 @@
         <link rel="stylesheet" type="text/css" href="_static/css/compas-reference.css" />
 
         
-            <link rel="next" title="Examples" href="examples.html" />
+            <link rel="next" title="API Reference" href="api.html" />
         
         
         
@@ -76,18 +76,12 @@ name you like.</p>
 skip the first step and simply activate the environment of your choice.</p>
 <div class="section" id="create-a-virtual-environment-and-install-compas">
 <h3>1. Create a virtual environment and install COMPAS</h3>
-<ul class="simple">
-<li><p><a class="reference external" href="https://conda.io/projects/conda/en/latest/user-guide/getting-started.html#managing-environments">https://conda.io/projects/conda/en/latest/user-guide/getting-started.html#managing-environments</a></p></li>
-</ul>
 <div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>$ conda create -n rbe -c conda-forge <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.6 COMPAS
 </code></pre></div>
 </div>
 </div>
 <div class="section" id="activate-the-environment">
 <h3>2. Activate the environment</h3>
-<ul class="simple">
-<li><p><a class="reference external" href="https://conda.io/projects/conda/en/latest/user-guide/getting-started.html#managing-environments">https://conda.io/projects/conda/en/latest/user-guide/getting-started.html#managing-environments</a></p></li>
-</ul>
 <p><strong>On Mac</strong></p>
 <div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>$ <span class="nb">source</span> activate rbe
 </code></pre></div>
@@ -99,9 +93,6 @@ skip the first step and simply activate the environment of your choice.</p>
 </div>
 <div class="section" id="install-dependencies">
 <h3>3. Install dependencies</h3>
-<p>To install <code class="docutils literal notranslate"><span class="pre">compas_assembly</span></code>, follow the instructions here
-<a class="reference external" href="https://blockresearchgroup.github.io/compas_assembly/gettingstarted.html">https://blockresearchgroup.github.io/compas_assembly/gettingstarted.html</a></p>
-<p>The instructions below are for installing the solvers.</p>
 <ul class="simple">
 <li><p><a class="reference external" href="http://cvxopt.org/install/index.html">http://cvxopt.org/install/index.html</a></p></li>
 <li><p><a class="reference external" href="https://www.cvxpy.org/install/">https://www.cvxpy.org/install/</a></p></li>
@@ -123,18 +114,12 @@ $ pip install cvxpy
 </div>
 <div class="section" id="fork-package">
 <h3>4. Fork package</h3>
-<ul class="simple">
-<li><p><a class="reference external" href="https://github.com/BlockResearchGroup/compas_rbe">COMPAS rbe</a></p></li>
-</ul>
 <p>Go to <a class="reference external" href="https://github.com/BlockResearchGroup/compas_rbe">https://github.com/BlockResearchGroup/compas_rbe</a> and <em>fork</em> the repository to your
 personal account. This will simplify the development process when you will start
 making changes to the code or when you want to start contributing.</p>
 </div>
 <div class="section" id="clone-forked-package">
 <h3>5. Clone forked package</h3>
-<ul class="simple">
-<li><p><a class="reference external" href="https://github.com">https://github.com</a>/&lt;your-username&gt;/compas_rbe</p></li>
-</ul>
 <p>Clone the forked package to a location on your computer.</p>
 <div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>$ mkdir ~/Code/COMPAS-packages
 $ <span class="nb">cd</span> ~/Code/COMPAS-packages
@@ -160,21 +145,13 @@ $ pip install -r requirements-dev.txt
 <div class="section" id="install-packages-for-rhino">
 <h3>8. Install packages for Rhino</h3>
 <p><strong>On Mac</strong></p>
-<div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>$ python -m compas_rhinomac.install compas compas_rhino compas_assembly compas_rbe
+<div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>$ python -m compas_rhinomac.install -p compas compas_rbe
 </code></pre></div>
 </div>
 <p><strong>On Windows</strong></p>
-<p><em>Not available yet.</em></p>
-</div>
-<div class="section" id="install-rhino-plugin">
-<h3>9. Install Rhino plugin</h3>
-<p><strong>On Mac</strong></p>
-<div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>$ <span class="nb">cd</span> ui/RhinoMac
-$ python -m compas_rhino.install_plugin RBE<span class="o">{</span>520ddb34-e56d-4a37-9c58-1da10edd1d62<span class="o">}</span>
+<div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>$ python -m compas_rhino.install -p compas compas_rbe
 </code></pre></div>
 </div>
-<p><strong>On Windows</strong></p>
-<p><em>Not available yet.</em></p>
 </div>
 </div>
 </div>
@@ -208,9 +185,7 @@ $ python -m compas_rhino.install_plugin RBE<span class="o">{</span>520ddb34-e56d
                                 <ul class="nav flex-column active">
 <li class="nav-item"><a class="nav-link reference internal" href="intro.html">Introduction</a></li>
 <li class="nav-item active"><a class="nav-link active current reference internal" href="#">Getting Started</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="examples.html">Examples</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="api.html">API Reference</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="publications.html">Publications</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="license.html">License</a></li>
 </ul>
 
@@ -241,7 +216,6 @@ $ python -m compas_rhino.install_plugin RBE<span class="o">{</span>520ddb34-e56d
 <li class="nav-item"><a class="nav-link reference internal" href="#install-cloned-package">6. Install cloned package</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="#check-installation">7. Check installation</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="#install-packages-for-rhino">8. Install packages for Rhino</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="#install-rhino-plugin">9. Install Rhino plugin</a></li>
 </ul>
 </li>
 </ul>
@@ -256,7 +230,7 @@ $ python -m compas_rhino.install_plugin RBE<span class="o">{</span>520ddb34-e56d
 
         <footer class="compas-footer">
             
-                Last updated on Jan 24, 2019.
+                Last updated on Jan 29, 2019.
             
 
             

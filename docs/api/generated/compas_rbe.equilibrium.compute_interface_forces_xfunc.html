@@ -9,16 +9,20 @@
         <meta name="author" content="" />
         <meta name="description" content="" />
 
-        <link rel="shortcut icon" href="../_static/images/compas.ico" type="image/x-icon">
+        <link rel="shortcut icon" href="../../_static/images/compas.ico" type="image/x-icon">
 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous" />
 
-        <link rel="stylesheet" type="text/css" href="../_static/css/prism.css" />
-        <link rel="stylesheet" type="text/css" href="../_static/css/compas.css" />
-        <link rel="stylesheet" type="text/css" href="../_static/css/compas-reference.css" />
+        <link rel="stylesheet" type="text/css" href="../../_static/css/prism.css" />
+        <link rel="stylesheet" type="text/css" href="../../_static/css/compas.css" />
+        <link rel="stylesheet" type="text/css" href="../../_static/css/compas-reference.css" />
 
         
+            <link rel="next" title="make_Aeq" href="compas_rbe.equilibrium.make_Aeq.html" />
         
+        
+        
+            <link rel="prev" title="compute_interface_forces_cvxopt" href="compas_rbe.equilibrium.compute_interface_forces_cvxopt.html" />
         
 
         <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
@@ -28,7 +32,7 @@
 
         <header class="navbar navbar-expand compas-navbar justify-content-between">
             <div class="navbar-header">
-                <a class="navbar-brand" href="../index.html">
+                <a class="navbar-brand" href="../../index.html">
                     COMPAS RBE 0.1.0
                 </a>
             </div>
@@ -36,7 +40,7 @@
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link" href="https://compas-dev.github.io">
-                        <img src="../_static/images/compas_icon_white.png" width="36px" height="36px" alt="compas" />
+                        <img src="../../_static/images/compas_icon_white.png" width="36px" height="36px" alt="compas" />
                     </a>
                 </li>
             </ul>
@@ -53,8 +57,13 @@
 
                         
 
-                        <div class="section" id="basic-usage">
-<h1>Basic Usage</h1>
+                        <div class="detail section" id="compute-interface-forces-xfunc">
+<h1>compute_interface_forces_xfunc</h1>
+<dl class="function">
+<dt id="compas_rbe.equilibrium.compute_interface_forces_xfunc">
+<code class="descclassname">compas_rbe.equilibrium.</code><code class="descname">compute_interface_forces_xfunc</code><span class="sig-paren">(</span><em>data</em>, <em>backend='cvx'</em>, <em>**kwargs</em><span class="sig-paren">)</span></dt>
+<dd></dd></dl>
+
 </div>
 
                         
@@ -67,7 +76,7 @@
                 <div class="col-12 col-md-3 col-xl-2 compas-sidebar" role="navigation"> 
                     <div class="navbar-light">
 
-                        <form id="" class="d-flex compas-searchbox" action="../search.html" method="get">
+                        <form id="" class="d-flex compas-searchbox" action="../../search.html" method="get">
                             <input class="form-control" type="text" name="q" placeholder="Search docs" />
                             <input type="hidden" name="check_keywords" value="yes" />
                             <input type="hidden" name="area" value="default" />
@@ -83,11 +92,21 @@
                             <div class="navbar-expand-md">
                                 <div id="compas-navigation" class="collapse navbar-collapse compas-navigation">
 
-                                <ul class="nav flex-column">
-<li class="nav-item"><a class="nav-link reference internal" href="../intro.html">Introduction</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="../gettingstarted.html">Getting Started</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="../api.html">API Reference</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="../license.html">License</a></li>
+                                <ul class="nav flex-column active">
+<li class="nav-item"><a class="nav-link reference internal" href="../../intro.html">Introduction</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="../../gettingstarted.html">Getting Started</a></li>
+<li class="nav-item active"><a class="nav-link reference internal" href="../../api.html">API Reference</a><ul class="nav active">
+<li class="nav-item active"><a class="nav-link reference internal" href="../compas_rbe.equilibrium.html">compas_rbe.equilibrium</a><ul class="nav active">
+<li class="nav-item"><a class="nav-link reference internal" href="compas_rbe.equilibrium.compute_interface_forces_cvx.html">compute_interface_forces_cvx</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="compas_rbe.equilibrium.compute_interface_forces_cvxopt.html">compute_interface_forces_cvxopt</a></li>
+<li class="nav-item active"><a class="nav-link active current reference internal" href="#">compute_interface_forces_xfunc</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="compas_rbe.equilibrium.make_Aeq.html">make_Aeq</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="compas_rbe.equilibrium.make_Aiq.html">make_Aiq</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="nav-item"><a class="nav-link reference internal" href="../../license.html">License</a></li>
 </ul>
 
 
@@ -106,7 +125,7 @@
                     
 
                     <ul class="nav flex-column" id="compas-localnav">
-<li class="nav-item"><a class="nav-link reference internal" href="#">Basic Usage</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#">compute_interface_forces_xfunc</a></li>
 </ul>
 
 
@@ -146,10 +165,10 @@ var DOCUMENTATION_OPTIONS = {
             <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.0.0/anchor.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js"></script>
 
-            <script src="../_static/underscore.js"></script>
-            <script src="../_static/doctools.js"></script>
-            <script src="../_static/js/searchtools_.js"></script>
-            <script src="../_static/js/prism.js"></script>
+            <script src="../../_static/underscore.js"></script>
+            <script src="../../_static/doctools.js"></script>
+            <script src="../../_static/js/searchtools_.js"></script>
+            <script src="../../_static/js/prism.js"></script>
 
             <script>
 $(document).ready(function() {

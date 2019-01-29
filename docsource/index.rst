@@ -8,7 +8,5 @@ compas_rbe
 
    Introduction <intro>
    gettingstarted
-   examples
    api
-   publications
    license

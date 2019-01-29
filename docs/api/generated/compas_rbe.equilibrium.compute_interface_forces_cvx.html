@@ -18,11 +18,11 @@
         <link rel="stylesheet" type="text/css" href="../../_static/css/compas-reference.css" />
 
         
-            <link rel="next" title="License" href="../../license.html" />
+            <link rel="next" title="compute_interface_forces_cvxopt" href="compas_rbe.equilibrium.compute_interface_forces_cvxopt.html" />
         
         
         
-            <link rel="prev" title="make_Aeq" href="compas_rbe.equilibrium.make_Aeq.html" />
+            <link rel="prev" title="compas_rbe.equilibrium" href="../compas_rbe.equilibrium.html" />
         
 
         <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
@@ -57,87 +57,58 @@
 
                         
 
-                        <div class="detail section" id="make-aiq">
-<h1>make_Aiq</h1>
+                        <div class="detail section" id="compute-interface-forces-cvx">
+<h1>compute_interface_forces_cvx</h1>
 <dl class="function">
-<dt id="compas_rbe.equilibrium.make_Aiq">
-<code class="descclassname">compas_rbe.equilibrium.</code><code class="descname">make_Aiq</code><span class="sig-paren">(</span><em>total_vcount</em>, <em>friction8=False</em>, <em>mu=0.6</em><span class="sig-paren">)</span></dt>
-<dd><p>Construct the matrix of inequality constraints of a quadratic program.</p>
+<dt id="compas_rbe.equilibrium.compute_interface_forces_cvx">
+<code class="descclassname">compas_rbe.equilibrium.</code><code class="descname">compute_interface_forces_cvx</code><span class="sig-paren">(</span><em>assembly</em>, <em>friction8=False</em>, <em>mu=0.6</em>, <em>density=1.0</em>, <em>verbose=False</em>, <em>maxiters=1000</em>, <em>solver=None</em><span class="sig-paren">)</span></dt>
+<dd><p>Compute the forces at the interfaces between the blocks of an assembly.</p>
+<p>Solve the following optimisation problem:</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\begin{aligned}\\\begin{split}    &amp; \underset{x}{\text{minimise}} &amp; \quad 0.5 \,
+                                      \mathbf{x}^{T} \mathbf{P} \mathbf{x} + \mathbf{q}^{T} \mathbf{x} \\
+    &amp; \text{such that} &amp; \quad \mathbf{A} \mathbf{x} = \mathbf{b} \\
+    &amp;                  &amp; \quad \mathbf{G} \mathbf{x} &lt;= \mathbf{h} \\\end{split}\\\end{aligned}\end{aligned}\end{align} \]</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>total_vcount</strong> (<em>int</em>) – The total number of interface vertices.</p></li>
-<li><p><strong>friction8</strong> (<em>bool, optional</em>) – Use an 8-sided friction cone.
-Default is <cite>False</cite>.</p></li>
-<li><p><strong>mu</strong> (<em>float, optional</em>) – The friction coefficient of the interface surfaces.</p></li>
+<li><p><strong>assembly</strong> (<em>Assembly</em>) – The rigid block assembly.</p></li>
+<li><p><strong>friction8</strong> (<em>bool, optional</em>) – Use an eight-sided friction pyramid.
+Default is <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+<li><p><strong>mu</strong> (<em>float, optional</em>) – ?</p></li>
+<li><p><strong>density</strong> (<em>float, optional</em>) – Density of the block material.
+Default is <code class="docutils literal notranslate"><span class="pre">1.0</span></code></p></li>
+<li><p><strong>verbose</strong> (<em>bool, optional</em>) – Print information during the execution of the algorithm.
+Default is <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+<li><p><strong>maxiters</strong> (<em>int, optional</em>) – Maximum number of iterations used by the solver.
+Default is <code class="docutils literal notranslate"><span class="pre">100</span></code>.</p></li>
+<li><p><strong>solver</strong> (<em>{‘OSQP’, ‘ECOS’, ‘CVXOPT’, ‘MOSEK’, ‘CPLEX’}, optional</em>) – The solver to be used internally.
+Default is <code class="docutils literal notranslate"><span class="pre">'ECOS'</span></code>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>Aiq</strong> (<em>coo_matrix</em>) – A sparse representation of the coefficient matrix of the inequality constraints.</p>
+<dd class="field-even"><p><em>None</em> – The assembly is updated in place.</p>
 </dd>
 </dl>
+<p class="rubric">References</p>
+<p>The computational procedure for calculating the interface forces is described
+in detail in <a class="reference internal" href="../../publications.html#frick2015" id="id1">[Frick2015]</a></p>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>CVXPY adaptive weights: <a class="reference external" href="https://www.cvxpy.org/examples/applications/sparse_solution.html">https://www.cvxpy.org/examples/applications/sparse_solution.html</a></p></li>
+<li><p>OOPQ-Eigen: <a class="reference external" href="https://github.com/ethz-asl/ooqp_eigen_interface">https://github.com/ethz-asl/ooqp_eigen_interface</a></p></li>
+<li><p>OOPQ: <a class="reference external" href="http://pages.cs.wisc.edu/~swright/ooqp/">http://pages.cs.wisc.edu/~swright/ooqp/</a></p></li>
+<li><p>HSL archive: <a class="reference external" href="http://www.hsl.rl.ac.uk/archive/index.html">http://www.hsl.rl.ac.uk/archive/index.html</a></p></li>
+<li><p>CVXOPT qp: <a class="reference external" href="http://cvxopt.org/userguide/coneprog.html#quadratic-programming">http://cvxopt.org/userguide/coneprog.html#quadratic-programming</a></p></li>
+<li><p>CVXPY solver options: <a class="reference external" href="http://www.cvxpy.org/tutorial/advanced/index.html#setting-solver-options">http://www.cvxpy.org/tutorial/advanced/index.html#setting-solver-options</a></p></li>
+<li><p>Comparison of solver performance: <a class="reference external" href="https://scaron.info/blog/quadratic-programming-in-python.html">https://scaron.info/blog/quadratic-programming-in-python.html</a></p></li>
+<li><p>OSQP solver settings: <a class="reference external" href="https://osqp.org/docs/interfaces/solver_settings.html#solver-settings">https://osqp.org/docs/interfaces/solver_settings.html#solver-settings</a></p></li>
+<li><p>CVXPY background: <a class="reference external" href="http://www.cvxpy.org/short_course/index.html">http://www.cvxpy.org/short_course/index.html</a></p></li>
+</ul>
 <p class="rubric">Examples</p>
-<div class="language-python notranslate"><div class="highlight"><pre><code><span></span><span class="n">G</span> <span class="o">=</span> <span class="n">make_Aiq</span><span class="p">(</span><span class="n">vcount</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
-<span class="n">G</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">toarray</span><span class="p">()</span>
-
-<span class="n">objective</span> <span class="o">=</span> <span class="n">cvxpy</span><span class="o">.</span><span class="n">Minimize</span><span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">cvxpy</span><span class="o">.</span><span class="n">quad_form</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">P</span><span class="p">))</span>
-
-<span class="n">constraints</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="n">A</span> <span class="o">*</span> <span class="n">x</span> <span class="o">==</span> <span class="n">b</span><span class="p">,</span>
-    <span class="n">G</span> <span class="o">*</span> <span class="n">x</span> <span class="o">&lt;=</span> <span class="n">h</span>
-<span class="p">]</span>
-
-<span class="n">problem</span> <span class="o">=</span> <span class="n">cvxpy</span><span class="o">.</span><span class="n">Problem</span><span class="p">(</span><span class="n">objective</span><span class="p">,</span> <span class="n">constraints</span><span class="p">)</span>
+<div class="language-python notranslate"><div class="highlight"><pre><code><span></span><span class="k">pass</span>
 </code></pre></div>
 </div>
-<p class="rubric">Notes</p>
-<p>In the optimisation problem</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}\begin{aligned}
-    &amp; \underset{x}{\text{minimise}} &amp; \quad 0.5 \, \mathbf{x}^{T} \mathbf{P} \mathbf{x} + \mathbf{q}^{T} \mathbf{x} \\
-    &amp; \text{such that} &amp; \quad \mathbf{A} \mathbf{x}  = \mathbf{b} \\
-    &amp;                  &amp; \quad \mathbf{G} \mathbf{x} \leq \mathbf{h} \\
-\end{aligned}\end{split}\]</div>
-<p><span class="math notranslate nohighlight">\(\mathbf{x}\)</span> is the <em>4n-by-1</em> vector of 4 unknown contact force components
-per vertex of all <em>n</em> interface vertices</p>
-<div class="math notranslate nohighlight">
-\[\mathbf{x}[i:i+4] = [c^{n+}_{i}, c^{n-}_{i}, c^{u}_{i}, c^{v}_{i}]\]</div>
-<p>with</p>
-<ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(c^{n+}_{i}\)</span> the component in the direction of the interface frame normal (a “compression” contact)</p></li>
-<li><p><span class="math notranslate nohighlight">\(c^{n-}_{i}\)</span> the component in the opposite direction of the interface frame normal (a “tension” contact)</p></li>
-<li><p><span class="math notranslate nohighlight">\(c^{u}_{i}\)</span> the component in the direction of the interface frame <em>u</em> direction (a “friction” contact)</p></li>
-<li><p><span class="math notranslate nohighlight">\(c^{v}_{i}\)</span> the component in the direction of the interface frame <em>v</em> direction (a “friction” contact)</p></li>
-</ul>
-<p><span class="math notranslate nohighlight">\(\mathbf{G}\)</span> is the <em>6n-by-4n</em> coefficient matrix of the 6 inequality constraints
-per vertex of all n interface vertices, as a function of the 4 unknown force components per vertex</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}\mathbf{G}[i:i+6, j:j+4]
-=
-\begin{bmatrix}
-     -1,  &amp;  0, &amp;  0, &amp;  0 \\
-      0,  &amp; -1, &amp;  0, &amp;  0 \\
-    -\mu, &amp;  0, &amp;  1, &amp;  0 \\
-    -\mu, &amp;  0, &amp; -1, &amp;  0 \\
-    -\mu, &amp;  0, &amp;  0, &amp;  1 \\
-    -\mu, &amp;  0, &amp;  0, &amp; -1
-\end{bmatrix}\end{split}\]</div>
-<p>Finally, <span class="math notranslate nohighlight">\(\mathbf{h}\)</span> is a <em>6n-by-1</em> vector of zeros.</p>
-<p>Per verter per interface, this results in the following inequality constraints</p>
-<ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(-c^{n+}_{i} &lt;= 0\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(-c^{n-}_{i} &lt;= 0\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(-\mu c^{n+}_{i} + c^{u}_{i} &lt;= 0\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(-\mu c^{n+}_{i} - c^{u}_{i} &lt;= 0\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(-\mu c^{n+}_{i} + c^{v}_{i} &lt;= 0\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(-\mu c^{n+}_{i} - c^{v}_{i} &lt;= 0\)</span></p></li>
-</ul>
-<p>which basically express that, per interface vertex,
-the force components in both the positive and the negative direction of the
-interface normal have to be positive;
-and that the absolute values of both friction force components should be smaller
-than the friction force in the positive normal direction scaled by a factor <span class="math notranslate nohighlight">\(\mu\)</span>.</p>
-<p class="rubric">References</p>
 </dd></dl>
 
 </div>
@@ -173,11 +144,11 @@ than the friction force in the positive normal direction scaled by a factor <spa
 <li class="nav-item"><a class="nav-link reference internal" href="../../gettingstarted.html">Getting Started</a></li>
 <li class="nav-item active"><a class="nav-link reference internal" href="../../api.html">API Reference</a><ul class="nav active">
 <li class="nav-item active"><a class="nav-link reference internal" href="../compas_rbe.equilibrium.html">compas_rbe.equilibrium</a><ul class="nav active">
-<li class="nav-item"><a class="nav-link reference internal" href="compas_rbe.equilibrium.compute_interface_forces_cvx.html">compute_interface_forces_cvx</a></li>
+<li class="nav-item active"><a class="nav-link active current reference internal" href="#">compute_interface_forces_cvx</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="compas_rbe.equilibrium.compute_interface_forces_cvxopt.html">compute_interface_forces_cvxopt</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="compas_rbe.equilibrium.compute_interface_forces_xfunc.html">compute_interface_forces_xfunc</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="compas_rbe.equilibrium.make_Aeq.html">make_Aeq</a></li>
-<li class="nav-item active"><a class="nav-link active current reference internal" href="#">make_Aiq</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="compas_rbe.equilibrium.make_Aiq.html">make_Aiq</a></li>
 </ul>
 </li>
 </ul>
@@ -201,7 +172,7 @@ than the friction force in the positive normal direction scaled by a factor <spa
                     
 
                     <ul class="nav flex-column" id="compas-localnav">
-<li class="nav-item"><a class="nav-link reference internal" href="#">make_Aiq</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#">compute_interface_forces_cvx</a></li>
 </ul>
 
 

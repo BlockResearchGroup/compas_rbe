@@ -13,8 +13,9 @@ Functions
     :toctree: generated/
     :nosignatures:
 
-    interfaceforces_cvx
-    interfaceforces_cvxopt
+    compute_interface_forces_cvx
+    compute_interface_forces_cvxopt
+    compute_interface_forces_xfunc
     make_Aeq
     make_Aiq
 
