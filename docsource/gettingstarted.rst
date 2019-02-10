@@ -16,45 +16,14 @@ Requirements
 Installation
 ============
 
-In this tutorial, we will create a new virtual environment with ``conda`` to install
-``compas_rbe``. We will name the environment ``rbe``, but you can use any
-name you like.
+.. note::
 
-If you wish to install ``compas_rbe`` in an already existing environment, just
-skip the first step and simply activate the environment of your choice.
+    If you intend to install ``compas_rbe`` in a virtual environment,
+    make sure to activate the environment first.
 
 
-1. Create a virtual environment and install COMPAS
---------------------------------------------------
-
-::
-
-    $ conda create -n rbe -c conda-forge python=3.6 COMPAS
-
-
-2. Activate the environment
----------------------------
-
-**On Mac**
-
-::
-
-    $ source activate rbe
-
-
-**On Windows**
-
-::
-
-    $ activate rbe
-
-
-3. Install dependencies
+1. Install dependencies
 -----------------------
-
-* http://cvxopt.org/install/index.html
-* https://www.cvxpy.org/install/
-
 
 **On Mac**
 
@@ -66,8 +35,6 @@ skip the first step and simply activate the environment of your choice.
 
 **On Windows**
 
-* https://github.com/cvxgrp/cvxpy/issues/88
-
 ::
 
     $ pip install cvxopt
@@ -75,57 +42,25 @@ skip the first step and simply activate the environment of your choice.
     $ pip install cvxpy
 
 
-4. Fork package
-----------------
+2. Install the package
+----------------------
 
-Go to https://github.com/BlockResearchGroup/compas_rbe and *fork* the repository to your
-personal account. This will simplify the development process when you will start
-making changes to the code or when you want to start contributing.
+.. note::
 
-
-5. Clone forked package
------------------------
-
-Clone the forked package to a location on your computer.
+    This will also install COMPAS and its dependencies, if necessary.
 
 ::
 
-    $ mkdir ~/Code/COMPAS-packages
-    $ cd ~/Code/COMPAS-packages
-    $ git clone https://github.com/<your-username>/compas_rbe.git
+    $ pip install git+https://github.com/BlockResearchGroup/compas_rbe.git
 
 
-6. Install cloned package
--------------------------
-
-::
-
-    $ cd compas_rbe
-    $ pip install -r requirements-dev.txt
-
-
-7. Check installation
+3. Check installation
 ---------------------
 
-Start an interactive Python session and import the installed packages.
-
->>> import compas
->>> import compas_rbe
-
-
-8. Install packages for Rhino
------------------------------
-
-**On Mac**
+Start an interactive Python session in the Terminal.
 
 ::
 
-    $ python -m compas_rhinomac.install -p compas compas_rbe
-
-
-**On Windows**
-
-::
-
-    $ python -m compas_rhino.install -p compas compas_rbe
+    >>> import compas
+    >>> import compas_rbe
 

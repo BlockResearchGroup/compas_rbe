@@ -33,7 +33,7 @@
         <header class="navbar navbar-expand compas-navbar justify-content-between">
             <div class="navbar-header">
                 <a class="navbar-brand" href="index.html">
-                    COMPAS RBE 0.1.0
+                    COMPAS RBE 0.1.1
                 </a>
             </div>
 
@@ -59,10 +59,6 @@
 
                         <div class="section" id="rigid-block-equilibrium-analysis">
 <h1>Rigid Block Equilibrium Analysis</h1>
-<div class="figure" id="id1">
-<img alt="_images/compas_rbe.jpg" class="figure-img img-fluid" src="_images/compas_rbe.jpg" />
-<p class="caption"><span class="caption-text">Rigid-block model of …</span></p>
-</div>
 <div class="section" id="introduction">
 <h2>Introduction</h2>
 <p><code class="xref py py-mod docutils literal notranslate"><span class="pre">compas_rbe</span></code> provides functionality for computing the set of contact forces
@@ -73,18 +69,18 @@ i.e. it favours solutions with only compression forces and friction.</p>
 <div class="section" id="assembly-data-structure">
 <h2>Assembly data structure</h2>
 <p>Assemblies of rigid blocks are represented with an <code class="docutils literal notranslate"><span class="pre">Assembly</span></code> data structure.
-A basic <code class="docutils literal notranslate"><span class="pre">Assembly</span></code> data structure is defined in <code class="xref py py-mod docutils literal notranslate"><span class="pre">compas_assembly</span></code> and extended
-here for the specific needs of the equilibrium analysis calculations.</p>
-<p>An <code class="docutils literal notranslate"><span class="pre">Assembly</span></code> data structure is essentially a network of vertices connected by edges.
-Each node corresponds to one rigid block in the assembly.
-Each edge corresponds to an interface between two blocks.</p>
-<p>The blocks are represented by <code class="docutils literal notranslate"><span class="pre">Block</span></code> data structures. A <code class="docutils literal notranslate"><span class="pre">Block</span></code> is essentially
-a closed <code class="docutils literal notranslate"><span class="pre">Mesh</span></code> with some additional functionality. The base <code class="docutils literal notranslate"><span class="pre">Block</span></code> is also
-defined in <code class="xref py py-mod docutils literal notranslate"><span class="pre">compas_assembly</span></code> and extended here.</p>
-<p>For more information about <code class="docutils literal notranslate"><span class="pre">Assembly</span></code> and <code class="docutils literal notranslate"><span class="pre">Block</span></code>, see …</p>
+An <code class="docutils literal notranslate"><span class="pre">Assembly</span></code> data structure is a network of vertices connected by edges.
+Each vertex corresponds to one rigid block in the assembly.
+Each edge corresponds to an interface between two blocks.
+The blocks are represented by <code class="docutils literal notranslate"><span class="pre">Block</span></code> data structures. A <code class="docutils literal notranslate"><span class="pre">Block</span></code> is
+a closed <code class="docutils literal notranslate"><span class="pre">Mesh</span></code> with some additional functionality.</p>
+<p>For more information about <code class="docutils literal notranslate"><span class="pre">Assembly</span></code> and <code class="docutils literal notranslate"><span class="pre">Block</span></code>, see <code class="xref py py-mod docutils literal notranslate"><span class="pre">compas_assembly.datastructures</span></code>.</p>
 </div>
 <div class="section" id="quadratic-program">
 <h2>Quadratic Program</h2>
+<div class="figure">
+<img alt="_images/compas_rbe_unknowns.png" class="figure-img img-fluid" src="_images/compas_rbe_unknowns.png" />
+</div>
 <p><code class="xref py py-mod docutils literal notranslate"><span class="pre">compas_rbe</span></code> finds a feasible equilibrium state by solving the following
 quadratic optimisation problem with linear equality and inequality constraints</p>
 <div class="math notranslate nohighlight">
@@ -270,7 +266,7 @@ components per vertex.</p>
 
         <footer class="compas-footer">
             
-                Last updated on Feb 10, 2019.
+                Last updated on Feb 11, 2019.
             
 
             
@@ -283,7 +279,7 @@ components per vertex.</p>
             <script type="text/javascript">
 var DOCUMENTATION_OPTIONS = {
     URL_ROOT          : '',
-    VERSION           : '0.1.0',
+    VERSION           : '0.1.1',
     COLLAPSE_INDEX    : false,
     FILE_SUFFIX       : '.html',
     HAS_SOURCE        : 'false',

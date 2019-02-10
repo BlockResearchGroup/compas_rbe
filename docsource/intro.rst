@@ -2,13 +2,6 @@
 Rigid Block Equilibrium Analysis
 ********************************************************************************
 
-.. figure:: /_images/compas_rbe.jpg
-    :figclass: figure
-    :class: figure-img img-fluid
-
-    Rigid-block model of ...
-
-
 Introduction
 ============
 
@@ -22,22 +15,22 @@ Assembly data structure
 =======================
 
 Assemblies of rigid blocks are represented with an ``Assembly`` data structure.
-A basic ``Assembly`` data structure is defined in :mod:`compas_assembly` and extended
-here for the specific needs of the equilibrium analysis calculations.
-
-An ``Assembly`` data structure is essentially a network of vertices connected by edges.
-Each node corresponds to one rigid block in the assembly.
+An ``Assembly`` data structure is a network of vertices connected by edges.
+Each vertex corresponds to one rigid block in the assembly.
 Each edge corresponds to an interface between two blocks.
+The blocks are represented by ``Block`` data structures. A ``Block`` is
+a closed ``Mesh`` with some additional functionality.
 
-The blocks are represented by ``Block`` data structures. A ``Block`` is essentially
-a closed ``Mesh`` with some additional functionality. The base ``Block`` is also
-defined in :mod:`compas_assembly` and extended here.
-
-For more information about ``Assembly`` and ``Block``, see ...
+For more information about ``Assembly`` and ``Block``, see :mod:`compas_assembly.datastructures`.
 
 
 Quadratic Program
 =================
+
+.. figure:: /_images/compas_rbe_unknowns.png
+    :figclass: figure
+    :class: figure-img img-fluid
+
 
 :mod:`compas_rbe` finds a feasible equilibrium state by solving the following
 quadratic optimisation problem with linear equality and inequality constraints

@@ -33,7 +33,7 @@
         <header class="navbar navbar-expand compas-navbar justify-content-between">
             <div class="navbar-header">
                 <a class="navbar-brand" href="index.html">
-                    COMPAS RBE 0.1.0
+                    COMPAS RBE 0.1.1
                 </a>
             </div>
 
@@ -69,87 +69,40 @@
 </div>
 <div class="section" id="installation">
 <h2>Installation</h2>
-<p>In this tutorial, we will create a new virtual environment with <code class="docutils literal notranslate"><span class="pre">conda</span></code> to install
-<code class="docutils literal notranslate"><span class="pre">compas_rbe</span></code>. We will name the environment <code class="docutils literal notranslate"><span class="pre">rbe</span></code>, but you can use any
-name you like.</p>
-<p>If you wish to install <code class="docutils literal notranslate"><span class="pre">compas_rbe</span></code> in an already existing environment, just
-skip the first step and simply activate the environment of your choice.</p>
-<div class="section" id="create-a-virtual-environment-and-install-compas">
-<h3>1. Create a virtual environment and install COMPAS</h3>
-<div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>$ conda create -n rbe -c conda-forge <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.6 COMPAS
-</code></pre></div>
-</div>
-</div>
-<div class="section" id="activate-the-environment">
-<h3>2. Activate the environment</h3>
-<p><strong>On Mac</strong></p>
-<div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>$ <span class="nb">source</span> activate rbe
-</code></pre></div>
-</div>
-<p><strong>On Windows</strong></p>
-<div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>$ activate rbe
-</code></pre></div>
-</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you intend to install <code class="docutils literal notranslate"><span class="pre">compas_rbe</span></code> in a virtual environment,
+make sure to activate the environment first.</p>
 </div>
 <div class="section" id="install-dependencies">
-<h3>3. Install dependencies</h3>
-<ul class="simple">
-<li><p><a class="reference external" href="http://cvxopt.org/install/index.html">http://cvxopt.org/install/index.html</a></p></li>
-<li><p><a class="reference external" href="https://www.cvxpy.org/install/">https://www.cvxpy.org/install/</a></p></li>
-</ul>
+<h3>1. Install dependencies</h3>
 <p><strong>On Mac</strong></p>
 <div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>$ conda install -n rbe -c conda-forge cvxopt
 $ conda install -n rbe -c omnia cvxpy
 </code></pre></div>
 </div>
 <p><strong>On Windows</strong></p>
-<ul class="simple">
-<li><p><a class="reference external" href="https://github.com/cvxgrp/cvxpy/issues/88">https://github.com/cvxgrp/cvxpy/issues/88</a></p></li>
-</ul>
 <div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>$ pip install cvxopt
 $ pip install ecos
 $ pip install cvxpy
 </code></pre></div>
 </div>
 </div>
-<div class="section" id="fork-package">
-<h3>4. Fork package</h3>
-<p>Go to <a class="reference external" href="https://github.com/BlockResearchGroup/compas_rbe">https://github.com/BlockResearchGroup/compas_rbe</a> and <em>fork</em> the repository to your
-personal account. This will simplify the development process when you will start
-making changes to the code or when you want to start contributing.</p>
+<div class="section" id="install-the-package">
+<h3>2. Install the package</h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This will also install COMPAS and its dependencies, if necessary.</p>
 </div>
-<div class="section" id="clone-forked-package">
-<h3>5. Clone forked package</h3>
-<p>Clone the forked package to a location on your computer.</p>
-<div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>$ mkdir ~/Code/COMPAS-packages
-$ <span class="nb">cd</span> ~/Code/COMPAS-packages
-$ git clone https://github.com/&lt;your-username&gt;/compas_rbe.git
-</code></pre></div>
-</div>
-</div>
-<div class="section" id="install-cloned-package">
-<h3>6. Install cloned package</h3>
-<div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>$ <span class="nb">cd</span> compas_rbe
-$ pip install -r requirements-dev.txt
+<div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>$ pip install git+https://github.com/BlockResearchGroup/compas_rbe.git
 </code></pre></div>
 </div>
 </div>
 <div class="section" id="check-installation">
-<h3>7. Check installation</h3>
-<p>Start an interactive Python session and import the installed packages.</p>
-<div class="nohighlight notranslate"><div class="highlight"><pre><code><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">compas</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">compas_rbe</span>
-</code></pre></div>
-</div>
-</div>
-<div class="section" id="install-packages-for-rhino">
-<h3>8. Install packages for Rhino</h3>
-<p><strong>On Mac</strong></p>
-<div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>$ python -m compas_rhinomac.install -p compas compas_rbe
-</code></pre></div>
-</div>
-<p><strong>On Windows</strong></p>
-<div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>$ python -m compas_rhino.install -p compas compas_rbe
+<h3>3. Check installation</h3>
+<p>Start an interactive Python session in the Terminal.</p>
+<div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>&gt;&gt;&gt; import compas
+&gt;&gt;&gt; import compas_rbe
 </code></pre></div>
 </div>
 </div>
@@ -208,14 +161,9 @@ $ pip install -r requirements-dev.txt
 <li class="nav-item"><a class="nav-link reference internal" href="#">Getting Started</a><ul class="nav">
 <li class="nav-item"><a class="nav-link reference internal" href="#requirements">Requirements</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="#installation">Installation</a><ul class="nav">
-<li class="nav-item"><a class="nav-link reference internal" href="#create-a-virtual-environment-and-install-compas">1. Create a virtual environment and install COMPAS</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="#activate-the-environment">2. Activate the environment</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="#install-dependencies">3. Install dependencies</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="#fork-package">4. Fork package</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="#clone-forked-package">5. Clone forked package</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="#install-cloned-package">6. Install cloned package</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="#check-installation">7. Check installation</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="#install-packages-for-rhino">8. Install packages for Rhino</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#install-dependencies">1. Install dependencies</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#install-the-package">2. Install the package</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#check-installation">3. Check installation</a></li>
 </ul>
 </li>
 </ul>
@@ -230,7 +178,7 @@ $ pip install -r requirements-dev.txt
 
         <footer class="compas-footer">
             
-                Last updated on Feb 10, 2019.
+                Last updated on Feb 11, 2019.
             
 
             
@@ -243,7 +191,7 @@ $ pip install -r requirements-dev.txt
             <script type="text/javascript">
 var DOCUMENTATION_OPTIONS = {
     URL_ROOT          : '',
-    VERSION           : '0.1.0',
+    VERSION           : '0.1.1',
     COLLAPSE_INDEX    : false,
     FILE_SUFFIX       : '.html',
     HAS_SOURCE        : 'false',
