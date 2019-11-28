@@ -34,18 +34,6 @@ def compute_interface_forces_cvxopt(assembly,
                                     maxiters=1000):
     r"""Compute the forces at the interfaces between the blocks of an assembly.
 
-    Solve the following optimisation problem:
-
-    .. math::
-
-        \begin{aligned}
-
-            & \underset{x}{\text{minimise}} & \quad 0.5 \, \mathbf{x}^{T} \mathbf{P} \mathbf{x} + \mathbf{q}^{T} \mathbf{x} \\
-            & \text{such that}              & \quad \mathbf{A} \mathbf{x} = \mathbf{b} \\
-            &                               & \quad \mathbf{G} \mathbf{x} = \mathbf{h} \\
-
-        \end{aligned}
-
     Parameters
     ----------
     assembly : Assembly
@@ -70,16 +58,30 @@ def compute_interface_forces_cvxopt(assembly,
     None
         The assembly is updated in place.
 
-    References
-    ----------
-    The computational procedure for calculating the interface forces is described
-    in detail in [Frick2015]_
+    Notes
+    -----
+    Solve the following optimisation problem:
+
+    .. math::
+
+        \begin{aligned}
+
+            & \underset{x}{\text{minimise}} & \quad 0.5 \, \mathbf{x}^{T} \mathbf{P} \mathbf{x} + \mathbf{q}^{T} \mathbf{x} \\
+            & \text{such that}              & \quad \mathbf{A} \mathbf{x} = \mathbf{b} \\
+            &                               & \quad \mathbf{G} \mathbf{x} = \mathbf{h} \\
+
+        \end{aligned}
 
     Examples
     --------
     .. code-block:: python
 
         pass
+
+    References
+    ----------
+    The computational procedure for calculating the interface forces is described
+    in detail in [Frick2015]_
 
     """
 

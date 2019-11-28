@@ -2,65 +2,48 @@
 Getting Started
 ********************************************************************************
 
-.. highlight:: bash
+Create environment
+==================
 
+.. code-block:: bash
 
-Requirements
-============
-
-* `Anaconda <https://www.anaconda.com/download>`_
-* `Github <https://github.com>`_ account
-* `Git <https://git-scm.com/downloads>`_
-
-
-Installation
-============
+    conda create -n rbe -c conda-forge python=3.7 COMPAS
 
 .. note::
 
-    If you intend to install ``compas_rbe`` in a virtual environment,
-    make sure to activate the environment first.
+    On Mac, make sure to install the framework version of Python as well.
 
+    ``conda create -n rbe -c conda-forge python=3.7 python.app COMPAS``
 
-1. Install dependencies
------------------------
+Activate environment
+====================
 
-**On Mac**
+.. code-block:: bash
 
-::
+    conda activate rbe
 
-    $ conda install -n rbe -c conda-forge cvxopt
-    $ conda install -n rbe -c omnia cvxpy
+Install dependencies
+====================
 
+.. code-block:: bash
 
-**On Windows**
+    conda install -c conda-forge cvxpy
+    conda install -c conda-forge cvxopt
+    conda install -c ibmdecisionoptimization cplex
 
-::
+Install the package
+===================
 
-    $ pip install cvxopt
-    $ pip install ecos
-    $ pip install cvxpy
+.. code-block:: bash
 
+    $ pip install git+https://github.com/BlockResearchGroup/compas_rbe.git#egg=compas_rbe
 
-2. Install the package
-----------------------
+Check the installation
+======================
 
-.. note::
+Start an interactive Python interpreter on the command line, and import the installed packages.
 
-    This will also install COMPAS and its dependencies, if necessary.
-
-::
-
-    $ pip install git+https://github.com/BlockResearchGroup/compas_rbe.git
-
-
-3. Check installation
----------------------
-
-Start an interactive Python session in the Terminal.
-
-::
+.. code-block:: python
 
     >>> import compas
     >>> import compas_rbe
-

@@ -32,15 +32,13 @@ def make_Aeq(assembly, return_vcount=True):
         Default is `True`.
 
     Returns
-    =======
+    -------
     Aeq : coo_matrix
         A sparse representation of the coefficient matrix of the equality constraints.
 
     Examples
-    ========
-    .. code-block:: python
-
-
+    --------
+    >>>
 
     """
     rows = []
@@ -172,7 +170,7 @@ def make_Aiq(total_vcount, friction8=False, mu=0.6):
     r"""Construct the matrix of inequality constraints of a quadratic program.
 
     Parameters
-    ==========
+    ----------
     total_vcount : int
         The total number of interface vertices.
     friction8 : bool, optional
@@ -182,12 +180,12 @@ def make_Aiq(total_vcount, friction8=False, mu=0.6):
         The friction coefficient of the interface surfaces.
 
     Returns
-    =======
+    -------
     Aiq : coo_matrix
         A sparse representation of the coefficient matrix of the inequality constraints.
 
     Examples
-    ========
+    --------
     .. code-block:: python
 
         G = make_Aiq(vcount, False)
@@ -203,7 +201,7 @@ def make_Aiq(total_vcount, friction8=False, mu=0.6):
         problem = cvxpy.Problem(objective, constraints)
 
     Notes
-    =====
+    -----
     In the optimisation problem
 
     .. math::
@@ -267,7 +265,7 @@ def make_Aiq(total_vcount, friction8=False, mu=0.6):
         :math:`\mu c^{n+}_{i}`, which is postive.
 
     References
-    ==========
+    ----------
 
     """
 

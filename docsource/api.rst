@@ -5,4 +5,4 @@ API Reference
 .. toctree::
     :maxdepth: 1
 
-    api/compas_rbe.equilibrium
+    api/compas_rbe

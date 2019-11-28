@@ -9,4 +9,5 @@ compas_rbe
    Introduction <intro>
    gettingstarted
    api
+   publications
    license

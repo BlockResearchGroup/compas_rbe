@@ -36,19 +36,6 @@ def compute_interface_forces_cvx(assembly,
                                  solver=None):
     r"""Compute the forces at the interfaces between the blocks of an assembly.
 
-    Solve the following optimisation problem:
-
-    .. math::
-
-        \begin{aligned}
-
-            & \underset{x}{\text{minimise}} & \quad 0.5 \,
-                                              \mathbf{x}^{T} \mathbf{P} \mathbf{x} + \mathbf{q}^{T} \mathbf{x} \\
-            & \text{such that} & \quad \mathbf{A} \mathbf{x} = \mathbf{b} \\
-            &                  & \quad \mathbf{G} \mathbf{x} <= \mathbf{h} \\
-
-        \end{aligned}
-
     Parameters
     ----------
     assembly : Assembly
@@ -76,13 +63,21 @@ def compute_interface_forces_cvx(assembly,
     None
         The assembly is updated in place.
 
-    References
-    ----------
-    The computational procedure for calculating the interface forces is described
-    in detail in [Frick2015]_
-
     Notes
     -----
+    This function solves the following optimisation problem:
+
+    .. math::
+
+        \begin{aligned}
+
+            & \underset{x}{\text{minimise}} & \quad 0.5 \,
+                                              \mathbf{x}^{T} \mathbf{P} \mathbf{x} + \mathbf{q}^{T} \mathbf{x} \\
+            & \text{such that} & \quad \mathbf{A} \mathbf{x} = \mathbf{b} \\
+            &                  & \quad \mathbf{G} \mathbf{x} <= \mathbf{h} \\
+
+        \end{aligned}
+
     * CVXPY adaptive weights: https://www.cvxpy.org/examples/applications/sparse_solution.html
     * OOPQ-Eigen: https://github.com/ethz-asl/ooqp_eigen_interface
     * OOPQ: http://pages.cs.wisc.edu/~swright/ooqp/
@@ -93,12 +88,16 @@ def compute_interface_forces_cvx(assembly,
     * OSQP solver settings: https://osqp.org/docs/interfaces/solver_settings.html#solver-settings
     * CVXPY background: http://www.cvxpy.org/short_course/index.html
 
-
     Examples
     --------
     .. code-block:: python
 
         pass
+
+    References
+    ----------
+    The computational procedure for calculating the interface forces is described
+    in detail in [Frick2015]_
 
     """
     if not solver:
