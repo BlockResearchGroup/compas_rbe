@@ -137,7 +137,7 @@ def compute_interface_forces_cvx(assembly,
     # inequality constraints
     # ==========================================================================
 
-    G = make_Aiq(vcount, False)
+    G = make_Aiq(vcount, friction8, mu)
     G = G.toarray()
 
     # print(G.shape)
