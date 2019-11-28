@@ -9,12 +9,6 @@ Create environment
 
     conda create -n rbe -c conda-forge python=3.7 COMPAS
 
-.. note::
-
-    On Mac, make sure to install the framework version of Python as well.
-
-    ``conda create -n rbe -c conda-forge python=3.7 python.app COMPAS``
-
 Activate environment
 ====================
 
@@ -36,7 +30,7 @@ Install the package
 
 .. code-block:: bash
 
-    $ pip install git+https://github.com/BlockResearchGroup/compas_rbe.git#egg=compas_rbe
+    pip install git+https://github.com/BlockResearchGroup/compas_rbe.git#egg=compas_rbe
 
 Check the installation
 ======================
