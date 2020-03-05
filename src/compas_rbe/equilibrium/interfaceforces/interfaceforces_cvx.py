@@ -103,11 +103,11 @@ def compute_interface_forces_cvx(assembly,
     if not solver:
         solver = 'ECOS'
 
-    n = assembly.number_of_vertices()
+    n = assembly.number_of_nodes()
 
-    key_index = {key: index for index, key in enumerate(assembly.vertices())}
+    key_index = {key: index for index, key in enumerate(assembly.nodes())}
 
-    fixed = [key for key in assembly.vertices_where({'is_support': True})]
+    fixed = [key for key in assembly.nodes_where({'is_support': True})]
     fixed = [key_index[key] for key in fixed]
     free  = list(set(range(n)) - set(fixed))
 
@@ -119,7 +119,7 @@ def compute_interface_forces_cvx(assembly,
     A = A.toarray()
     A = A[[index * 6 + i for index in free for i in range(6)], :]
 
-    b = [[0, 0, -1 * assembly.blocks[key].volume() * density, 0, 0, 0] for key in assembly.vertices()]
+    b = [[0, 0, -1 * assembly.blocks[key].volume() * density, 0, 0, 0] for key in assembly.nodes()]
     b = array(b, dtype=float)
     b = b[free, :].reshape((-1, 1), order='C')
 
@@ -259,7 +259,7 @@ def compute_interface_forces_cvx(assembly,
 
         offset = 0
 
-        for u, v, attr in assembly.edges(True):
+        for (u, v), attr in assembly.edges(True):
 
             n = len(attr['interface_points'])
 

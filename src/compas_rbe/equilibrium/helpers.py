@@ -47,9 +47,9 @@ def make_Aeq(assembly, return_vcount=True):
 
     vcount = 0
 
-    key_index = {key: index for index, key in enumerate(assembly.vertices())}
+    key_index = {key: index for index, key in enumerate(assembly.nodes())}
 
-    for u, v, attr in assembly.edges(True):
+    for (u, v), attr in assembly.edges(True):
 
         i = key_index[u]
         j = key_index[v]
