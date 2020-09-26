@@ -2,20 +2,12 @@ from __future__ import print_function
 from __future__ import absolute_import
 from __future__ import division
 
-import compas
+from numpy import array
+from numpy import zeros
+from numpy import diagflat
+from numpy import absolute
 
-try:
-    from numpy import array
-    from numpy import zeros
-    from numpy import diagflat
-    from numpy import absolute
-except ImportError:
-    compas.raise_if_not_ironpython()
-
-try:
-    import cvxopt
-except ImportError:
-    compas.raise_if_not_ironpython()
+import cvxopt
 
 from compas_rbe.equilibrium.helpers import make_Aeq
 from compas_rbe.equilibrium.helpers import make_Aiq
@@ -85,13 +77,13 @@ def compute_interface_forces_cvxopt(assembly,
 
     """
 
-    n = assembly.number_of_vertices()
+    n = assembly.number_of_nodes()
 
-    key_index = {key: index for index, key in enumerate(assembly.vertices())}
+    key_index = {key: index for index, key in enumerate(assembly.nodes())}
 
-    fixed = [key for key in assembly.vertices_where({'is_support': True})]
+    fixed = [key for key in assembly.nodes_where({'is_support': True})]
     fixed = [key_index[key] for key in fixed]
-    free  = [index for index in range(n) if index not in fixed]
+    free  = list(set(range(n)) - set(fixed))
 
     # ==========================================================================
     # equality constraints
@@ -101,7 +93,7 @@ def compute_interface_forces_cvxopt(assembly,
     A = A.toarray()
     A = A[[index * 6 + i for index in free for i in range(6)], :]
 
-    b = [[0, 0, -1 * assembly.blocks[key].volume() * density, 0, 0, 0] for key in assembly.vertices()]
+    b = [[0, 0, -1 * assembly.blocks[key].volume() * density, 0, 0, 0] for key in assembly.nodes()]
     b = array(b, dtype=float)
     b = b[free, :].reshape((-1, 1), order='C')
 
@@ -191,7 +183,7 @@ def compute_interface_forces_cvxopt(assembly,
 
         offset = 0
 
-        for u, v, attr in assembly.edges(True):
+        for (u, v), attr in assembly.edges(True):
 
             n = len(attr['interface_points'])
 

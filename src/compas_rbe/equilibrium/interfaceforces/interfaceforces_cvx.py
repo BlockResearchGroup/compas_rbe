@@ -4,24 +4,16 @@ from __future__ import division
 
 import compas
 
-try:
-    from numpy import array
-    from numpy import zeros
-    from numpy import diagflat
-    from numpy import absolute
-except ImportError:
-    compas.raise_if_not_ironpython()
+from numpy import array
+from numpy import zeros
+from numpy import diagflat
+from numpy import absolute
+from numpy import float64
 
-try:
-    import cvxpy
-except ImportError:
-    compas.raise_if_not_ironpython()
+import cvxpy
 
 from compas_rbe.equilibrium.helpers import make_Aeq
 from compas_rbe.equilibrium.helpers import make_Aiq
-
-from numpy import set_printoptions
-set_printoptions(linewidth=1000)
 
 
 __all__ = ['compute_interface_forces_cvx']
@@ -90,9 +82,7 @@ def compute_interface_forces_cvx(assembly,
 
     Examples
     --------
-    .. code-block:: python
-
-        pass
+    >>>
 
     References
     ----------
@@ -119,8 +109,14 @@ def compute_interface_forces_cvx(assembly,
     A = A.toarray()
     A = A[[index * 6 + i for index in free for i in range(6)], :]
 
-    b = [[0, 0, -1 * assembly.blocks[key].volume() * density, 0, 0, 0] for key in assembly.nodes()]
-    b = array(b, dtype=float)
+    # b = [[0, 0, -1 * assembly.blocks[key].volume() * density, 0, 0, 0] for key in assembly.nodes()]
+
+    b = [[0, 0, 0, 0, 0, 0] for i in range(n)]
+    for key in assembly.nodes():
+        index = key_index[key]
+        b[index][2] = -1 * assembly.blocks[key].volume() * density
+
+    b = array(b, dtype=float64)
     b = b[free, :].reshape((-1, 1), order='C')
 
     # print(A)
@@ -189,10 +185,12 @@ def compute_interface_forces_cvx(assembly,
         # abstol_inacc (5e-5)
         # reltol_inacc (5e-5)
         # feastol_inacc (1e-4)
+
     elif solver == 'OSQP':
         solver = cvxpy.OSQP
         # max_iter (100)
         # ...
+
     elif solver == 'CVXOPT':
         solver = cvxpy.CVXOPT
         # max_iters (100)
@@ -201,10 +199,13 @@ def compute_interface_forces_cvx(assembly,
         # feastol (1e-7)
         # refinement (1)
         # kktsolver ('chol', 'robust')
+
     elif solver == 'MOSEK':
         solver = cvxpy.MOSEK
+
     elif solver == 'CPLEX':
         solver = cvxpy.CPLEX
+
     else:
         raise Exception('Solver not supported: {}'.format(solver))
 
@@ -216,16 +217,16 @@ def compute_interface_forces_cvx(assembly,
     objective = cvxpy.Minimize(0.5 * cvxpy.quad_form(x, P))
 
     constraints = [
-        A * x == b,
-        G * x <= h
+        A @ x == b,
+        G @ x <= h
     ]
 
     problem = cvxpy.Problem(objective, constraints)
 
     problem.solve(solver=solver, verbose=verbose)
 
-    if not verbose:
-        print(problem.status)
+    # if not verbose:
+    #     print(problem.status)
 
     # OPTIMAL
     # INFEASIBLE
@@ -237,12 +238,8 @@ def compute_interface_forces_cvx(assembly,
     if problem.status == cvxpy.OPTIMAL:
         x = array(x.value).reshape((-1, 1))
 
-        print(problem.value)
-
     elif problem.status == cvxpy.OPTIMAL_INACCURATE:
         x = array(x.value).reshape((-1, 1))
-
-        print(problem.value)
 
     else:
         x = None
