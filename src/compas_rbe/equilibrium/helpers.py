@@ -4,13 +4,7 @@ from __future__ import division
 
 from math import sqrt
 
-import compas
-
-try:
-    from scipy.sparse import coo_matrix
-except ImportError:
-    compas.raise_if_not_ironpython()
-
+from scipy.sparse import coo_matrix
 from compas.geometry import cross_vectors
 
 
