@@ -274,6 +274,8 @@ def compute_interface_forces_cvx(assembly,
 
             offset += 4 * n
 
+    return assembly
+
 
 # ==============================================================================
 # Main
