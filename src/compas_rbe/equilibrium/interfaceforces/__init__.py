@@ -11,7 +11,7 @@ import compas
 from compas_assembly.datastructures import Assembly
 from compas_assembly.datastructures import Block
 
-# from .interfaceforces_cvx import *
+from .interfaceforces_cvx import *
 from .interfaceforces_cvxopt import *
 
 

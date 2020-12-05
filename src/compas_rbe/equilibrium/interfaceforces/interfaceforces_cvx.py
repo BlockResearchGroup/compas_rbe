@@ -95,10 +95,10 @@ def compute_interface_forces_cvx(assembly,
 
     n = assembly.number_of_nodes()
 
-    key_index = {key: index for index, key in enumerate(assembly.nodes())}
+    node_index = {node: index for index, node in enumerate(assembly.nodes())}
 
-    fixed = [key for key in assembly.nodes_where({'is_support': True})]
-    fixed = [key_index[key] for key in fixed]
+    fixed = [node for node in assembly.nodes_where({'is_support': True})]
+    fixed = [node_index[node] for node in fixed]
     free  = list(set(range(n)) - set(fixed))
 
     # ==========================================================================
@@ -109,12 +109,13 @@ def compute_interface_forces_cvx(assembly,
     A = A.toarray()
     A = A[[index * 6 + i for index in free for i in range(6)], :]
 
-    # b = [[0, 0, -1 * assembly.blocks[key].volume() * density, 0, 0, 0] for key in assembly.nodes()]
+    # b = [[0, 0, -1 * assembly.blocks[node].volume() * density, 0, 0, 0] for node in assembly.nodes()]
 
     b = [[0, 0, 0, 0, 0, 0] for i in range(n)]
-    for key in assembly.nodes():
-        index = key_index[key]
-        b[index][2] = -1 * assembly.blocks[key].volume() * density
+    for node in assembly.nodes():
+        block = assembly.node_attribute(node, 'block')
+        index = node_index[node]
+        b[index][2] = -1 * block.volume() * density
 
     b = array(b, dtype=float64)
     b = b[free, :].reshape((-1, 1), order='C')
@@ -256,14 +257,15 @@ def compute_interface_forces_cvx(assembly,
 
         offset = 0
 
-        for (u, v), attr in assembly.edges(True):
+        for edge in assembly.edges():
+            interface = assembly.edge_attribute(edge, 'interface')
 
-            n = len(attr['interface_points'])
+            n = len(interface.points)
 
-            attr['interface_forces'] = []
+            interface.forces = []
 
             for i in range(n):
-                attr['interface_forces'].append({
+                interface.forces.append({
                     'c_np': x[offset + 4 * i + 0],
                     'c_nn': x[offset + 4 * i + 1],
                     'c_u' : x[offset + 4 * i + 2],

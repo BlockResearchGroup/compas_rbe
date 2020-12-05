@@ -41,22 +41,23 @@ def make_Aeq(assembly, return_vcount=True):
 
     vcount = 0
 
-    key_index = {key: index for index, key in enumerate(assembly.nodes())}
+    node_index = {node: index for index, node in enumerate(assembly.nodes())}
 
-    for (u, v), attr in assembly.edges(True):
+    for edge in assembly.edges():
+        u, v = edge
 
-        i = key_index[u]
-        j = key_index[v]
+        i = node_index[u]
+        j = node_index[v]
 
-        interface = {
-            'points' : attr['interface_points'],
-            'uvw'    : attr['interface_uvw'],
-        }
+        U = assembly.node_attribute(u, 'block')
+        V = assembly.node_attribute(v, 'block')
 
-        n = len(interface['points'])
+        interface = assembly.edge_attribute(edge, 'interface')
+
+        n = len(interface.points)
 
         # process the u block
-        center = assembly.blocks[u].center()
+        center = U.center()
 
         # B1
         block_rows, block_cols, block_data = _make_Aeq_block(interface, center, False)
@@ -67,7 +68,7 @@ def make_Aeq(assembly, return_vcount=True):
         data += block_data
 
         # process the v block
-        center = assembly.blocks[v].center()
+        center = V.center()
 
         # B2
         block_rows, block_cols, block_data = _make_Aeq_block(interface, center, True)
@@ -96,7 +97,9 @@ def _make_Aeq_block(interface, center, reverse):
     cols = []
     data = []
 
-    u, v, w = interface['uvw']
+    u = interface.frame.xaxis
+    v = interface.frame.yaxis
+    w = interface.frame.zaxis
 
     if reverse:
         u = [-1.0 * axis for axis in u]
@@ -107,9 +110,9 @@ def _make_Aeq_block(interface, center, reverse):
     fy = [w[1], - w[1], u[1], v[1]]
     fz = [w[2], - w[2], u[2], v[2]]
 
-    for i in range(len(interface['points'])):
+    for i in range(len(interface.points)):
 
-        xyz = interface['points'][i]
+        xyz = interface.points[i]
 
         # coordinates of interface point
         # relative to block mass center
