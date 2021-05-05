@@ -17,7 +17,7 @@ import sphinx_compas_theme
 project = 'COMPAS RBE'
 copyright = 'Block Research Group - ETH Zurich'
 author = 'tom van mele'
-release = '0.1.1'
+release = '0.1.2rc0'
 version = '.'.join(release.split('.')[0:2])
 
 master_doc = 'index'
