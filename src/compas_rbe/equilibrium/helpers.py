@@ -269,7 +269,7 @@ def make_Aiq(total_vcount, friction8=False, mu=0.6):
     rows = []
     cols = []
     data = []
-    c_8  = 1.0 / sqrt(2.0)
+    c_8 = 1.0 / sqrt(2.0)
 
     # offsets
 
@@ -287,8 +287,8 @@ def make_Aiq(total_vcount, friction8=False, mu=0.6):
         # friction4
 
         rows += [i + 2, i + 2, i + 3, i + 3, i + 4, i + 4, i + 5, i + 5]
-        cols += [j    , j + 2, j    , j + 2, j    , j + 3, j    , j + 3]
-        data += [-mu  , 1    , -mu  , -1   , -mu  , 1    , -mu  ,    -1]
+        cols += [j, j + 2, j, j + 2, j, j + 3, j, j + 3]
+        data += [-mu, 1, -mu, -1, -mu, 1, -mu,    -1]
 
         if not friction8:
             i += 6

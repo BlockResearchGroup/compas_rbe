@@ -83,7 +83,7 @@ def compute_interface_forces_cvxopt(assembly,
 
     fixed = [node for node in assembly.nodes_where({'is_support': True})]
     fixed = [node_index[node] for node in fixed]
-    free  = list(set(range(n)) - set(fixed))
+    free = list(set(range(n)) - set(fixed))
 
     # ==========================================================================
     # equality constraints
@@ -195,8 +195,8 @@ def compute_interface_forces_cvxopt(assembly,
                 interface.forces.append({
                     'c_np': x[offset + 4 * i + 0],
                     'c_nn': x[offset + 4 * i + 1],
-                    'c_u' : x[offset + 4 * i + 2],
-                    'c_v' : x[offset + 4 * i + 3]
+                    'c_u': x[offset + 4 * i + 2],
+                    'c_v': x[offset + 4 * i + 3]
                 })
 
             offset += 4 * n

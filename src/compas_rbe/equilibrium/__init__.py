@@ -28,8 +28,8 @@ from __future__ import print_function
 import compas
 
 if not compas.IPY:
-    from .helpers import *
+    from .helpers import * # noqa F403
 
-from .interfaceforces import *
+from .interfaceforces import * # noqa F403
 
 __all__ = [name for name in dir() if not name.startswith('_')]

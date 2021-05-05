@@ -115,3 +115,4 @@ __temp/**
 !src/compas_rbe/__temp/PLACEHOLDER
 
 .DS_Store
+.vscode
